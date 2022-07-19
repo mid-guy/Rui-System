@@ -1,1 +1,1 @@
-export { default } from './getButtonCss'
+export { default as getCss } from './getButtonCss'
