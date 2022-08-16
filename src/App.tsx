@@ -1,12 +1,7 @@
-import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Text from './components/Text'
-import { Button } from './components/ButtonBase';
-import { getCss } from "./components/ButtonBase/getButtonCss"
 function App() {
-  // *it will be alert missing type by props
-  const css = getCss();
   return (
     <div className="App">
       <header className="App-header">
@@ -23,7 +18,6 @@ function App() {
           Learn React
         </a>
           <Text title="oke" />
-          <Button variant="primary" children={<span>Base Button</span>} />
       </header>
     </div>
   );
