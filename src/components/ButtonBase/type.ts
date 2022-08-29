@@ -1,17 +1,17 @@
 import { ReactNode } from "react";
-import { variants, sizes, backgrounds, types } from "./getButtonCss";
+import { backgrounds, sizes, types, variants } from "./constants";
 
 export type BaseProps = {
   /**
    * The variant to use.
    * @default primary
    */
-  variant: keyof typeof variants;
+  variant?: keyof typeof variants;
   /**
    * The size to use.
    * @default primary
    */
-  background: keyof typeof backgrounds
+  background?: keyof typeof backgrounds
   /**
    * The size to use.
    * @default sm

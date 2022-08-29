@@ -1,47 +1,7 @@
 import { css, SerializedStyles } from '@emotion/react';
 import { BaseProps } from './type';
 
-export const variants = {
-  container: (theme: any) => css`
-    color: #fff;
-  `,
-  outlined: (theme: any) => css`
-    color: red;
-    border: 1px solid red;
-    background: none;
-  `,
-  text: (theme: any) => css`
-    background: none;
-  `
-}
-
-export const types = { button: "button", submit: "submit" }
-
-export const backgrounds = {
-  primary: (theme: any): SerializedStyles => css`
-    background-color: rgb(25, 118, 210);
-  `,
-  secondary: (theme: any): SerializedStyles => css`
-    background-color: rgb(156, 39, 176);
-  `,
-  ternary: (theme: any): SerializedStyles => css`
-    background-color: rgb(211, 47, 47);
-  `
-}
-
-export const sizes = {
-  sm: (theme: any) => css`
-    min-width: 64px
-  `,
-  md: (theme: any) => css`
-    min-width: 138px
-  `,
-  lg: (theme: any) => css`
-    min-width: 238px
-  `,
-}
-
-const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
+const getButtonCss = (theme: any, props: any): SerializedStyles => css`
   background: none;
   border: none;
   box-sizing: border-box;
@@ -63,14 +23,13 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
   label {
     display: block;
     transition-duration: 200ms;
-  }
+  } 
 
-  ${backgrounds[props.background as NonNullable<keyof typeof backgrounds>](theme)};
+  ${theme.variants[props.variant as NonNullable<keyof typeof theme.variants>](theme)};
   
-  ${sizes[props.size as NonNullable<keyof typeof sizes>](theme)};
-
-  ${variants[props.variant as NonNullable<keyof typeof variants>](theme)};
+  ${theme.sizes[props.size as NonNullable<keyof typeof theme.sizes>](theme)};
   
+  ${theme.backgrounds[props.background as NonNullable<keyof typeof theme.backgrounds>](theme)};
 
 `;
 
