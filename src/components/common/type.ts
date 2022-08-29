@@ -57,3 +57,10 @@ export interface OverridableComponent<M extends OverridableTypeMap> {
   ): JSX.Element;
   (props: DefaultComponentProps<M>): JSX.Element;
 }
+
+
+export interface OverridableTypeMap {
+  props: {};
+  defaultComponent: React.ElementType;
+  classKey: string;
+}

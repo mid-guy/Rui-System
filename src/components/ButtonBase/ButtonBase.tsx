@@ -1,17 +1,41 @@
 /** @jsxImportSource @emotion/react */
-import { forwardRef } from 'react'
-import { OverridableComponent, OverrideProps } from '../common/type'
-import getButtonCss, { variants }  from './getButtonCss'
+import { css } from "@emotion/react";
+import React from "react";
+import createTheme from "../theme/theme";
+import getButtonCss from "./getButtonCss";
+import { BaseProps } from "./type";
 
-// const ButtonBase: OverridableComponent<ButtonTypeMap> = forwardRef(
-//   function Button(props: Props, ref: React.Ref<HTMLButtonElement>) {
-//     /* eslint-disable @typescript-eslint/no-unused-vars */
-//   const theme = {}
-//   const { variant, ...rest } = props
-//   const css = getButtonCss(theme, props as any)
-//   return ( <button css={css} {...rest} ref={ref} />)
+const theme = createTheme({
+  button: {
+    backgrounds: [
+      {
+        props: { variant: "dashed" },
+        style: (theme: any) => css`
+          background-color: red;
+        `,
+      },
+    ],
+  },
+});
 
-//   }
-// )
+const ButtonBase = React.forwardRef(function Button(
+  props: BaseProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const { variant, size, background, ...rest } = props;
+  /* eslint-enable @typescript-eslint/no-unused-vars */
+  const theme = {};
+  const css = getButtonCss(theme, props);
 
-export default Button
+  return <button ref={ref} css={css} {...rest} />;
+});
+
+ButtonBase.defaultProps = {
+  variant: "container",
+  size: "sm",
+  background: "primary",
+  type: "button",
+};
+
+export default ButtonBase;
