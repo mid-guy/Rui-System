@@ -1,7 +1,7 @@
 import { css, SerializedStyles } from '@emotion/react';
-import { BaseProps } from './type';
+import { BaseProps } from './ButtonBase';
 
-const getButtonCss = (theme: any, props: any): SerializedStyles => css`
+const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
   background: none;
   border: none;
   box-sizing: border-box;
@@ -25,12 +25,13 @@ const getButtonCss = (theme: any, props: any): SerializedStyles => css`
     transition-duration: 200ms;
   } 
 
-  ${theme.variants[props.variant as NonNullable<keyof typeof theme.variants>](theme)};
-  
-  ${theme.sizes[props.size as NonNullable<keyof typeof theme.sizes>](theme)};
-  
-  ${theme.backgrounds[props.background as NonNullable<keyof typeof theme.backgrounds>](theme)};
+  ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.variants>](theme)};
 
 `;
+
+
+// ${theme.button.sizes[props.size as NonNullable<keyof typeof theme.button.sizes>](theme)};
+
+// ${theme.button.backgrounds[props.background as NonNullable<keyof typeof theme.button.backgrounds>](theme)};
 
 export default getButtonCss

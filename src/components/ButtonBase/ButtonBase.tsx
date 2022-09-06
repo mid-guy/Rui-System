@@ -1,44 +1,23 @@
 /** @jsxImportSource @emotion/react */
-import { css, SerializedStyles } from "@emotion/react";
-import React from "react";
-import createTheme from "../theme/theme";
-import { backgrounds } from "./constants";
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
 import getButtonCss from "./getButtonCss";
-import { BaseProps } from "./type";
+import { ReactNode } from "react";
+import { backgrounds, sizes, types, variants } from "./constants";
 
-const theme = createTheme({
-  button: {
-    backgrounds: [
-      {
-        props: { background: "dashed" },
-        style: (theme: any): SerializedStyles => css`
-          background-color: blue;
-          color: red;
-        `,
-      },
-    ],
-  },
-});
-
-interface GenericBackgroundType<T> {
-  T: (theme: any) => SerializedStyles;
-}
-
-const ButtonBase = React.forwardRef(function Button(
-  props: {
-    background: GenericBackgroundType<typeof backgrounds>;
-    [key: string]: any;
-  },
-  // props: BaseProps,
-  ref: React.Ref<HTMLButtonElement>
-) {
+const ButtonBase = function (props: BaseProps) {
+  const theme = useContext(ThemeContext);
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const { variant, size, background, ...rest } = props;
   /* eslint-enable @typescript-eslint/no-unused-vars */
-  const css = getButtonCss(theme, props);
-
-  return <button ref={ref} css={css} {...rest} />;
-});
+  // const css = getButtonCss(theme, props);
+  return (
+    <button
+      // css={css}
+      {...rest}
+    />
+  );
+};
 
 ButtonBase.defaultProps = {
   variant: "container",
@@ -46,5 +25,57 @@ ButtonBase.defaultProps = {
   background: "primary",
   type: "button",
 };
+
+export interface ButtonPropsVariantOverrides {}
+export interface ButtonPropsBackgroundOverrides {}
+export interface ButtonPropsSizeOverrides {}
+
+export type OverridableStringUnion<A, B> = A | keyof B;
+
+export type BaseProps = {
+  /**
+   * The variant to use.
+   * @default container
+   */
+  variant?: OverridableStringUnion<
+    keyof typeof variants,
+    ButtonPropsVariantOverrides
+  >;
+  /**
+   * The size to use.
+   * @default primary
+   */
+  background?: OverridableStringUnion<
+    keyof typeof backgrounds,
+    ButtonPropsBackgroundOverrides
+  >;
+  /**
+   * The size to use.
+   * @default sm
+   */
+  size?: keyof typeof sizes;
+  /**
+   * the dense to use
+   * @default sm
+   */
+  dense?: any;
+  /**
+   * The variant to use.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * The type to use.
+   * @default button
+   */
+  type?: keyof typeof types;
+
+  children: ReactNode;
+};
+
+export interface ButtonTypeMap<D extends React.ElementType = "button"> {
+  props: BaseProps;
+  defaultComponent: D;
+}
 
 export default ButtonBase;

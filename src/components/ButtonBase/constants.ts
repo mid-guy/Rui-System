@@ -1,41 +1,40 @@
-import { css, SerializedStyles } from "@emotion/react";
 
 export const types = { button: "button", submit: "submit" };
 
 export const sizes = {
-    sm: (theme: any) => css`
+  sm: `
     min-width: 64px;
   `,
-    md: (theme: any) => css`
+  md: `
     min-width: 138px;
   `,
-    lg: (theme: any) => css`
+  lg: `
     min-width: 238px;
   `,
 };
 
 export const variants = {
-    container: (theme: any) => css`
+  container: `
     color: #fff;
   `,
-    outlined: (theme: any) => css`
+  outlined: `
     color: red;
     border: 1px solid red;
     background: none;
   `,
-    text: (theme: any) => css`
+  text: `
     background: none;
   `,
 };
 
 export const backgrounds = {
-    primary: (theme: any): SerializedStyles => css`
+  primary: `
     background-color: rgb(25, 118, 210);
   `,
-    secondary: (theme: any): SerializedStyles => css`
+  secondary: `
     background-color: rgb(156, 39, 176);
   `,
-    ternary: (theme: any): SerializedStyles => css`
+  ternary: `
     background-color: rgb(211, 47, 47);
   `,
 };

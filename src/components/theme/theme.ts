@@ -1,20 +1,76 @@
-import { backgrounds, sizes, variants } from "../ButtonBase/constants"
+import createTheme from "./createTheme";
 
-function createTheme(options: any = {}, ...args: any[]) {
-    const { button } = options
-    return {
-        backgrounds: {
-            ...backgrounds,
-            ...(button.backgrounds && { [button.backgrounds[0].props.background]: button.backgrounds[0].style })
+export default createTheme({
+    components: {
+        button: {
+            variants: [
+                {
+                    props: { variant: "dashed" },
+                    style: "background-color: blue"
+                },
+                {
+                    props: { variant: "dasher" },
+                    style: " background-color: blue; ",
+                },
+            ],
+            backgrounds: [
+                {
+                    props: { background: "ghost" },
+                    style: " background- color: black; ",
+                },
+                {
+                    props: { background: "submit" },
+                    style: "  background- color: red; ",
+                },
+            ],
+            sizes: [
+                {
+                    props: { size: "xs" },
+                    style: " min-width: 40px;"
+                },
+                {
+                    props: { size: "xxl" },
+                    style: "min-width: 416px;",
+                },
+            ]
         },
-        variants: {
-            ...variants,
-            ...(button.variants && { [button.variants[0].props.variant]: button.variants[0].style })
-        },
-        sizes: {
-            ...sizes,
-            ...(button.sizes && { [button.sizes[0].props.size]: button.sizes[0].style })
-        }
+        // label: {
+        //     status: [
+        //         {
+        //             props: { size: "success" },
+        //             style: `
+        //                 background-color: green;
+        //             `,
+        //         },
+        //         {
+        //             props: { size: "error" },
+        //             style: `
+        //             background-color: red;
+        //             `,
+        //         },
+        //     ],
+        //     sizes: [
+        //         {
+        //             props: { size: "xs" },
+        //             style: `
+        //                 min-width: 40px;
+        //             `,
+        //         },
+        //         {
+        //             props: { size: "xxl" },
+        //             style: `
+        //                 min-width: 416px;
+        //             `,
+        //         },
+        //     ]
+        // }
+    }
+});
+
+declare module "../ButtonBase/ButtonBase" {
+    interface ButtonPropsVariantOverrides {
+        dashed: true;
+        dasher: true;
     }
 }
-export default createTheme
+
