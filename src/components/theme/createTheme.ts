@@ -1,39 +1,10 @@
 import { sizes, variants, backgrounds } from "../ButtonBase/constants"
 function createTheme(options?: any) {
-    let defaultTheme = {
-        components: {
-            button: {
-                variants: variants,
-                sizes: sizes,
-                backgrounds: backgrounds
-            },
-            label: {
-
-            },
-            input: {
-
-            }
-        },
-        palette: {
-            primary: {
-                main: "red"
-            },
-            secondary: {
-                main: "red 1"
-            },
-            ternary: {
-                main: "red 2"
-            }
-        },
-        responsive: {},
-        zIndex: {}
-    }
 
     if (!options) return defaultTheme
 
     const outerTheme = _mapValueKeys(options)
     const _outerTheme = _deepMerge(outerTheme, defaultTheme)
-    console.log(_outerTheme)
     return _outerTheme
 }
 
@@ -62,6 +33,35 @@ function _deepMerge(target: any, source: any) {
     });
     Object.assign(target || {}, source)
     return target
+}
+
+export const defaultTheme = {
+    components: {
+        button: {
+            variants: variants,
+            sizes: sizes,
+            backgrounds: backgrounds
+        },
+        label: {
+
+        },
+        input: {
+
+        }
+    },
+    palette: {
+        primary: {
+            main: "red"
+        },
+        secondary: {
+            main: "red 1"
+        },
+        ternary: {
+            main: "red 2"
+        }
+    },
+    responsive: {},
+    zIndex: {}
 }
 
 export default createTheme

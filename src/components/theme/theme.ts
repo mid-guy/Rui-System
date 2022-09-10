@@ -10,23 +10,23 @@ export default createTheme({
                 },
                 {
                     props: { variant: "dasher" },
-                    style: " background-color: blue; ",
+                    style: "background-color: blue;",
                 },
             ],
             backgrounds: [
                 {
                     props: { background: "ghost" },
-                    style: " background- color: black; ",
+                    style: "background-color: black;",
                 },
                 {
                     props: { background: "submit" },
-                    style: "  background- color: red; ",
+                    style: "background-color: red;",
                 },
             ],
             sizes: [
                 {
                     props: { size: "xs" },
-                    style: " min-width: 40px;"
+                    style: "min-width: 40px;"
                 },
                 {
                     props: { size: "xxl" },

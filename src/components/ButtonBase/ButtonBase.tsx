@@ -1,22 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import { useContext } from "react";
-import { ThemeContext } from "../../App";
+
 import getButtonCss from "./getButtonCss";
 import { ReactNode } from "react";
 import { backgrounds, sizes, types, variants } from "./constants";
+import { useTheme } from "../../App";
 
 const ButtonBase = function (props: BaseProps) {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const { variant, size, background, ...rest } = props;
   /* eslint-enable @typescript-eslint/no-unused-vars */
-  // const css = getButtonCss(theme, props);
-  return (
-    <button
-      // css={css}
-      {...rest}
-    />
-  );
+  const css = getButtonCss(theme, props);
+  return <button css={css} {...rest} />;
 };
 
 ButtonBase.defaultProps = {

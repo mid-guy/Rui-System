@@ -1,9 +1,16 @@
 import "./App.css";
-import { createContext, lazy } from "react";
+import { createContext, lazy, useContext } from "react";
 import theme from "./components/theme/theme";
+import { defaultTheme } from "./components/theme/createTheme";
 const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
 
-export const ThemeContext = createContext({});
+export const ThemeContext = createContext(defaultTheme);
+
+export const useTheme = () => {
+  const theme = useContext(ThemeContext);
+  console.log(theme);
+  return theme;
+};
 
 const ThemeProvider = ({ children, theme }: any) => {
   return (
@@ -12,6 +19,7 @@ const ThemeProvider = ({ children, theme }: any) => {
 };
 
 function App() {
+  console.log({ theme });
   return (
     <div className="App">
       <header className="App-header">
