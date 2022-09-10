@@ -1,22 +1,8 @@
 import "./App.css";
-import { createContext, lazy, useContext } from "react";
-import theme from "./components/theme/theme";
-import { defaultTheme } from "./components/theme/createTheme";
+import { lazy } from "react";
+import theme from "./components/core-theme/theme";
+import ThemeProvider from "./components/core-theme/themeProvider";
 const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
-
-export const ThemeContext = createContext(defaultTheme);
-
-export const useTheme = () => {
-  const theme = useContext(ThemeContext);
-  console.log(theme);
-  return theme;
-};
-
-const ThemeProvider = ({ children, theme }: any) => {
-  return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
-  );
-};
 
 function App() {
   console.log({ theme });
@@ -27,11 +13,11 @@ function App() {
           <ButtonBase variant="container">
             <label>Dasher</label>
           </ButtonBase>
-          <ButtonBase variant="container">
-            <label>OKR</label>
+          <ButtonBase variant="container" background="secondary">
+            <label>Secondary</label>
           </ButtonBase>
-          <ButtonBase variant="container">
-            <label>OKE</label>
+          <ButtonBase variant="container" background="ternary">
+            <label>Ternary</label>
           </ButtonBase>
         </ThemeProvider>
       </header>
