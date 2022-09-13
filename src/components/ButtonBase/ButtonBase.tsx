@@ -7,11 +7,37 @@ import { useTheme } from "../core-theme/themeProvider";
 const ButtonBase = forwardRef(function (props: BaseProps, ref: any) {
   const theme = useTheme();
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  const { variant, size, background, disabled, isVisible, ...rest } = props;
+  const { variant, size, background, disabled, isVisible, onClick, ...rest } =
+    props;
   /* eslint-enable @typescript-eslint/no-unused-vars */
   const css = getButtonCss(theme, props);
-  return <button css={css} disabled={disabled} {...rest} ref={ref} />;
+  const _onClick = (e: any) => withAnimation(e, onClick && onClick);
+  return (
+    <button
+      css={css}
+      disabled={disabled}
+      {...rest}
+      ref={ref}
+      onClick={_onClick}
+    />
+  );
 });
+
+function withAnimation(e: any, onClick?: any) {
+  console.log(e.nativeEvent);
+  const clientRect = e.nativeEvent;
+  const x = clientRect.offsetX;
+  const y = clientRect.offsetY;
+  const ripple = document.createElement("span");
+  ripple.onanimationend = function () {
+    e.target.remove(ripple);
+  };
+
+  e.target.appendChild(ripple);
+  ripple.style.left = `${x}px`;
+  ripple.style.top = `${y}px`;
+  onClick && onClick();
+}
 
 ButtonBase.defaultProps = {
   variant: "container",
@@ -65,18 +91,19 @@ export type BaseProps = {
   type?: keyof typeof types;
   /**
    * The visible to use that component should be visible
-   * @default {}
+   * @default boolean
    */
-  isVisible?: boolean
+  isVisible?: boolean;
   /**
    * The Style to use as html style.
    * @default {}
    */
-  style?: CSSProperties,
+  style?: CSSProperties;
   /**
    * Children to use
    * @default {}
    */
+  onClick?: any;
   children: ReactNode;
 };
 

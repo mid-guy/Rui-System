@@ -13,12 +13,6 @@ function App() {
           <ButtonBase variant="container">
             <label>Dasher</label>
           </ButtonBase>
-          <ButtonBase variant="container" background="secondary">
-            <label>Secondary</label>
-          </ButtonBase>
-          <ButtonBase variant="container" background="ternary">
-            <label>Ternary</label>
-          </ButtonBase>
         </ThemeProvider>
       </header>
     </div>
