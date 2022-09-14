@@ -67,7 +67,7 @@ export default createTheme({
     }
 });
 
-declare module "../ButtonBase/ButtonBase" {
+declare module "../components/ButtonBase/ButtonBase" {
     interface ButtonPropsVariantOverrides {
         dashed: true;
         dasher: true;

@@ -13,6 +13,38 @@ export const sizes = {
   `,
 };
 
+export const animationFrames = {
+  ripple: `
+    span {
+      position: absolute;
+      background: white;
+      transform: translate(-50%,-50%);
+      border-radius: 50%;
+      animation: ripples 800ms linear;
+      transition-duration: 1000ms;
+    }
+    @keyframes ripples {
+      0% {
+        width: 0px;
+        height: 0px;
+        opacity: 0.1;
+      }
+      100% {
+        width: 500px;
+        height: 500px;
+        opacity: 0;
+      }
+    }
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+  `,
+  scale: `
+    &:active > label {
+      transform: scale(0.9);
+    }
+  `
+}
 export const variants = {
   container: `
     color: #fff;

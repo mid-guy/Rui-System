@@ -1,7 +1,7 @@
 import "./App.css";
 import { lazy } from "react";
-import theme from "./components/core-theme/theme";
-import ThemeProvider from "./components/core-theme/themeProvider";
+import theme from "./core-theme/theme";
+import ThemeProvider from "./core-theme/themeProvider";
 const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
 
 function App() {

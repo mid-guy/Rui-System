@@ -1,4 +1,4 @@
-import { sizes, variants, backgrounds } from "../ButtonBase/constants"
+import { sizes, variants, backgrounds, animationFrames } from "../components/ButtonBase/constants"
 function createTheme(options?: any) {
 
     if (!options) return defaultTheme
@@ -25,6 +25,7 @@ function getStylesOverride(target: any, key: string) {
         Object.assign(target, { [key]: Object.assign({}, ...style) })
     }
 }
+
 function _deepMerge(target: any, source: any) {
     Object.keys(target).forEach((key): any => {
         if (typeof target[key] === "object" && !Array.isArray(target[key]) && target[key] !== null) {
@@ -58,6 +59,11 @@ export const defaultTheme = {
         },
         ternary: {
             main: "red 2"
+        }
+    },
+    animationFrames: {
+        button: {
+            animationFrames: animationFrames
         }
     },
     responsive: {},
