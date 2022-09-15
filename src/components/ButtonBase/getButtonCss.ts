@@ -1,4 +1,3 @@
-import { animationFrames } from './constants';
 import { css, SerializedStyles } from '@emotion/react';
 import { BaseProps } from './ButtonBase';
 
@@ -24,12 +23,13 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
     display: block;
   } 
 
-  ${theme.animationFrames.button.animationFrames[props.animationFrame as NonNullable<keyof typeof theme.animationFrames.button.animationFrames>]};
+  ${theme.animationframe.button.animationframe[props.animationframe as NonNullable<keyof typeof theme.animationframe.button.animationframe>]};
 
   ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
 
   ${theme.components.button.backgrounds[props.background as NonNullable<keyof typeof theme.components.button.backgrounds>]};
 
+  display:  ${props.isVisible ? 'none' : 'block'};
 `;
 
 

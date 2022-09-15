@@ -1,4 +1,4 @@
-import { sizes, variants, backgrounds, animationFrames } from "../components/ButtonBase/constants"
+import { sizes, variants, backgrounds, animationframes } from "../components/ButtonBase/constants"
 function createTheme(options?: any) {
 
     if (!options) return defaultTheme
@@ -61,9 +61,9 @@ export const defaultTheme = {
             main: "red 2"
         }
     },
-    animationFrames: {
+    animationframe: {
         button: {
-            animationFrames: animationFrames
+            animationframe: animationframes
         }
     },
     responsive: {},

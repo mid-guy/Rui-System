@@ -13,7 +13,7 @@ export const sizes = {
   `,
 };
 
-export const animationFrames = {
+export const animationframes = {
   ripple: `
     span {
       position: absolute;
@@ -40,11 +40,15 @@ export const animationFrames = {
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
   `,
   scale: `
+    label {
+      transition-duration: 150ms;
+    }
     &:active > label {
       transform: scale(0.9);
     }
   `
 }
+
 export const variants = {
   container: `
     color: #fff;

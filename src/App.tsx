@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <ButtonBase variant="container">
+          <ButtonBase variant="container" animationframe="scale">
             <label>Dasher</label>
           </ButtonBase>
         </ThemeProvider>

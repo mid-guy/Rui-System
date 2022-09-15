@@ -2,36 +2,44 @@
 import getButtonCss from "./getButtonCss";
 import { CSSProperties, forwardRef, ReactNode } from "react";
 import {
-  animationFrames,
+  animationframes,
   backgrounds,
   sizes,
   types,
   variants,
 } from "./constants";
 import { useTheme } from "../../core-theme/themeProvider";
-import { generateRippleButton } from "../../utils/generateRippleButton";
 
 const ButtonBase = forwardRef(function (props: BaseProps, ref: any) {
   const theme = useTheme();
-  const { onClick, ...rest } = props;
+  const { onClick, isVisible, animationframe, ...rest } = props;
   const css = getButtonCss(theme, props);
   return (
-    <button
-      {...rest}
-      css={css}
-      ref={ref}
-      onClick={(e) => generateRippleButton(e)}
-    />
+    <button {...rest} css={css} ref={ref} onClick={generateRippleButton} />
   );
 });
 
 ButtonBase.defaultProps = {
   variant: "container",
-  animationFrame: "ripple",
+  animationframe: "ripple",
   size: "sm",
   background: "primary",
+  isVisible: false,
   type: "button",
 };
+
+function generateRippleButton(e: any) {
+  const clientRect = e.nativeEvent;
+  const x = clientRect.offsetX;
+  const y = clientRect.offsetY;
+  const ripple = document.createElement("span");
+  e.target.appendChild(ripple);
+  ripple.onanimationend = () => {
+    ripple.remove();
+  };
+  ripple.style.left = `${x}px`;
+  ripple.style.top = `${y}px`;
+}
 
 export interface ButtonPropsVariantOverrides {}
 export interface ButtonPropsBackgroundOverrides {}
@@ -84,7 +92,7 @@ export type BaseProps = {
    * The animation perform to use when user touch on button.
    * @default ripple
    */
-  animationFrame?: keyof typeof animationFrames;
+  animationframe?: keyof typeof animationframes;
   /**
    * The Style to use as html style.
    * @default {}
