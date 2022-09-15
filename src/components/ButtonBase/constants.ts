@@ -27,7 +27,7 @@ export const animationframes = {
       0% {
         width: 0px;
         height: 0px;
-        opacity: 0.1;
+        opacity: 0.25;
       }
       100% {
         width: 500px;

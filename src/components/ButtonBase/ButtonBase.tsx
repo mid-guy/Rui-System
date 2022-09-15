@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import getButtonCss from "./getButtonCss";
-import { CSSProperties, forwardRef, ReactNode } from "react";
+import React, { CSSProperties, forwardRef, ReactNode } from "react";
 import {
   animationframes,
   backgrounds,
@@ -10,12 +10,21 @@ import {
 } from "./constants";
 import { useTheme } from "../../core-theme/themeProvider";
 
-const ButtonBase = forwardRef(function (props: BaseProps, ref: any) {
+const ButtonBase = forwardRef(function (
+  props: BaseProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
   const theme = useTheme();
-  const { onClick, isVisible, animationframe, ...rest } = props;
+  const { onClick, isVisible, animationframe, className, ...rest } = props;
   const css = getButtonCss(theme, props);
   return (
-    <button {...rest} css={css} ref={ref} onClick={generateRippleButton} />
+    <button
+      {...rest}
+      css={css}
+      ref={ref}
+      className={className}
+      onClick={(e) => _onClick(e, animationframe, onClick)}
+    />
   );
 });
 
@@ -27,6 +36,17 @@ ButtonBase.defaultProps = {
   isVisible: false,
   type: "button",
 };
+
+function _onClick(
+  e: any,
+  animationframe: "ripple" | "scale" = "ripple",
+  onClick: any
+) {
+  if (animationframe === "ripple") {
+    generateRippleButton(e);
+  }
+  onClick(e);
+}
 
 function generateRippleButton(e: any) {
   const clientRect = e.nativeEvent;
@@ -44,6 +64,7 @@ function generateRippleButton(e: any) {
 export interface ButtonPropsVariantOverrides {}
 export interface ButtonPropsBackgroundOverrides {}
 export interface ButtonPropsSizeOverrides {}
+export interface ButtonPropsAnimationFrame {}
 export type OverridableStringUnion<A, B> = A | keyof B;
 
 export type BaseProps = {
@@ -92,7 +113,10 @@ export type BaseProps = {
    * The animation perform to use when user touch on button.
    * @default ripple
    */
-  animationframe?: keyof typeof animationframes;
+  animationframe?: OverridableStringUnion<
+    keyof typeof animationframes,
+    ButtonPropsAnimationFrame
+  >;
   /**
    * The Style to use as html style.
    * @default {}
@@ -103,6 +127,11 @@ export type BaseProps = {
    * @default {}
    */
   onClick?: any;
+  /**
+   * className to use style
+   * @default {}
+   */
+  className?: string;
   /**
    * Children to use
    * @default {}

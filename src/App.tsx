@@ -5,12 +5,11 @@ import ThemeProvider from "./core-theme/themeProvider";
 const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
 
 function App() {
-  console.log({ theme });
   return (
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <ButtonBase variant="container" animationframe="scale">
+          <ButtonBase variant="container" animationframe="ripple">
             <label>Dasher</label>
           </ButtonBase>
         </ThemeProvider>
