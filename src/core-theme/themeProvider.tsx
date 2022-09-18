@@ -1,12 +1,13 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { defaultTheme } from "./createTheme";
-
 
 export const ThemeContext = createContext(defaultTheme);
 
 const ThemeProvider = ({ children, theme }: any) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const _theme = useMemo(() => theme, [])
   return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={_theme}>{children}</ThemeContext.Provider>
   );
 };
 

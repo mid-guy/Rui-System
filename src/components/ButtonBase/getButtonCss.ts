@@ -14,24 +14,26 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
   }
 
   &:disabled {
-    background-color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.26);
     pointer-events: none;
-    cursor: default;
+    ${props.variant === "container" && "background-color: rgba(0, 0, 0, 0.12)"}
+    ${props.variant === "outlined" && "border: 1px solid rgba(0, 0, 0, 0.12)"}
+    ${props.variant === "text" && "border: none"}
   }
-
+  ${props.fullWidth && "width: 100%"};
   label {
     display: block;
   } 
 
   ${theme.animationframe.button.animationframe[props.animationframe as NonNullable<keyof typeof theme.animationframe.button.animationframe>]};
 
-  ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
-
   ${theme.components.button.backgrounds[props.background as NonNullable<keyof typeof theme.components.button.backgrounds>]};
+  
+  ${theme.components.button.sizes[props.size as NonNullable<keyof typeof theme.components.button.sizes>]};
 
-  display:  ${props.isVisible ? 'none' : 'block'};
+  ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
+  
+  ${props.isVisible ? 'display: none' : 'display: block'}
 `;
 
-
-// ${ theme.button.sizes[props.size as NonNullable<keyof typeof theme.components.button.sizes>] };
 export default getButtonCss

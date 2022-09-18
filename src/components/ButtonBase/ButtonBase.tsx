@@ -15,7 +15,7 @@ const ButtonBase = forwardRef(function (
   ref: React.Ref<HTMLButtonElement>
 ) {
   const theme = useTheme();
-  const { onClick, isVisible, animationframe, className, ...rest } = props;
+  const { onClick, isVisible, animationframe, className, fullWidth, ...rest } = props;
   const css = getButtonCss(theme, props);
   return (
     <button
@@ -32,6 +32,7 @@ ButtonBase.defaultProps = {
   variant: "container",
   animationframe: "ripple",
   size: "sm",
+  fullWidth: false,
   background: "primary",
   isVisible: false,
   type: "button",
@@ -45,7 +46,7 @@ function _onClick(
   if (animationframe === "ripple") {
     generateRippleButton(e);
   }
-  onClick(e);
+  onClick && onClick(e);
 }
 
 function generateRippleButton(e: any) {
@@ -89,6 +90,21 @@ export type BaseProps = {
    * @default sm
    */
   size?: keyof typeof sizes;
+  /**
+   * the fullWidth to use
+   * @default false
+   */
+  fullWidth?: boolean;
+  /**
+   * the startIcon to add icon component
+   * @default {}
+   */
+  startIcon?: ReactNode;
+  /**
+   * the endIcon to add icon component
+   * @default {}
+   */
+  endIcon?: ReactNode;
   /**
    * the dense to use
    * @default sm

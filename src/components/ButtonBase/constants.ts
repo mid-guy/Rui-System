@@ -54,8 +54,8 @@ export const variants = {
     color: #fff;
   `,
   outlined: `
-    color: red;
-    border: 1px solid red;
+    color: rgb(25, 118, 210);
+    border: 1px solid rgba(25, 118, 210, 0.5);
     background: none;
   `,
   text: `
