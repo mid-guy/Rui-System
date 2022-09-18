@@ -5,6 +5,7 @@ import theme from "./core-theme/theme";
 import ThemeProvider from "./core-theme/themeProvider";
 import Tooltips from "./components/Tooltips/Tooltips";
 import TooltipsCustom from "./components/TooltipsCustom/TooltipsCustom";
+import InputBase from "./components/InputBase/InputBase";
 const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
 
 function App() {
@@ -15,10 +16,7 @@ function App() {
           {/* <ButtonBase variant="container" animationframe="ripple">
             <label>Dasher</label>
           </ButtonBase> */}
-          <Tooltips currentID="1"/>
-          <Tooltips currentID="2"/>
-          {/* <TooltipsCustom currentID="2" />
-          <TooltipsCustom currentID="2" /> */}
+          <InputBase />
         </ThemeProvider>
       </header>
     </div>

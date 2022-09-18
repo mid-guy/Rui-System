@@ -1,0 +1,64 @@
+/*   color variables */
+$clr-primary: #18ffff;
+$clr-primary-light: #adffff;
+$clr-primary-dark: #091034;
+$clr-gray100: #f9fbff;
+$clr-gray150: #f4f6fb;
+$clr-gray200: #eef1f6;
+$clr-gray300: #e1e5ee;
+$clr-gray400: #767b91;
+$clr-gray500: #4f546c;
+$clr-gray600: #2a324b;
+$clr-gray700: #161d34;
+$clr-bg: white;
+
+/*   border radius */
+$radius: 4px;
+
+.form {
+  position: relative;
+  width: 300px;
+  &__input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid $clr-gray300;
+    border-radius: $radius;
+    font-family: inherit;
+    font-size: inherit;
+    color: black;
+    outline: none;
+    background: none;
+    height: 50px;
+    padding: 20px;
+    box-sizing: border-box;
+    &:hover {
+      border-color: $clr-primary-light;
+    }
+
+    /* Change border when input focus*/
+
+    &:focus {
+      border-color: $clr-primary;
+    }
+  }
+
+  &__label {
+    position: absolute;
+    left: 1rem;
+    top: 0.8rem;
+    padding: 0 0.5rem;
+    color: black;
+    cursor: text;
+    transition: top 200ms ease, left 200ms ease, font-size 200ms ease;
+    background-color: $clr-bg;
+  }
+}
+.form__input:focus ~ .form__label,
+.form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label {
+  top: -0.5rem;
+  font-size: 0.8rem;
+  left: 0.8rem;
+}
