@@ -1,4 +1,6 @@
-import { useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Fragment, useCallback, useRef, useState } from "react";
 import useClickOutside from "../../core-hooks/useClickOutside";
 import debounce from "../utils/debounce";
 import "./InputBase.scss";
@@ -8,7 +10,6 @@ const InputBase = () => {
   const [isTyping, setTyping] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<string | number>("");
   const menuRef = useRef<any>();
-  const inputValuesRef = useRef<number | string>("");
   function _onToggleField() {
     setFocus(false);
   }
@@ -20,15 +21,20 @@ const InputBase = () => {
   function _onRemoveMenu() {
     setVisible(false);
   }
-  async function withTyping(callback: any) {
-    setTyping(true);
-    await callback;
-    setTyping(false);
-  }
+
+  const _debounce = useCallback(
+    debounce(async function (value: string) {
+      setTyping(false);
+    }, 1000),
+    []
+  );
+
   function _onChangeField(e: any) {
-    console.log(e.target.value);
-    debounce(() => new Promise((resolve) => resolve(() => console.log("123"))));
-    // return () => new Promise((resolve) => resolve(() => console.log("render")));
+    if (!isTyping) {
+      setTyping(true);
+    }
+    setInputValues(e.target.value);
+    _debounce(e.target.value);
   }
   useClickOutside(menuRef, _onToggleField);
   return (
@@ -43,8 +49,8 @@ const InputBase = () => {
         className="form__input"
         autoComplete="off"
         placeholder=" "
+        value={inputValues}
         onChange={_onChangeField}
-        value={isTyping ? inputValuesRef.current : inputValues}
       />
       <label htmlFor="email" className="form__label">
         Email
@@ -52,6 +58,7 @@ const InputBase = () => {
       {isVisible && (
         <Menu
           isFocus={isFocus}
+          isTyping={isTyping}
           _onToggleField={_onToggleField}
           _onRemoveMenu={_onRemoveMenu}
         />
@@ -60,7 +67,7 @@ const InputBase = () => {
   );
 };
 
-function Menu({ isFocus, _onToggleField, _onRemoveMenu }: any) {
+function Menu({ isFocus, isTyping, _onToggleField, _onRemoveMenu }: any) {
   function _onFinishAnimation() {
     if (!isFocus) return _onRemoveMenu();
   }
@@ -69,11 +76,18 @@ function Menu({ isFocus, _onToggleField, _onRemoveMenu }: any) {
     <div
       className={`popover-container ${isFocus ? "visible" : "hidden"}`}
       onAnimationEnd={_onFinishAnimation}
+      style={{ height: isTyping ? 53 : 108 }}
     >
-      <div>Menu item 1</div>
-      <div>Menu item 2</div>
-      <div>Menu item 3</div>
-      <div>Menu item 4</div>
+      {isTyping ? (
+        <div style={{ padding: 16, fontSize: 16 }}>Loading...</div>
+      ) : (
+        <Fragment>
+          <div>Menu item 1</div>
+          <div>Menu item 2</div>
+          <div>Menu item 3</div>
+          <div>Menu item 4</div>
+        </Fragment>
+      )}
     </div>
   );
 }

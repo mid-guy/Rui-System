@@ -18,7 +18,7 @@ $radius: 4px;
 .form {
   position: relative;
   width: 300px;
-  height: 50px;
+  height: 56px;
   &__input {
     position: absolute;
     top: 0;
@@ -60,6 +60,7 @@ $radius: 4px;
   position: relative;
   .popover-container {
     position: absolute;
+    transition: 250ms ease;
     width: 100%;
     top: calc(100% + 5px);
     animation-duration: 250ms;
@@ -67,6 +68,10 @@ $radius: 4px;
     animation-fill-mode: forwards;
     border-radius: 4px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
     &.visible {
       animation-name: visible-popover;
     }
