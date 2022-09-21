@@ -16,7 +16,12 @@ function App() {
           {/* <ButtonBase variant="container" animationframe="ripple">
             <label>Dasher</label>
           </ButtonBase> */}
-          <InputBase />
+          <InputBase>
+            <div>Menu item</div>
+            <div>Menu item</div>
+            <div>Menu item</div>
+            <div>Menu item</div>
+          </InputBase>
         </ThemeProvider>
       </header>
     </div>

@@ -1,15 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Fragment, useCallback, useRef, useState } from "react";
+import {
+  forwardRef,
+  Fragment,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
 import useClickOutside from "../../core-hooks/useClickOutside";
+import { useFadeEffect } from "../../core-hooks/useFadeEffect";
 import debounce from "../utils/debounce";
 import "./InputBase.scss";
-const InputBase = () => {
+const InputBase = ({ children }: any) => {
   const [isVisible, setVisible] = useState<boolean>(false);
   const [isFocus, setFocus] = useState<boolean>(false);
   const [isTyping, setTyping] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<string | number>("");
   const menuRef = useRef<any>();
+
   function _onToggleField() {
     setFocus(false);
   }
@@ -56,39 +67,84 @@ const InputBase = () => {
         Email
       </label>
       {isVisible && (
-        <Menu
+        <MenuPopover
           isFocus={isFocus}
           isTyping={isTyping}
+          ref={menuRef}
           _onToggleField={_onToggleField}
           _onRemoveMenu={_onRemoveMenu}
-        />
+        >
+          {children}
+        </MenuPopover>
       )}
     </div>
   );
 };
 
-function Menu({ isFocus, isTyping, _onToggleField, _onRemoveMenu }: any) {
+const MenuPopover = forwardRef(function (
+  props: any,
+  ref: React.Ref<HTMLDivElement>
+) {
+  const { isTyping, isFocus, _onRemoveMenu, children } = props;
+  const [rect, setRect] = useState({
+    top: 0,
+    width: 0,
+    left: 0,
+    pendingHeight: 0,
+  });
   function _onFinishAnimation() {
     if (!isFocus) return _onRemoveMenu();
   }
 
-  return (
-    <div
-      className={`popover-container ${isFocus ? "visible" : "hidden"}`}
-      onAnimationEnd={_onFinishAnimation}
-      style={{ height: isTyping ? 53 : 108 }}
-    >
-      {isTyping ? (
-        <div style={{ padding: 16, fontSize: 16 }}>Loading...</div>
-      ) : (
-        <Fragment>
-          <div>Menu item 1</div>
-          <div>Menu item 2</div>
-          <div>Menu item 3</div>
-          <div>Menu item 4</div>
-        </Fragment>
-      )}
-    </div>
+  function calcPositionMenu(ref: any) {
+    const clientRect = ref.current.getBoundingClientRect();
+    setRect({
+      ...rect,
+      width: clientRect.width,
+      top: clientRect.top + 5 + clientRect.height,
+      left: clientRect.left,
+      pendingHeight: clientRect.height,
+    });
+  }
+
+  function calcHeightContent() {
+    const root = document.getElementById("container-menu");
+    console.log(root?.getBoundingClientRect());
+  }
+  useLayoutEffect(() => {
+    calcPositionMenu(ref);
+  }, []);
+
+  useEffect(() => {
+    calcHeightContent();
+  }, []);
+  /**
+   * check body is exited...
+   */
+  const rootBody = document.querySelector("body");
+  if (!rootBody) return <Fragment></Fragment>;
+  const { left, top, width, pendingHeight } = rect;
+  return createPortal(
+    <div id="portal-overlay">
+      <div className="container-menu">
+        <div
+          className={`popover-container ${isFocus ? "visible" : "hidden"}`}
+          id="container-menu"
+          onAnimationEnd={_onFinishAnimation}
+          style={{
+            maxHeight: isTyping ? 50 : 0,
+            overflow: "hidden",
+            width: width,
+            left: left,
+            top: top,
+          }}
+        >
+          {children}
+        </div>
+      </div>
+    </div>,
+    rootBody
   );
-}
+});
+
 export default InputBase;
