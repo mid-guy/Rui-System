@@ -4,14 +4,12 @@ import {
   forwardRef,
   Fragment,
   useCallback,
-  useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
 import { createPortal } from "react-dom";
 import useClickOutside from "../../core-hooks/useClickOutside";
-import { useFadeEffect } from "../../core-hooks/useFadeEffect";
 import debounce from "../utils/debounce";
 import "./InputBase.scss";
 const InputBase = ({ children }: any) => {
@@ -47,7 +45,9 @@ const InputBase = ({ children }: any) => {
     setInputValues(e.target.value);
     _debounce(e.target.value);
   }
+
   useClickOutside(menuRef, _onToggleField);
+
   return (
     <div
       className="form container-menu"
@@ -62,6 +62,7 @@ const InputBase = ({ children }: any) => {
         placeholder=" "
         value={inputValues}
         onChange={_onChangeField}
+        onBlur={_onRemoveMenu}
       />
       <label htmlFor="email" className="form__label">
         Email
@@ -85,13 +86,15 @@ const MenuPopover = forwardRef(function (
   props: any,
   ref: React.Ref<HTMLDivElement>
 ) {
-  const { isTyping, isFocus, _onRemoveMenu, children } = props;
+  const { isTyping, isFocus, LoadingComponent, children, _onRemoveMenu } =
+    props;
+
   const [rect, setRect] = useState({
     top: 0,
     width: 0,
     left: 0,
-    pendingHeight: 0,
   });
+
   function _onFinishAnimation() {
     if (!isFocus) return _onRemoveMenu();
   }
@@ -103,43 +106,36 @@ const MenuPopover = forwardRef(function (
       width: clientRect.width,
       top: clientRect.top + 5 + clientRect.height,
       left: clientRect.left,
-      pendingHeight: clientRect.height,
     });
   }
 
-  function calcHeightContent() {
-    const root = document.getElementById("container-menu");
-    console.log(root?.getBoundingClientRect());
-  }
   useLayoutEffect(() => {
     calcPositionMenu(ref);
-  }, []);
-
-  useEffect(() => {
-    calcHeightContent();
   }, []);
   /**
    * check body is exited...
    */
   const rootBody = document.querySelector("body");
   if (!rootBody) return <Fragment></Fragment>;
-  const { left, top, width, pendingHeight } = rect;
+  /**
+   * body is exited...
+   */
+  const { left, top, width } = rect;
   return createPortal(
     <div id="portal-overlay">
       <div className="container-menu">
         <div
           className={`popover-container ${isFocus ? "visible" : "hidden"}`}
-          id="container-menu"
+          id="popover-container"
           onAnimationEnd={_onFinishAnimation}
           style={{
-            maxHeight: isTyping ? 50 : 0,
-            overflow: "hidden",
+            maxHeight: 200,
             width: width,
             left: left,
             top: top,
           }}
         >
-          {children}
+          {isTyping ? LoadingComponent : children}
         </div>
       </div>
     </div>,

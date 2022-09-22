@@ -6,6 +6,9 @@ import ThemeProvider from "./core-theme/themeProvider";
 import Tooltips from "./components/Tooltips/Tooltips";
 import TooltipsCustom from "./components/TooltipsCustom/TooltipsCustom";
 import InputBase from "./components/InputBase/InputBase";
+import TextField from "./components/TextField/TextField";
+import { Button } from "@mui/material";
+// import ButtonBase from "./components/ButtonBase/ButtonBase";
 const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
 
 function App() {
@@ -13,16 +16,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          {/* <ButtonBase variant="container" animationframe="ripple">
+          <ButtonBase variant="container" animationframe="ripple">
             <label>Dasher</label>
-          </ButtonBase> */}
-          <InputBase>
-            <div>Menu item</div>
-            <div>Menu item</div>
-            <div>Menu item</div>
-            <div>Menu item</div>
-          </InputBase>
+          </ButtonBase>
         </ThemeProvider>
+        <Button variant="contained">123</Button>
       </header>
     </div>
   );

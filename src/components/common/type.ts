@@ -13,9 +13,9 @@ export type OverrideProps<
   M extends OverridableTypeMap,
   C extends React.ElementType
 > = (
-  & BaseProps<M>
-  & DistributiveOmit<React.ComponentPropsWithRef<C>, keyof BaseProps<M>>
-);
+    & BaseProps<M>
+    & DistributiveOmit<React.ComponentPropsWithRef<C>, keyof BaseProps<M>>
+  );
 
 export type ClassNameMap<ClassKey extends string = string> = Record<ClassKey, string>;
 
@@ -29,17 +29,17 @@ export interface StyledComponentProps<ClassKey extends string = string> {
 /**
  * Props that are valid for material-ui components.
   */
-  // each component declares it's classes in a separate interface for proper JSDoc.
-  export interface CommonProps extends StyledComponentProps<never> {
-    className?: string;
-    style?: React.CSSProperties;
-  }
+// each component declares it's classes in a separate interface for proper JSDoc.
+export interface CommonProps extends StyledComponentProps<never> {
+  className?: string;
+  style?: React.CSSProperties;
+}
 
 // prettier-ignore
 export type DefaultComponentProps<M extends OverridableTypeMap> =
   & BaseProps<M>
   & DistributiveOmit<React.ComponentPropsWithRef<M['defaultComponent']>, keyof BaseProps<M>>;
-  
+
 // prettier-ignore
 export type BaseProps<M extends OverridableTypeMap> =
   & M['props']

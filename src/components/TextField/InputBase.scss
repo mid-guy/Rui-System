@@ -56,62 +56,9 @@ $radius: 4px;
   }
 }
 
-.container-menu {
-  position: relative;
-  .popover-container {
-    position: absolute;
-    transition: height 1000ms ease;
-    width: 100%;
-    top: calc(100% + 5px);
-    animation-duration: 250ms;
-    background-color: black;
-    color: white;
-    animation-fill-mode: forwards;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
-    &.visible {
-      animation-name: visible-popover;
-    }
-    &.hidden {
-      animation-name: hidden-popover;
-    }
-  }
-}
-
 .form__input:focus ~ .form__label,
 .form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label {
   top: -0.5rem;
   font-size: 0.8rem;
   left: 0.8rem;
-}
-
-@keyframes visible-popover {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes hidden-popover {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-#portal-overlay {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  background: transparent;
-  top: 0;
-  pointer-events: none;
 }
