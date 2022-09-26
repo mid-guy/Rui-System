@@ -15,7 +15,8 @@ const ButtonBase = forwardRef(function (
   ref: React.Ref<HTMLButtonElement>
 ) {
   const theme = useTheme();
-  const { onClick, isVisible, animationframe, className, fullWidth, ...rest } = props;
+  const { onClick, isVisible, animationframe, className, fullWidth, ...rest } =
+    props;
   const css = getButtonCss(theme, props);
   return (
     <button
@@ -111,12 +112,17 @@ export type BaseProps = {
    */
   dense?: any;
   /**
-   * The variant to use.
+   * The disable to disable button.
    * @default false
    */
   disabled?: boolean;
   /**
-   * The type to use.
+   * The disableElevation to disable box-shadow.
+   * @default false
+   */
+  disableElevation?: boolean;
+  /**
+   * The type to change type of button.
    * @default button
    */
   type?: keyof typeof types;

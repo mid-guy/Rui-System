@@ -17,10 +17,10 @@ function App() {
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <ButtonBase variant="container" animationframe="ripple">
-            <label>Dasher</label>
+            <label>THIS IS A BUTTON</label>
           </ButtonBase>
         </ThemeProvider>
-        <Button variant="contained">123</Button>
+        <Button variant="contained">This is a button</Button>
       </header>
     </div>
   );

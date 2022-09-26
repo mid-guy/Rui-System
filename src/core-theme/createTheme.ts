@@ -43,12 +43,6 @@ export const defaultTheme = {
             sizes: sizes,
             backgrounds: backgrounds
         },
-        label: {
-
-        },
-        input: {
-
-        }
     },
     palette: {
         primary: {
@@ -66,7 +60,68 @@ export const defaultTheme = {
             animationframe: animationframes
         }
     },
-    responsive: {},
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 600,
+            md: 900,
+            lg: 1200,
+            xl: 1536
+        }
+    },
+    typography: {
+        global: {
+            fontSize: 16
+        },
+        fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'
+        ].join(','),
+        h1: {
+
+        },
+        h2: {
+
+        },
+        h3: {
+
+        },
+        h4: {
+
+        },
+        h5: {
+
+        },
+        h6: {
+
+        },
+        subtitle1: {
+            fontSize: 12,
+        },
+        subtitle2: {
+            fontSize: 12,
+        },
+        body1: {
+            fontWeight: 500,
+        },
+        body2: {
+            fontWeight: 500,
+        }
+    },
+    transitions: {
+        duration: {
+            shortest: 150,
+            shorter: 200,
+            short: 250,
+            // most basic recommended timing
+            standard: 300,
+            // this is to be used in complex animations
+            complex: 375,
+            // recommended when something is entering screen
+            enteringScreen: 225,
+            // recommended when something is leaving screen
+            leavingScreen: 195,
+        }
+    },
+    spacing: {},
     zIndex: {}
 }
 
