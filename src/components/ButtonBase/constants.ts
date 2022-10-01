@@ -13,6 +13,22 @@ export const sizes = {
   `,
 };
 
+export const width = {
+
+}
+
+export const height = {
+  sm: `
+    height: 36px;
+  `,
+  md: `
+    height: 38px;
+  `,
+  lg: `
+    height: 40px;
+  `,
+}
+
 export const animationframes = {
   ripple: `
     span {
@@ -40,10 +56,8 @@ export const animationframes = {
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
   `,
   scale: `
-    label {
-      transition-duration: 150ms;
-    }
-    &:active > label {
+    transition-duration: 150ms;
+    &:active {
       transform: scale(0.9);
     }
   `

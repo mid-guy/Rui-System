@@ -1,4 +1,4 @@
-export function generateClassNames(element: 'button' | 'input', arg: string[]) {
+export function generateClassNames(element: 'button', arg: string[]) {
     let classNames
     return classNames
 

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import getButtonCss from "./getButtonCss";
+import getButtonCss, { generateButtonClassNames } from "./getButtonCss";
 import React, { CSSProperties, forwardRef, ReactNode } from "react";
 import {
   animationframes,
@@ -15,15 +15,17 @@ const ButtonBase = forwardRef(function (
   ref: React.Ref<HTMLButtonElement>
 ) {
   const theme = useTheme();
-  const { onClick, isVisible, animationframe, className, fullWidth, ...rest } =
+  const { onClick, isVisible, animationframe, variant, fullWidth, disabled, background, ...rest } =
     props;
+  const classes = generateButtonClassNames({ root: true, fullWidth, disabled })
   const css = getButtonCss(theme, props);
   return (
     <button
       {...rest}
       css={css}
       ref={ref}
-      className={className}
+      disabled={disabled}
+      className={classes}
       onClick={(e) => _onClick(e, animationframe, onClick)}
     />
   );
