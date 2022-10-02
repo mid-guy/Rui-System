@@ -1,4 +1,5 @@
 import { sizes, variants, backgrounds, animationframes } from "../components/ButtonBase/constants"
+import { blue, green, pink, red } from "../core-colors/colors"
 function createTheme(options?: any) {
 
     if (!options) return defaultTheme
@@ -46,13 +47,32 @@ export const defaultTheme = {
     },
     palette: {
         primary: {
-            main: "red"
+            main: blue[700],
+            contrastText: "#FFF"
         },
         secondary: {
-            main: "red 1"
+            main: pink["A400"],
+            contrastText: "#FFF"
         },
-        ternary: {
-            main: "red 2"
+        success: {
+            main: green[800],
+            contrastText: "#FFF"
+        },
+        error: {
+            main: red[700],
+            contrastText: "#FFF"
+        },
+        text: {
+            primary: "rgba(0, 0, 0, 0.87)",
+            secondary: "rgba(0, 0, 0, 0.6)",
+            disabled: "rgba(0, 0, 0, 0.38)",
+        },
+        divider: "rgba(0, 0, 0, 0.12)",
+        action: {
+            disabledBackground: "rgba(0,0,0,0.12)" 
+        },
+        shape: {
+            borderRadius: 4
         }
     },
     animationframe: {

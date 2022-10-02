@@ -14,7 +14,8 @@ const classNames: { [key: string]: string} = {
   root: ".cds-button-root",
   fullWidth: ".cds-button-fullWidth",
   disabled: ".cds-button-disabled",
-  visible: ".cds-button-visible" 
+  visible: ".cds-button-visible", 
+
 }
 
 const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
@@ -22,15 +23,21 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
     border: none;
     box-sizing: border-box;
     cursor: pointer;
+    min-width: 64px;
     border-radius: 0.375rem;
     padding: 0.5rem 1rem;
-    height: 36px;
-    font-size: 14px;
     > * {
       pointer-events: none;
     }
-    font-family: ${theme.typography.fontFamily};
+    ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
+  
+    ${theme.animationframe.button.animationframe[props.animationframe as NonNullable<keyof typeof theme.animationframe.button.animationframe>]};
+  
+    ${theme.components.button.backgrounds[props.background as NonNullable<keyof typeof theme.components.button.backgrounds>]};
+    
+    ${theme.components.button.sizes[props.size as NonNullable<keyof typeof theme.components.button.sizes>]};
   }
+  font-family: inherit;
   &${classNames.fullWidth} {
     width: 100%;
   }
@@ -41,18 +48,14 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
     background-color: rgba(0, 0, 0, 0.12);
     ${props.variant === "text" && "border: none"}
   } 
-
-  ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
-
-  ${theme.animationframe.button.animationframe[props.animationframe as NonNullable<keyof typeof theme.animationframe.button.animationframe>]};
-
-  ${theme.components.button.backgrounds[props.background as NonNullable<keyof typeof theme.components.button.backgrounds>]};
   
-  ${theme.components.button.sizes[props.size as NonNullable<keyof typeof theme.components.button.sizes>]};
-  
-  ${props.isVisible ? 'display: none' : 'display: block'}
+  &${classNames.visible} {
+    display: ${props.isVisible ? "block" : "none"};
+  }
+
 `;
 
 
+// font-family: ${theme.typography.fontFamily};
 
 export default getButtonCss

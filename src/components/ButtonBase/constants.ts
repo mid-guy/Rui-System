@@ -1,33 +1,22 @@
-
 export const types = { button: "button", submit: "submit" };
 
 export const sizes = {
   sm: `
-    min-width: 64px;
+    padding: 6px 12px;
+    font-size: 12px;
+    height: 30px;
   `,
   md: `
-    min-width: 138px;
-  `,
-  lg: `
-    min-width: 238px;
-  `,
-};
-
-export const width = {
-
-}
-
-export const height = {
-  sm: `
+    padding: 8px 16px;
+    font-size: 14px;
     height: 36px;
   `,
-  md: `
-    height: 38px;
-  `,
   lg: `
-    height: 40px;
+    padding: 8px 24px;
+    font-size: 16px;
+    height: 42px;
   `,
-}
+};
 
 export const animationframes = {
   ripple: `
@@ -58,7 +47,7 @@ export const animationframes = {
   scale: `
     transition-duration: 150ms;
     &:active {
-      transform: scale(0.9);
+      transform: scale(0.95);
     }
   `
 }
