@@ -15,17 +15,17 @@ const ButtonBase = forwardRef(function (
   ref: React.Ref<HTMLButtonElement>
 ) {
   const theme = useTheme();
-  const { onClick, isVisible, animationframe, variant, fullWidth, disabled, background, ...rest } =
+  const { onClick, isVisible, cssOuter, animationframe, variant, fullWidth, disabled, background, ...rest } =
     props;
   const classes = generateButtonClassNames({ root: true, fullWidth, disabled })
   const css = getButtonCss(theme, props);
   return (
     <button
       {...rest}
-      css={css}
+      css={[ css, cssOuter]}
       ref={ref}
       disabled={disabled}
-      className={classes}
+      className={[classes, "cds-button-sm"].join(" ")}
       onClick={(e) => _onClick(e, animationframe, onClick)}
     />
   );
@@ -161,6 +161,7 @@ export type BaseProps = {
    * @default {}
    */
   children: ReactNode;
+  cssOuter?: any;
 };
 
 export interface ButtonTypeMap<D extends React.ElementType = "button"> {

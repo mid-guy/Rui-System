@@ -4,15 +4,15 @@ function createTheme(options?: any) {
 
     if (!options) return defaultTheme
 
-    const outerTheme = _mapValueKeys(options)
+    const outerTheme = mapValueKeys(options)
     const _outerTheme = _deepMerge(outerTheme, defaultTheme)
     return _outerTheme
 }
 
-function _mapValueKeys(target: any) {
+function mapValueKeys(target: any) {
     Object.keys(target).forEach((key: string) => {
         if (typeof target[key] === "object" && !Array.isArray(target[key]) && target[key] !== null) {
-            Object.assign(target[key], _mapValueKeys(target[key]))
+            Object.assign(target[key], mapValueKeys(target[key]))
         }
         getStylesOverride(target, key)
     })
@@ -87,7 +87,13 @@ export const defaultTheme = {
             md: 900,
             lg: 1200,
             xl: 1536
-        }
+        },
+        down: function(breakpoint: "xs" | "sm" | "md" | "lg" | "xl") {
+            return `@media (min-width: ${this.values[breakpoint]}px)`
+        },
+        up: function(breakpoint: "xs" | "sm" | "md" | "lg" | "xl") {
+            return `@media (max-width: ${this.values[breakpoint]}px)`
+        },
     },
     typography: {
         global: {
@@ -141,7 +147,11 @@ export const defaultTheme = {
             leavingScreen: 195,
         }
     },
-    spacing: {},
+    spacing: {
+        1: 16,
+        2: 18,
+        3: 20
+    },
     zIndex: {}
 }
 

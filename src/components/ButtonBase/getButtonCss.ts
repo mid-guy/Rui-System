@@ -15,7 +15,6 @@ const classNames: { [key: string]: string} = {
   fullWidth: ".cds-button-fullWidth",
   disabled: ".cds-button-disabled",
   visible: ".cds-button-visible", 
-
 }
 
 const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
@@ -25,16 +24,18 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
     cursor: pointer;
     min-width: 64px;
     border-radius: 0.375rem;
-    padding: 0.5rem 1rem;
     > * {
       pointer-events: none;
     }
-    ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
-  
-    ${theme.animationframe.button.animationframe[props.animationframe as NonNullable<keyof typeof theme.animationframe.button.animationframe>]};
-  
-    ${theme.components.button.backgrounds[props.background as NonNullable<keyof typeof theme.components.button.backgrounds>]};
-    
+  }
+  .cds-button-contained: {
+  }
+  .cds-button-primary {
+  }
+  ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
+  ${theme.components.button.backgrounds[props.background as NonNullable<keyof typeof theme.components.button.backgrounds>]};
+  ${theme.animationframe.button.animationframe[props.animationframe as NonNullable<keyof typeof theme.animationframe.button.animationframe>]};
+  .cds-button-sm {
     ${theme.components.button.sizes[props.size as NonNullable<keyof typeof theme.components.button.sizes>]};
   }
   font-family: inherit;
@@ -52,10 +53,6 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
   &${classNames.visible} {
     display: ${props.isVisible ? "block" : "none"};
   }
-
 `;
-
-
-// font-family: ${theme.typography.fontFamily};
 
 export default getButtonCss
