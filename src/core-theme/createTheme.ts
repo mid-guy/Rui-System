@@ -69,7 +69,7 @@ export const defaultTheme = {
         },
         divider: "rgba(0, 0, 0, 0.12)",
         action: {
-            disabledBackground: "rgba(0,0,0,0.12)" 
+            disabledBackground: "rgba(0,0,0,0.12)"
         },
         shape: {
             borderRadius: 4
@@ -88,10 +88,13 @@ export const defaultTheme = {
             lg: 1200,
             xl: 1536
         },
-        down: function(breakpoint: "xs" | "sm" | "md" | "lg" | "xl") {
+        down: function (breakpoint: "xs" | "sm" | "md" | "lg" | "xl") {
             return `@media (min-width: ${this.values[breakpoint]}px)`
         },
-        up: function(breakpoint: "xs" | "sm" | "md" | "lg" | "xl") {
+        up: function (breakpoint: "xs" | "sm" | "md" | "lg" | "xl") {
+            return `@media (max-width: ${this.values[breakpoint]}px)`
+        },
+        between: function (breakpoint: "xs" | "sm" | "md" | "lg" | "xl") {
             return `@media (max-width: ${this.values[breakpoint]}px)`
         },
     },

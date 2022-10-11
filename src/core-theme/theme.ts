@@ -26,44 +26,14 @@ export default createTheme({
             sizes: [
                 {
                     props: { size: "xs" },
-                    style: "min-width: 40px;"
+                    style: "padding: 8px 16px; font-size: 14px; height: 36px;"
                 },
                 {
                     props: { size: "xxl" },
-                    style: "min-width: 416px;",
+                    style: "padding: 8px 16px; font-size: 18px; height: 45px;"
                 },
             ]
         },
-        // label: {
-        //     status: [
-        //         {
-        //             props: { size: "success" },
-        //             style: `
-        //                 background-color: green;
-        //             `,
-        //         },
-        //         {
-        //             props: { size: "error" },
-        //             style: `
-        //             background-color: red;
-        //             `,
-        //         },
-        //     ],
-        //     sizes: [
-        //         {
-        //             props: { size: "xs" },
-        //             style: `
-        //                 min-width: 40px;
-        //             `,
-        //         },
-        //         {
-        //             props: { size: "xxl" },
-        //             style: `
-        //                 min-width: 416px;
-        //             `,
-        //         },
-        //     ]
-        // }
     }
 });
 
@@ -71,6 +41,10 @@ declare module "../components/ButtonBase/ButtonBase" {
     interface ButtonPropsVariantOverrides {
         dashed: true;
         dasher: true;
+    }
+    interface ButtonPropsSizeOverrides {
+        xs: true;
+        xxl: true
     }
 }
 

@@ -13,17 +13,22 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          {/* <ButtonBase variant="container" animationframe="ripple" size="lg">
+          <ButtonBase variant="container" animationframe="ripple" size="xxl">
             This is Button Ripple
-          </ButtonBase> */}
-          <LocalButton>
+          </ButtonBase>
+          <ButtonBase
+            variant="container"
+            animationframe="scale"
+            size="lg"
+            style={{ marginTop: 10 }}
+          >
+            This is Button Scale
+          </ButtonBase>
+          <LocalButton style={{ marginTop: 10 }}>
             This is Local Button
           </LocalButton>
-          {/* <ButtonBase variant="container" animationframe="scale" size="lg" style={{ marginTop: 10 }}>
-            This is Button Scale
-          </ButtonBase> */}
         </ThemeProvider>
-        {/* <Button variant="contained" disabled>THIS IS A BUTTON</Button> */}
+        {/* <Button variant="contained">THIS IS A BUTTON</Button> */}
       </header>
     </div>
   );

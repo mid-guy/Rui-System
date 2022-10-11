@@ -1,13 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import getButtonCss, { generateButtonClassNames } from "./getButtonCss";
 import React, { CSSProperties, forwardRef, ReactNode } from "react";
-import {
-  animationframes,
-  backgrounds,
-  sizes,
-  types,
-  variants,
-} from "./constants";
+import { animationframes, backgrounds, types, variants } from "./constants";
 import { useTheme } from "../../core-theme/themeProvider";
 
 const ButtonBase = forwardRef(function (
@@ -15,17 +9,34 @@ const ButtonBase = forwardRef(function (
   ref: React.Ref<HTMLButtonElement>
 ) {
   const theme = useTheme();
-  const { onClick, isVisible, cssOuter, animationframe, variant, fullWidth, disabled, background, ...rest } =
-    props;
-  const classes = generateButtonClassNames({ root: true, fullWidth, disabled })
+  const {
+    onClick,
+    isVisible,
+    animationframe,
+    variant,
+    size,
+    fullWidth,
+    disabled,
+    background,
+    cssOuter,
+    className,
+    ...rest
+  } = props;
+  const classes = generateButtonClassNames({
+    root: true,
+    fullWidth,
+    disabled,
+    size: size,
+    background: background,
+  });
   const css = getButtonCss(theme, props);
   return (
     <button
       {...rest}
-      css={[ css, cssOuter]}
+      css={[css, cssOuter]}
       ref={ref}
       disabled={disabled}
-      className={[classes, "cds-button-sm"].join(" ")}
+      className={[classes, className].join(" ")}
       onClick={(e) => _onClick(e, animationframe, onClick)}
     />
   );
@@ -71,6 +82,16 @@ export interface ButtonPropsSizeOverrides {}
 export interface ButtonPropsAnimationFrame {}
 export type OverridableStringUnion<A, B> = A | keyof B;
 
+export type ButtonPropsSize = OverridableStringUnion<
+  "sm" | "md" | "lg",
+  ButtonPropsSizeOverrides
+>;
+
+export type ButtonPropsBackground = OverridableStringUnion<
+  keyof typeof backgrounds,
+  ButtonPropsBackgroundOverrides
+>;
+
 export type BaseProps = {
   /**
    * The variant to use.
@@ -84,15 +105,12 @@ export type BaseProps = {
    * The size to use.
    * @default primary
    */
-  background?: OverridableStringUnion<
-    keyof typeof backgrounds,
-    ButtonPropsBackgroundOverrides
-  >;
+  background?: ButtonPropsBackground;
   /**
    * The size to use.
    * @default sm
    */
-  size?: keyof typeof sizes;
+  size?: ButtonPropsSize;
   /**
    * the fullWidth to use
    * @default false
