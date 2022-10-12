@@ -16,14 +16,14 @@ function App() {
           <ButtonBase variant="container" animationframe="ripple" size="xxl">
             This is Button Ripple
           </ButtonBase>
-          <ButtonBase
-            variant="container"
+          {/* <ButtonBase
+            variant={"container"}
             animationframe="scale"
             size="lg"
             style={{ marginTop: 10 }}
           >
             This is Button Scale
-          </ButtonBase>
+          </ButtonBase> */}
           <LocalButton style={{ marginTop: 10 }}>
             This is Local Button
           </LocalButton>

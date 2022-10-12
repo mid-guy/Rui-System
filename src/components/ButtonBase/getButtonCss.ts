@@ -1,13 +1,16 @@
 import { css, SerializedStyles } from '@emotion/react';
-import { BaseProps, ButtonPropsBackground, ButtonPropsSize } from './ButtonBase';
+import { BaseProps, ButtonPropsAnimationFrame, ButtonPropsBackground, ButtonPropsSize, ButtonPropsVariant } from './ButtonBase';
 
 
-export const generateButtonClassNames = (props: { root: boolean, fullWidth?: boolean, disabled?: boolean, size?: ButtonPropsSize, background?: ButtonPropsBackground }) => {
+export const generateButtonClassNames = (props: {
+  root: boolean, fullWidth?: boolean, disabled?: boolean,
+  variant?: ButtonPropsVariant, size?: ButtonPropsSize, background?: ButtonPropsBackground, animationframe?: ButtonPropsAnimationFrame
+}) => {
   const _props: { [key: string]: boolean | string | ButtonPropsSize } = props
   return Object.keys(props).reduce((prevClasses: any, key: any) => {
     if (_props[key]) {
-      if (key === "size" || key === "background") {
-        return [...prevClasses, classNames[key](_props[key] as string)]
+      if (key === "size" || key === "background" || key === "variant" || key === "animationframe") {
+        return [...prevClasses, classNames[key](_props[key])]
       }
       return [...prevClasses, classNames[key]]
     }
@@ -21,11 +24,17 @@ const classNames: { [key: string]: any } = {
   fullWidth: "cds-button-fullWidth",
   disabled: "cds-button-disabled",
   visible: "cds-button-visible",
-  size: (value: ButtonPropsSize): string => {
-    return `cds-button-size${capitalizeFirstLetter(value)}`
+  variant: (value: ButtonPropsVariant): string => {
+    return `cds-button-${capitalizeFirstLetter(value)}`
   },
   background: (value: ButtonPropsBackground): string => {
     return `cds-button-bg${capitalizeFirstLetter(value)}`
+  },
+  size: (value: ButtonPropsSize): string => {
+    return `cds-button-size${capitalizeFirstLetter(value)}`
+  },
+  animationframe: (value: ButtonPropsAnimationFrame): string => {
+    return `cds-button-animation${capitalizeFirstLetter(value)}`
   },
 }
 
@@ -40,14 +49,18 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
       pointer-events: none;
     }
   }
-  &.${classNames.size(props.size)} {
-    ${theme.components.button.sizes[props.size as NonNullable<keyof typeof theme.components.button.sizes>]};
+  &.${classNames.variant(props.variant)} {
+    ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
   }
   &.${classNames.background(props.background)} {
     ${theme.components.button.backgrounds[props.background as NonNullable<keyof typeof theme.components.button.backgrounds>]};
   }
-  ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
-  ${theme.animationframe.button.animationframe[props.animationframe as NonNullable<keyof typeof theme.animationframe.button.animationframe>]};
+  &.${classNames.size(props.size)} {
+    ${theme.components.button.sizes[props.size as NonNullable<keyof typeof theme.components.button.sizes>]};
+  }
+  &.${classNames.animationframe(props.animationframe)} {  
+    ${theme.animationframe.button.animationframe[props.animationframe as NonNullable<keyof typeof theme.animationframe.button.animationframe>]};
+  }
   font-family: inherit;
   &.${classNames.fullWidth} {
     width: 100%;

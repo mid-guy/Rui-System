@@ -10,8 +10,12 @@ const useStyles = makeStyles(
 );
 export default function LocalButton(props: any) {
   const classes = useStyles();
-  console.log(classes);
   return (
-    <ButtonBase {...props} cssOuter={classes} size="xxl" variant="contained" />
+    <ButtonBase
+      size="xxl"
+      variant={"container"}
+      cssOuter={classes}
+      {...props}
+    />
   );
 }

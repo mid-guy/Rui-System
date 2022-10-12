@@ -1,8 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import getButtonCss, { generateButtonClassNames } from "./getButtonCss";
-import React, { CSSProperties, forwardRef, ReactNode } from "react";
-import { animationframes, backgrounds, types, variants } from "./constants";
+import React, {
+  CSSProperties,
+  forwardRef,
+  ReactNode,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import { types } from "./constants";
 import { useTheme } from "../../core-theme/themeProvider";
+import { css } from "@emotion/react";
 
 const ButtonBase = forwardRef(function (
   props: BaseProps,
@@ -20,24 +28,79 @@ const ButtonBase = forwardRef(function (
     background,
     cssOuter,
     className,
+    children,
+    startIcon,
+    endIcon,
     ...rest
   } = props;
   const classes = generateButtonClassNames({
     root: true,
     fullWidth,
     disabled,
+    variant: variant,
     size: size,
     background: background,
+    animationframe: animationframe,
   });
   const css = getButtonCss(theme, props);
+  const TouchRippleRef = useRef<CountdownHandle>(null);
   return (
     <button
       {...rest}
-      css={[css, cssOuter]}
       ref={ref}
+      css={[css, cssOuter]}
       disabled={disabled}
-      className={[classes, className].join(" ")}
-      onClick={(e) => _onClick(e, animationframe, onClick)}
+      className={[classes, className].join("")}
+      onClick={() => TouchRippleRef.current?._onTouchRipple()}
+    >
+      {startIcon && startIcon}
+      {children}
+      <TouchRipple ref={TouchRippleRef} />
+      {endIcon && endIcon}
+    </button>
+  );
+});
+
+const cssRipple = css`
+  &.cds-ripple-root {
+    position: absolute;
+    background: white;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    animation: ripples 650ms linear;
+    @keyframes ripples {
+      0% {
+        width: 0px;
+        height: 0px;
+        opacity: 0.25;
+      }
+      100% {
+        width: 500px;
+        height: 500px;
+        opacity: 0;
+      }
+    }
+  }
+`;
+
+export type CountdownHandle = {
+  _onTouchRipple: () => void;
+};
+
+type Props = {};
+const TouchRipple = forwardRef<CountdownHandle, Props>((props, ref) => {
+  const [animationIterationCount, setAnimationIterationCount] =
+    useState<number>(0);
+  useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
+  function _onTouchRipple() {
+    console.log("clicked", animationIterationCount);
+    setAnimationIterationCount((prev: number) => prev + 1);
+  }
+  return (
+    <span
+      css={cssRipple}
+      className="cds-ripple-root"
+      style={{ animationIterationCount: animationIterationCount }}
     />
   );
 });
@@ -52,35 +115,16 @@ ButtonBase.defaultProps = {
   type: "button",
 };
 
-function _onClick(
-  e: any,
-  animationframe: "ripple" | "scale" = "ripple",
-  onClick: any
-) {
-  if (animationframe === "ripple") {
-    generateRippleButton(e);
-  }
-  onClick && onClick(e);
-}
-
-function generateRippleButton(e: any) {
-  const clientRect = e.nativeEvent;
-  const x = clientRect.offsetX;
-  const y = clientRect.offsetY;
-  const ripple = document.createElement("span");
-  e.target.appendChild(ripple);
-  ripple.onanimationend = () => {
-    ripple.remove();
-  };
-  ripple.style.left = `${x}px`;
-  ripple.style.top = `${y}px`;
-}
-
 export interface ButtonPropsVariantOverrides {}
 export interface ButtonPropsBackgroundOverrides {}
 export interface ButtonPropsSizeOverrides {}
-export interface ButtonPropsAnimationFrame {}
+export interface ButtonPropsAnimationFrameOverrides {}
 export type OverridableStringUnion<A, B> = A | keyof B;
+
+export type ButtonPropsVariant = OverridableStringUnion<
+  "container" | "outlined" | "text",
+  ButtonPropsVariantOverrides
+>;
 
 export type ButtonPropsSize = OverridableStringUnion<
   "sm" | "md" | "lg",
@@ -88,8 +132,13 @@ export type ButtonPropsSize = OverridableStringUnion<
 >;
 
 export type ButtonPropsBackground = OverridableStringUnion<
-  keyof typeof backgrounds,
+  "primary" | "secondary" | "ternary",
   ButtonPropsBackgroundOverrides
+>;
+
+export type ButtonPropsAnimationFrame = OverridableStringUnion<
+  "ripple" | "scale",
+  ButtonPropsAnimationFrameOverrides
 >;
 
 export type BaseProps = {
@@ -97,10 +146,7 @@ export type BaseProps = {
    * The variant to use.
    * @default container
    */
-  variant?: OverridableStringUnion<
-    keyof typeof variants,
-    ButtonPropsVariantOverrides
-  >;
+  variant?: ButtonPropsVariant;
   /**
    * The size to use.
    * @default primary
@@ -155,10 +201,7 @@ export type BaseProps = {
    * The animation perform to use when user touch on button.
    * @default ripple
    */
-  animationframe?: OverridableStringUnion<
-    keyof typeof animationframes,
-    ButtonPropsAnimationFrame
-  >;
+  animationframe?: ButtonPropsAnimationFrame;
   /**
    * The Style to use as html style.
    * @default {}
@@ -188,3 +231,27 @@ export interface ButtonTypeMap<D extends React.ElementType = "button"> {
 }
 
 export default ButtonBase;
+
+// function _onClick(
+//   e: any,
+//   animationframe: "ripple" | "scale" = "ripple",
+//   onClick: any
+// ) {
+//   if (animationframe === "ripple") {
+//     generateRippleButton(e);
+//   }
+//   onClick && onClick(e);
+// }
+
+// function generateRippleButton(e: any) {
+//   const clientRect = e.nativeEvent;
+//   const x = clientRect.offsetX;
+//   const y = clientRect.offsetY;
+//   const ripple = document.createElement("span");
+//   e.target.appendChild(ripple);
+//   ripple.onanimationend = () => {
+//     ripple.remove();
+//   };
+//   ripple.style.left = `${x}px`;
+//   ripple.style.top = `${y}px`;
+// }
