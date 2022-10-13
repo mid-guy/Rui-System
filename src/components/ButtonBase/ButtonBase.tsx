@@ -6,14 +6,17 @@ import React, {
   ReactNode,
   useImperativeHandle,
   useRef,
-  useState,
 } from "react";
 import { types } from "./constants";
 import { useTheme } from "../../core-theme/themeProvider";
-import { css } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
+
+type OverridableMapType<A, B> = MergeType<Omit<A, keyof B>, B>;
+
+type MergeType<A, B> = A & B;
 
 const ButtonBase = forwardRef(function (
-  props: BaseProps,
+  props: OverridableMapType<React.HTMLProps<HTMLButtonElement>, BaseProps>,
   ref: React.Ref<HTMLButtonElement>
 ) {
   const theme = useTheme();
@@ -43,7 +46,7 @@ const ButtonBase = forwardRef(function (
     animationframe: animationframe,
   });
   const css = getButtonCss(theme, props);
-  const TouchRippleRef = useRef<CountdownHandle>(null);
+  const TouchRippleRef = useRef<TouchRippleRefs>(null);
   return (
     <button
       {...rest}
@@ -83,27 +86,21 @@ const cssRipple = css`
   }
 `;
 
-export type CountdownHandle = {
+export type TouchRippleRefs = {
   _onTouchRipple: () => void;
 };
 
-type Props = {};
-const TouchRipple = forwardRef<CountdownHandle, Props>((props, ref) => {
-  const [animationIterationCount, setAnimationIterationCount] =
-    useState<number>(0);
-  useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
-  function _onTouchRipple() {
-    console.log("clicked", animationIterationCount);
-    setAnimationIterationCount((prev: number) => prev + 1);
+type TouchRippleProps = {};
+
+const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(
+  (props, ref) => {
+    useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
+    function _onTouchRipple() {
+      console.log("on-click");
+    }
+    return <span css={cssRipple} className="cds-ripple-root" />;
   }
-  return (
-    <span
-      css={cssRipple}
-      className="cds-ripple-root"
-      style={{ animationIterationCount: animationIterationCount }}
-    />
-  );
-});
+);
 
 ButtonBase.defaultProps = {
   variant: "container",
@@ -176,7 +173,7 @@ export type BaseProps = {
    * the dense to use
    * @default sm
    */
-  dense?: any;
+  dense?: "sm" | "md" | "lg";
   /**
    * The disable to disable button.
    * @default false
@@ -211,7 +208,7 @@ export type BaseProps = {
    * The Style to use as html style.
    * @default {}
    */
-  onClick?: any;
+  onClick?: React.MouseEvent<HTMLButtonElement>;
   /**
    * className to use style
    * @default {}
@@ -222,13 +219,8 @@ export type BaseProps = {
    * @default {}
    */
   children: ReactNode;
-  cssOuter?: any;
+  cssOuter?: SerializedStyles;
 };
-
-export interface ButtonTypeMap<D extends React.ElementType = "button"> {
-  props: BaseProps;
-  defaultComponent: D;
-}
 
 export default ButtonBase;
 

@@ -1,7 +1,5 @@
 import { css, SerializedStyles } from '@emotion/react';
 import { BaseProps, ButtonPropsAnimationFrame, ButtonPropsBackground, ButtonPropsSize, ButtonPropsVariant } from './ButtonBase';
-
-
 export const generateButtonClassNames = (props: {
   root: boolean, fullWidth?: boolean, disabled?: boolean,
   variant?: ButtonPropsVariant, size?: ButtonPropsSize, background?: ButtonPropsBackground, animationframe?: ButtonPropsAnimationFrame
@@ -18,7 +16,6 @@ export const generateButtonClassNames = (props: {
   }
     , []).join(" ")
 }
-
 const classNames: { [key: string]: any } = {
   root: "cds-button-root",
   fullWidth: "cds-button-fullWidth",
@@ -72,7 +69,6 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
     background-color: rgba(0, 0, 0, 0.12);
     ${props.variant === "text" && "border: none"}
   } 
-  
   &.${classNames.visible} {
     display: ${props.isVisible ? "block" : "none"};
   }
