@@ -4,15 +4,41 @@ import "@testing-library/jest-dom";
 
 import ButtonBase from "../ButtonBase";
 
-test("loads and displays greeting", () => {
+
+// normal render
+test("render button", () => {
   // ARRANGE
   render(<ButtonBase>This Test Button</ButtonBase>);
 
-  // // ACT
-  // await userEvent.click(screen.getByText("Load Greeting"));
-  // await screen.findByRole("heading");
+  const button = screen.getByRole("button", {name: "This Test Button"});
 
-  // // ASSERT
-  // expect(screen.getByRole("heading")).toHaveTextContent("hello there");
-  // expect(screen.getByRole("button")).toBeDisabled();
+  expect(button).toBeInTheDocument();
 });
+
+// render disable button
+test("render button disabled", () => {
+  // ARRANGE
+  render(<ButtonBase disabled={true}>This Test Button</ButtonBase>);
+
+  const button = screen.getByRole("button", {name: "This Test Button"});
+
+  expect(button).toBeInTheDocument();
+  expect(button).toHaveClass('cds-button-disabled');
+});
+
+// call callback function when click
+test("test beheavior when click", () => {
+  const callback = jest.fn((e: any) => {});
+
+  // ARRANGE
+  render(<ButtonBase onClick={(e) => callback(e)}>This Test Button</ButtonBase>);
+
+  const button = screen.getByRole("button", {name: "This Test Button"});
+
+  userEvent.click(button);
+
+  expect(callback).toHaveBeenCalled();
+
+  expect(button).toBeInTheDocument();
+});
+

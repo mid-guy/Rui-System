@@ -54,7 +54,7 @@ const ButtonBase = forwardRef(function (
       css={[css, cssOuter]}
       disabled={disabled}
       className={[classes, className].join("")}
-      onClick={() => TouchRippleRef.current?._onTouchRipple()}
+      onClick={onClick}
     >
       {startIcon && startIcon}
       {children}
@@ -208,7 +208,7 @@ export type BaseProps = {
    * The Style to use as html style.
    * @default {}
    */
-  onClick?: React.MouseEvent<HTMLButtonElement>;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   /**
    * className to use style
    * @default {}

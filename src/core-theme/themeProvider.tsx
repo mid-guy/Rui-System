@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createContext, useContext, useMemo } from "react";
 import {
   ButtonPropsAnimationFrame,
@@ -15,7 +16,7 @@ const ThemeProvider = ({
   theme,
 }: {
   children: any;
-  theme: ThemeProps;
+  theme: any;
 }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const _theme = useMemo(() => theme, []);
