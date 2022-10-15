@@ -1,4 +1,4 @@
-import { sizes, variants, backgrounds, animationframes } from "../components/ButtonBase/constants"
+import { sizes, variants, backgrounds, colors, outlinedTheme, animationframes } from "../components/ButtonBase/constants"
 import { blue, green, pink, red } from "../core-colors/colors"
 function createTheme(options?: any) {
     if (!options) return defaultTheme
@@ -40,7 +40,9 @@ export const defaultTheme = {
         button: {
             variants: variants,
             sizes: sizes,
-            backgrounds: backgrounds
+            colors: colors,
+            backgrounds: backgrounds,
+            outlinedTheme: outlinedTheme
         },
     },
     palette: {

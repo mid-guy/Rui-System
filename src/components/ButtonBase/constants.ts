@@ -1,4 +1,58 @@
+import { lightBlue, orange } from './../../core-colors/colors';
+import { blue, green, pink, red } from '../../core-colors/colors';
 export const types = { button: "button", submit: "submit" };
+
+
+export const palette = {
+  primary: {
+      main: blue[700],
+      contrastText: "#FFF"
+  },
+  secondary: {
+      main: pink["A400"],
+      contrastText: "#FFF"
+  },
+  ternary: {
+      main: orange["A400"],
+      contrastText: "#FFF"
+  },
+  success: {
+      main: green[800],
+      contrastText: "#FFF"
+  },
+  error: {
+      main: red[700],
+      contrastText: "#FFF"
+  },
+  text: {
+      primary: "rgba(0, 0, 0, 0.87)",
+      secondary: "rgba(0, 0, 0, 0.6)",
+      disabled: "rgba(0, 0, 0, 0.38)",
+  },
+  divider: "rgba(0, 0, 0, 0.12)",
+  action: {
+      disabledBackground: "rgba(0,0,0,0.12)"
+  },
+  shape: {
+      borderRadius: 4
+  }
+}
+
+export const transitions = {
+  duration: {
+      shortest: 150,
+      shorter: 200,
+      short: 250,
+      // most basic recommended timing
+      standard: 300,
+      // this is to be used in complex animations
+      complex: 375,
+      // recommended when something is entering screen
+      enteringScreen: 225,
+      // recommended when something is leaving screen
+      leavingScreen: 195,
+  }
+}
 
 export const sizes = {
   sm: `
@@ -22,7 +76,6 @@ export const animationframes = {
   ripple: `
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
   `,
   scale: `
     transition-duration: 150ms;
@@ -34,26 +87,59 @@ export const animationframes = {
 
 export const variants = {
   container: `
-    color: #fff;
+    color: ${palette.primary.contrastText};
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
   `,
   outlined: `
-    color: rgb(25, 118, 210);
-    border: 1px solid rgba(25, 118, 210, 0.5);
-    background: none;
+    background: inherit;
   `,
   text: `
-    background: none;
+    background: inherit;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
   `,
 };
 
-export const backgrounds = {
+export const colors = {
   primary: `
-    background-color: rgb(25, 118, 210);
+    color: ${palette.primary.main};
   `,
   secondary: `
-    background-color: rgb(156, 39, 176);
+    color: ${palette.secondary.main};
   `,
   ternary: `
-    background-color: rgb(211, 47, 47);
+    color: ${palette.ternary.main};
+  `,
+}
+
+// &:hover {
+//   //  background-color: red;
+//   }
+export const backgrounds = {
+  primary: `
+    background-color: ${palette.primary.main};
+  `,
+  secondary: `
+    background-color: ${palette.secondary.main};
+  `,
+  ternary: `
+    background-color: ${palette.ternary.main};
   `,
 };
+
+export const outlinedTheme = {
+  primary: `
+    border: 1px solid ${blue[300]};
+    color: ${blue[700]};  
+  `,
+  secondary: `
+    border: 1px solid ${palette.secondary.main};
+    color: ${palette.secondary.main};
+  `,
+  ternary: `
+    border: 1px solid ${palette.secondary.main};
+    color: ${palette.ternary.main};
+  `,
+
+}

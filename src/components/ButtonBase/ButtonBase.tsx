@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { types } from "./constants";
 import { useTheme } from "../../core-theme/themeProvider";
-import { css, SerializedStyles } from "@emotion/react";
+import { SerializedStyles } from "@emotion/react";
 
 type OverridableMapType<A, B> = MergeType<Omit<A, keyof B>, B>;
 
@@ -26,9 +26,11 @@ const ButtonBase = forwardRef(function (
     animationframe,
     variant,
     size,
+    color,
+    background,
+    outlinedTheme,
     fullWidth,
     disabled,
-    background,
     cssOuter,
     className,
     children,
@@ -36,58 +38,50 @@ const ButtonBase = forwardRef(function (
     endIcon,
     ...rest
   } = props;
-  const classes = generateButtonClassNames({
+  const buttonClasses = generateButtonClassNames({
     root: true,
-    fullWidth,
-    disabled,
     variant: variant,
     size: size,
-    background: background,
+    ...(variant === "text" && {
+      color: color
+    }),
+    ...(variant === "outlined" && {
+      outlinedTheme: outlinedTheme
+    }),
+    ...(variant === "container" && {
+      background: background }),
     animationframe: animationframe,
+    fullWidth,
+    disabled,
   });
   const css = getButtonCss(theme, props);
   const TouchRippleRef = useRef<TouchRippleRefs>(null);
+  const withTouchRipple = (callback: any) => {
+    return (e: React.MouseEvent<HTMLButtonElement>) => { 
+      TouchRippleRef.current?._onTouchRipple(e)
+      callback && callback(e)
+    }
+  }
+  console.log(css);
   return (
     <button
       {...rest}
       ref={ref}
       css={[css, cssOuter]}
       disabled={disabled}
-      className={[classes, className].join("")}
-      onClick={onClick}
+      className={[buttonClasses, className].join("")}
+      onClick={withTouchRipple(onClick)}
     >
       {startIcon && startIcon}
       {children}
-      <TouchRipple ref={TouchRippleRef} />
       {endIcon && endIcon}
+      <TouchRipple ref={TouchRippleRef} />
     </button>
   );
 });
 
-const cssRipple = css`
-  &.cds-ripple-root {
-    position: absolute;
-    background: white;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    animation: ripples 650ms linear;
-    @keyframes ripples {
-      0% {
-        width: 0px;
-        height: 0px;
-        opacity: 0.25;
-      }
-      100% {
-        width: 500px;
-        height: 500px;
-        opacity: 0;
-      }
-    }
-  }
-`;
-
 export type TouchRippleRefs = {
-  _onTouchRipple: () => void;
+  _onTouchRipple: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 type TouchRippleProps = {};
@@ -95,10 +89,11 @@ type TouchRippleProps = {};
 const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(
   (props, ref) => {
     useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
-    function _onTouchRipple() {
+    function _onTouchRipple(e: React.MouseEvent<HTMLButtonElement>) {
       console.log("on-click");
+      generateRippleButton(e)
     }
-    return <span css={cssRipple} className="cds-ripple-root" />;
+    return <span className="cds-ripple-root" />;
   }
 );
 
@@ -107,14 +102,18 @@ ButtonBase.defaultProps = {
   animationframe: "ripple",
   size: "sm",
   fullWidth: false,
+  color: "primary",
   background: "primary",
+  outlinedTheme: "primary",
   isVisible: false,
   type: "button",
 };
 
 export interface ButtonPropsVariantOverrides {}
-export interface ButtonPropsBackgroundOverrides {}
 export interface ButtonPropsSizeOverrides {}
+export interface ButtonPropsTextColorOverrides {}
+export interface ButtonPropsBackgroundOverrides {}
+export interface ButtonPropsOutlinedThemeOverrides {}
 export interface ButtonPropsAnimationFrameOverrides {}
 export type OverridableStringUnion<A, B> = A | keyof B;
 
@@ -128,9 +127,19 @@ export type ButtonPropsSize = OverridableStringUnion<
   ButtonPropsSizeOverrides
 >;
 
+export type ButtonPropsTextColor = OverridableStringUnion<
+  "primary" | "secondary" | "ternary",
+  ButtonPropsTextColorOverrides
+>;
+
 export type ButtonPropsBackground = OverridableStringUnion<
   "primary" | "secondary" | "ternary",
   ButtonPropsBackgroundOverrides
+>;
+
+export type ButtonPropsOutlinedTheme = OverridableStringUnion<
+  "primary" | "secondary" | "ternary",
+  ButtonPropsOutlinedThemeOverrides
 >;
 
 export type ButtonPropsAnimationFrame = OverridableStringUnion<
@@ -148,15 +157,25 @@ export type BaseProps = {
    * The size to use.
    * @default primary
    */
+  size?: ButtonPropsSize;
+  /**
+   * the color to use for variant="text"
+   * @default primary
+   */
+  color?: ButtonPropsTextColor; 
+  /**
+   * the background to use for variant="container"
+   * @default false
+   */
   background?: ButtonPropsBackground;
   /**
    * The size to use.
    * @default sm
    */
-  size?: ButtonPropsSize;
+  outlinedTheme?: ButtonPropsOutlinedTheme,
   /**
-   * the fullWidth to use
-   * @default false
+   * The size to use.
+   * @default sm
    */
   fullWidth?: boolean;
   /**
@@ -235,15 +254,18 @@ export default ButtonBase;
 //   onClick && onClick(e);
 // }
 
-// function generateRippleButton(e: any) {
-//   const clientRect = e.nativeEvent;
-//   const x = clientRect.offsetX;
-//   const y = clientRect.offsetY;
-//   const ripple = document.createElement("span");
-//   e.target.appendChild(ripple);
-//   ripple.onanimationend = () => {
-//     ripple.remove();
-//   };
-//   ripple.style.left = `${x}px`;
-//   ripple.style.top = `${y}px`;
-// }
+function generateRippleButton(e: any) {
+  const clientRect = e.nativeEvent;
+  const x = clientRect.offsetX;
+  const y = clientRect.offsetY;
+  const ripple = document.createElement("span");
+  ripple.classList.add("cds-animation-ripple");
+  const childNodes = e.target.childNodes
+  const touchRippleComponent = childNodes[childNodes.length - 1]
+  touchRippleComponent.appendChild(ripple);
+  ripple.onanimationend = () => {
+    ripple.remove();
+  };
+  ripple.style.left = `${x}px`;
+  ripple.style.top = `${y}px`;
+}
