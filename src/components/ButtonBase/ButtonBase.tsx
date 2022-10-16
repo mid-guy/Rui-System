@@ -43,13 +43,14 @@ const ButtonBase = forwardRef(function (
     variant: variant,
     size: size,
     ...(variant === "text" && {
-      color: color
+      color: color,
     }),
     ...(variant === "outlined" && {
-      outlinedTheme: outlinedTheme
+      outlinedTheme: outlinedTheme,
     }),
     ...(variant === "container" && {
-      background: background }),
+      background: background,
+    }),
     animationframe: animationframe,
     fullWidth,
     disabled,
@@ -57,12 +58,11 @@ const ButtonBase = forwardRef(function (
   const css = getButtonCss(theme, props);
   const TouchRippleRef = useRef<TouchRippleRefs>(null);
   const withTouchRipple = (callback: any) => {
-    return (e: React.MouseEvent<HTMLButtonElement>) => { 
-      TouchRippleRef.current?._onTouchRipple(e)
-      callback && callback(e)
-    }
-  }
-  console.log(css);
+    return (e: React.MouseEvent<HTMLButtonElement>) => {
+      TouchRippleRef.current?._onTouchRipple(e);
+      callback && callback(e);
+    };
+  };
   return (
     <button
       {...rest}
@@ -91,7 +91,7 @@ const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(
     useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
     function _onTouchRipple(e: React.MouseEvent<HTMLButtonElement>) {
       console.log("on-click");
-      generateRippleButton(e)
+      generateRippleButton(e);
     }
     return <span className="cds-ripple-root" />;
   }
@@ -162,7 +162,7 @@ export type BaseProps = {
    * the color to use for variant="text"
    * @default primary
    */
-  color?: ButtonPropsTextColor; 
+  color?: ButtonPropsTextColor;
   /**
    * the background to use for variant="container"
    * @default false
@@ -172,7 +172,7 @@ export type BaseProps = {
    * The size to use.
    * @default sm
    */
-  outlinedTheme?: ButtonPropsOutlinedTheme,
+  outlinedTheme?: ButtonPropsOutlinedTheme;
   /**
    * The size to use.
    * @default sm
@@ -260,8 +260,8 @@ function generateRippleButton(e: any) {
   const y = clientRect.offsetY;
   const ripple = document.createElement("span");
   ripple.classList.add("cds-animation-ripple");
-  const childNodes = e.target.childNodes
-  const touchRippleComponent = childNodes[childNodes.length - 1]
+  const childNodes = e.target.childNodes;
+  const touchRippleComponent = childNodes[childNodes.length - 1];
   touchRippleComponent.appendChild(ripple);
   ripple.onanimationend = () => {
     ripple.remove();

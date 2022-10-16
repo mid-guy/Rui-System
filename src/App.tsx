@@ -14,9 +14,9 @@ function App() {
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <div>
-          <ButtonBase variant="text" animationframe="ripple" size="xxl">
-            This is Button Ripple
-          </ButtonBase>
+            <ButtonBase variant="outlined" animationframe="ripple" size="xxl">
+              This is Button Ripple
+            </ButtonBase>
           </div>
           {/* <ButtonBase
             variant={"container"}

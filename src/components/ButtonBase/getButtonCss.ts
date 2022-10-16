@@ -3,7 +3,7 @@ import { BaseProps, ButtonPropsAnimationFrame, ButtonPropsBackground, ButtonProp
 import { transitions } from './constants';
 export const generateButtonClassNames = (props: {
   root: boolean, fullWidth?: boolean, disabled?: boolean,
-  variant?: ButtonPropsVariant, size?: ButtonPropsSize, background?: ButtonPropsBackground, color?: ButtonPropsTextColor,animationframe?: ButtonPropsAnimationFrame
+  variant?: ButtonPropsVariant, size?: ButtonPropsSize, background?: ButtonPropsBackground, color?: ButtonPropsTextColor, animationframe?: ButtonPropsAnimationFrame
 }) => {
   const _props: { [key: string]: boolean | string | ButtonPropsSize } = props
   return Object.keys(props).reduce((prevClasses: any, key: any) => {
@@ -17,7 +17,7 @@ export const generateButtonClassNames = (props: {
   }
     , []).join(" ")
 }
-const classNames: { [key: string]: string | any} = {
+const classNames: { [key: string]: string | any } = {
   root: "cds-button-root",
   fullWidth: "cds-button-fullWidth",
   disabled: "cds-button-disabled",
@@ -94,10 +94,10 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
   &.${classNames.visible} {
     display: ${props.isVisible ? "block" : "none"};
   }
-  > .${classNames.touchRipple} {
+  .${classNames.touchRipple} {
     > .cds-animation-ripple {
       position: absolute;
-      background: ${props.variant === "container" ? "white" : "red"};
+      background: inherit;
       transform: translate(-50%, -50%);
       animation: ripples 650ms linear;
       border-radius: 50%;

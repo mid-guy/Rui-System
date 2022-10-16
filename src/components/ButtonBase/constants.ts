@@ -1,56 +1,57 @@
-import { lightBlue, orange } from './../../core-colors/colors';
+import { orange } from './../../core-colors/colors';
 import { blue, green, pink, red } from '../../core-colors/colors';
+import { convertHEXtoRGB } from '../../utils/convertHEXtoRGB';
 export const types = { button: "button", submit: "submit" };
 
 
 export const palette = {
   primary: {
-      main: blue[700],
-      contrastText: "#FFF"
+    main: blue[700],
+    contrastText: "#FFF"
   },
   secondary: {
-      main: pink["A400"],
-      contrastText: "#FFF"
+    main: pink["A400"],
+    contrastText: "#FFF"
   },
   ternary: {
-      main: orange["A400"],
-      contrastText: "#FFF"
+    main: orange["A400"],
+    contrastText: "#FFF"
   },
   success: {
-      main: green[800],
-      contrastText: "#FFF"
+    main: green[800],
+    contrastText: "#FFF"
   },
   error: {
-      main: red[700],
-      contrastText: "#FFF"
+    main: red[700],
+    contrastText: "#FFF"
   },
   text: {
-      primary: "rgba(0, 0, 0, 0.87)",
-      secondary: "rgba(0, 0, 0, 0.6)",
-      disabled: "rgba(0, 0, 0, 0.38)",
+    primary: "rgba(0, 0, 0, 0.87)",
+    secondary: "rgba(0, 0, 0, 0.6)",
+    disabled: "rgba(0, 0, 0, 0.38)",
   },
   divider: "rgba(0, 0, 0, 0.12)",
   action: {
-      disabledBackground: "rgba(0,0,0,0.12)"
+    disabledBackground: "rgba(0,0,0,0.12)"
   },
   shape: {
-      borderRadius: 4
+    borderRadius: 4
   }
 }
 
 export const transitions = {
   duration: {
-      shortest: 150,
-      shorter: 200,
-      short: 250,
-      // most basic recommended timing
-      standard: 300,
-      // this is to be used in complex animations
-      complex: 375,
-      // recommended when something is entering screen
-      enteringScreen: 225,
-      // recommended when something is leaving screen
-      leavingScreen: 195,
+    shortest: 150,
+    shorter: 200,
+    short: 250,
+    // most basic recommended timing
+    standard: 300,
+    // this is to be used in complex animations
+    complex: 375,
+    // recommended when something is entering screen
+    enteringScreen: 225,
+    // recommended when something is leaving screen
+    leavingScreen: 195,
   }
 }
 
@@ -104,18 +105,33 @@ export const variants = {
 export const colors = {
   primary: `
     color: ${palette.primary.main};
+    &:hover {
+      background: ${convertHEXtoRGB(palette.primary.main, 0.04)};
+    }
+    .cds-ripple-root {
+      background: ${palette.primary.main};
+    }
   `,
   secondary: `
     color: ${palette.secondary.main};
+    &:hover {
+      background: ${convertHEXtoRGB(palette.secondary.main, 0.04)};
+    }
+    .cds-ripple-root {
+      background: ${palette.secondary.main};
+    }
   `,
   ternary: `
     color: ${palette.ternary.main};
+    &:hover {
+      background: ${convertHEXtoRGB(palette.ternary.main, 0.04)};
+    }
+    .cds-ripple-root {
+      background: ${palette.ternary.main};
+    }
   `,
 }
 
-// &:hover {
-//   //  background-color: red;
-//   }
 export const backgrounds = {
   primary: `
     background-color: ${palette.primary.main};
@@ -130,16 +146,37 @@ export const backgrounds = {
 
 export const outlinedTheme = {
   primary: `
-    border: 1px solid ${blue[300]};
-    color: ${blue[700]};  
+    border: 1px solid ${convertHEXtoRGB(palette.primary.main, 0.5)};
+    color: ${palette.primary.main};
+    &:hover {
+      border: 1px solid ${palette.primary.main};
+      background: ${convertHEXtoRGB(palette.primary.main, 0.04)};
+    }
+    .cds-ripple-root {
+      background: ${palette.primary.main};
+    }
   `,
   secondary: `
     border: 1px solid ${palette.secondary.main};
     color: ${palette.secondary.main};
+    &:hover {
+      border: 1px solid ${palette.secondary.main};
+      background: ${convertHEXtoRGB(palette.secondary.main, 0.04)};
+    }
+    .cds-ripple-root {
+      background: ${palette.secondary.main};
+    }
   `,
   ternary: `
-    border: 1px solid ${palette.secondary.main};
+    border: 1px solid ${convertHEXtoRGB(palette.secondary.main, 0.5)};
     color: ${palette.ternary.main};
+    &:hover {
+      border: 1px solid ${palette.secondary.main};
+      background: ${convertHEXtoRGB(palette.secondary.main, 0.04)};
+    }
+    .cds-ripple-root {
+      background: ${palette.secondary.main};
+    }
   `,
 
 }
