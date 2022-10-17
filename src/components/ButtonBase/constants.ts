@@ -79,7 +79,7 @@ export const animationframes = {
     overflow: hidden;
   `,
   scale: `
-    transition-duration: 150ms;
+    transition-duration: ${transitions.duration.shortest}ms;
     &:active {
       transform: scale(0.95);
     }

@@ -85,10 +85,10 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
     width: 100%;
   }
   &.${classNames.disabled} {
-    color: rgba(0, 0, 0, 0.26);
+    color: ${theme.palette.text.disabled};
     pointer-events: none;
     box-shadow: none;
-    background-color: rgba(0, 0, 0, 0.12);
+    background-color: ${theme.palette.action.disabledBackground};
     ${props.variant === "text" && "border: none"}
   } 
   &.${classNames.visible} {
