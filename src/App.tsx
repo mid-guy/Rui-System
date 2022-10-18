@@ -7,7 +7,6 @@ import { Button } from "@mui/material";
 import ButtonBase from "./components/ButtonBase/ButtonBase";
 import LocalButton from "./components/LocalButton/LocalButton";
 // const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
-
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const withLoading = (callback: any) => {
@@ -24,18 +23,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <div>
-            <ButtonBase
-              onClick={withLoading((e: any) => console.log(e))}
-              className="ml-10"
-              variant="container"
-              outlinedTheme="primary"
-              animationframe="ripple"
-              size="sm"
-            >
-              This is Button Ripple
-            </ButtonBase>
-          </div>
           {/* <LocalButton style={{ marginTop: 10 }}>
             This is Local Button
           </LocalButton> */}
@@ -47,6 +34,13 @@ function App() {
           >
             This is Button Scale
           </ButtonBase> */}
+          <ButtonBase
+            onClick={withLoading((e: any) => console.log(e))}
+            variant="container"
+            size={"lg"}
+          >
+            This is Button Ripple
+          </ButtonBase>
         </ThemeProvider>
         {/* <Button variant="contained">THIS IS A BUTTON</Button> */}
       </header>

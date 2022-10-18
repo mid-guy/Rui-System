@@ -25,6 +25,7 @@ type ThemeProviderProps = {
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const _theme = useMemo(() => theme, []);
+  console.log(_theme.components.button.variants);
   return (
     <ThemeContext.Provider value={_theme}>{children}</ThemeContext.Provider>
   );
@@ -33,6 +34,7 @@ export const useTheme = () => {
   const theme = useContext(ThemeContext);
   return theme;
 };
+
 export type ThemeProps = {
   components: {
     button: {

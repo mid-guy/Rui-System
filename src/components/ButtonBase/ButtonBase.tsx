@@ -19,8 +19,7 @@ const ButtonBase = forwardRef(function (
   props: OverridableMapType<React.HTMLProps<HTMLButtonElement>, BaseProps>,
   ref: React.Ref<HTMLButtonElement>
 ) {
-  const theme: any = useTheme();
-  console.log(theme.components.button.variants);
+  const theme = useTheme() as ThemeProps;
   const {
     onClick,
     isVisible,
@@ -56,7 +55,8 @@ const ButtonBase = forwardRef(function (
     fullWidth,
     disabled,
   });
-  // const css = getButtonCss(theme, props);
+  console.log(theme.components.button.variants.container);
+  const css = getButtonCss(theme, props);
   const TouchRippleRef = useRef<TouchRippleRefs>(null);
   const withTouchRipple = (callback?: Function) => {
     return (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,15 +64,17 @@ const ButtonBase = forwardRef(function (
       callback && callback(e);
     };
   };
+  const _onClick =
+    animationframe === "ripple" ? withTouchRipple(onClick) : onClick;
 
   return (
     <button
       {...rest}
       ref={ref}
-      // css={[css, cssOuter]}
+      css={[css, cssOuter]}
       disabled={disabled}
       className={[buttonClasses, className].join(" ")}
-      onClick={withTouchRipple(onClick)}
+      onClick={_onClick}
     >
       {startIcon && startIcon}
       {children}

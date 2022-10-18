@@ -1,18 +1,20 @@
 import {
-  sizes,
-  variants,
+  animationframes,
   backgrounds,
   colors,
   outlinedTheme,
-  animationframes,
+  sizes,
+  variants,
 } from "../components/ButtonBase/constants";
 import { blue, green, orange, pink, red } from "../core-colors/colors";
 import { BreakpointsValuesProps } from "./themeProvider";
 
-function createTheme(options?: Object) {
-  if (!options) return defaultTheme;
-  const outerTheme = mapValueKeys(options);
-  const _outerTheme = _deepMerge(outerTheme, defaultTheme);
+function createTheme(theme?: any, options?: Object) {
+  if (!theme) return defaultTheme;
+  const outerTheme = mapValueKeys(options ? options : theme);
+  // console.log("input", outerTheme.components.button.variants)
+  const _outerTheme = _deepMerge(outerTheme, options ? theme : defaultTheme);
+  // console.log("output", outerTheme.components.button.variants)
   return _outerTheme;
 }
 
