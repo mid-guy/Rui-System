@@ -26,7 +26,7 @@ test("render button disabled", () => {
 });
 
 // call callback function when click
-test("test behavior when click", () => {
+test("behavior when click", () => {
   const callback = jest.fn((e: any) => {});
 
   // ARRANGE

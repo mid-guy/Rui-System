@@ -1,22 +1,46 @@
-import { css, SerializedStyles } from '@emotion/react';
-import { BaseProps, ButtonPropsAnimationFrame, ButtonPropsBackground, ButtonPropsOutlinedTheme, ButtonPropsSize, ButtonPropsTextColor, ButtonPropsVariant } from './ButtonBase';
-import { transitions } from './constants';
+import { ThemeProps } from "./../../core-theme/themeProvider";
+import { css, SerializedStyles } from "@emotion/react";
+import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
+import {
+  BaseProps,
+  ButtonPropsAnimationFrame,
+  ButtonPropsBackground,
+  ButtonPropsOutlinedTheme,
+  ButtonPropsSize,
+  ButtonPropsTextColor,
+  ButtonPropsVariant,
+} from "./ButtonBase";
 export const generateButtonClassNames = (props: {
-  root: boolean, fullWidth?: boolean, disabled?: boolean,
-  variant?: ButtonPropsVariant, size?: ButtonPropsSize, background?: ButtonPropsBackground, color?: ButtonPropsTextColor, animationframe?: ButtonPropsAnimationFrame
+  root: boolean;
+  fullWidth?: boolean;
+  disabled?: boolean;
+  variant?: ButtonPropsVariant;
+  size?: ButtonPropsSize;
+  background?: ButtonPropsBackground;
+  outlinedTheme?: ButtonPropsOutlinedTheme;
+  color?: ButtonPropsTextColor;
+  animationframe?: ButtonPropsAnimationFrame;
 }) => {
-  const _props: { [key: string]: boolean | string | ButtonPropsSize } = props
-  return Object.keys(props).reduce((prevClasses: any, key: any) => {
-    if (_props[key]) {
-      if (key === "size" || key === "background" || key === "variant" || key === "color" || key === "outlinedTheme" || key === "animationframe") {
-        return [...prevClasses, classNames[key](_props[key])]
+  const _props: { [key: string]: boolean | string } = props;
+  return Object.keys(props)
+    .reduce((prevClasses: any, key: any) => {
+      if (_props[key]) {
+        if (
+          key === "size" ||
+          key === "background" ||
+          key === "variant" ||
+          key === "color" ||
+          key === "outlinedTheme" ||
+          key === "animationframe"
+        ) {
+          return [...prevClasses, classNames[key](_props[key])];
+        }
+        return [...prevClasses, classNames[key]];
       }
-      return [...prevClasses, classNames[key]]
-    }
-    return prevClasses
-  }
-    , []).join(" ")
-}
+      return prevClasses;
+    }, [])
+    .join(" ");
+};
 const classNames: { [key: string]: string | any } = {
   root: "cds-button-root",
   fullWidth: "cds-button-fullWidth",
@@ -24,26 +48,29 @@ const classNames: { [key: string]: string | any } = {
   visible: "cds-button-visible",
   touchRipple: "cds-ripple-root",
   variant: (value: ButtonPropsVariant): string => {
-    return `cds-button-${capitalizeFirstLetter(value)}`
+    return value && `cds-button-${capitalizeFirstLetter(value)}`;
   },
   color: (value: ButtonPropsTextColor): string => {
-    return `cds-button-text${capitalizeFirstLetter(value)}`
+    return value && `cds-button-text${capitalizeFirstLetter(value)}`;
   },
   background: (value: ButtonPropsBackground): string => {
-    return `cds-button-bg${capitalizeFirstLetter(value)}`
+    return value && `cds-button-bg${capitalizeFirstLetter(value)}`;
   },
   outlinedTheme: (value: ButtonPropsOutlinedTheme): string => {
-    return `cds-button-outlined${capitalizeFirstLetter(value)}`
+    return value && `cds-button-outlined${capitalizeFirstLetter(value)}`;
   },
   size: (value: ButtonPropsSize): string => {
-    return `cds-button-size${capitalizeFirstLetter(value)}`
+    return value && `cds-button-size${capitalizeFirstLetter(value)}`;
   },
   animationframe: (value: ButtonPropsAnimationFrame): string => {
-    return `cds-button-animation${capitalizeFirstLetter(value)}`
+    return value && `cds-button-animation${capitalizeFirstLetter(value)}`;
   },
-}
+};
 
-const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
+const getButtonCss = (
+  theme: ThemeProps,
+  props: BaseProps
+): SerializedStyles => css`
   &.${classNames.root} {
     display: inline-flex;
     -webkit-box-align: center;
@@ -54,31 +81,50 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
     border: none;
     cursor: pointer;
     min-width: 64px;
-    margin: 0;
     border-radius: 0.375rem;
-    transition: background-color ${transitions.duration.standard}ms ease;
+    transition: ${theme.transitions.duration.standard}ms ease;
     box-sizing: border-box;
     > * {
       pointer-events: none;
     }
   }
   &.${classNames.variant(props.variant)} {
-    ${theme.components.button.variants[props.variant as NonNullable<keyof typeof theme.components.button.variants>]};
+    ${theme.components.button.variants[
+      props.variant as NonNullable<
+        keyof typeof theme.components.button.variants
+      >
+    ](theme)};
   }
   &.${classNames.color(props.color)} {
-    ${theme.components.button.colors[props.color as NonNullable<keyof typeof theme.components.button.colors>]};
+    ${theme.components.button.colors[
+      props.color as NonNullable<keyof typeof theme.components.button.colors>
+    ](theme)};
   }
   &.${classNames.background(props.background)} {
-    ${theme.components.button.backgrounds[props.background as NonNullable<keyof typeof theme.components.button.backgrounds>]};
+    ${theme.components.button.backgrounds[
+      props.background as NonNullable<
+        keyof typeof theme.components.button.backgrounds
+      >
+    ](theme)};
   }
   &.${classNames.outlinedTheme(props.outlinedTheme)} {
-    ${theme.components.button.outlinedTheme[props.outlinedTheme as NonNullable<keyof typeof theme.components.button.outlinedTheme>]};
+    ${theme.components.button.outlinedTheme[
+      props.outlinedTheme as NonNullable<
+        keyof typeof theme.components.button.outlinedTheme
+      >
+    ](theme)};
   }
   &.${classNames.size(props.size)} {
-    ${theme.components.button.sizes[props.size as NonNullable<keyof typeof theme.components.button.sizes>]};
+    ${theme.components.button.sizes[
+      props.size as NonNullable<keyof typeof theme.components.button.sizes>
+    ](theme)};
   }
-  &.${classNames.animationframe(props.animationframe)} {  
-    ${theme.animationframe.button.animationframe[props.animationframe as NonNullable<keyof typeof theme.animationframe.button.animationframe>]};
+  &.${classNames.animationframe(props.animationframe)} {
+    ${theme.animationframe.button.animationframe[
+      props.animationframe as NonNullable<
+        keyof typeof theme.animationframe.button.animationframe
+      >
+    ](theme)};
   }
   font-family: inherit;
   &.${classNames.fullWidth} {
@@ -89,8 +135,7 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
     pointer-events: none;
     box-shadow: none;
     background-color: ${theme.palette.action.disabledBackground};
-    ${props.variant === "text" && "border: none"}
-  } 
+  }
   &.${classNames.visible} {
     display: ${props.isVisible ? "block" : "none"};
   }
@@ -117,8 +162,4 @@ const getButtonCss = (theme: any, props: BaseProps): SerializedStyles => css`
   }
 `;
 
-function capitalizeFirstLetter(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-export default getButtonCss
+export default getButtonCss;
