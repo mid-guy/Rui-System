@@ -19,13 +19,12 @@ export const ThemeContext = createContext(defaultTheme);
 
 type ThemeProviderProps = {
   children: ReactNode;
-  theme: ThemeProps;
+  theme: any;
 };
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const _theme = useMemo(() => theme, []);
-  console.log(_theme.components.button.variants);
   return (
     <ThemeContext.Provider value={_theme}>{children}</ThemeContext.Provider>
   );

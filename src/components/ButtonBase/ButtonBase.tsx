@@ -55,7 +55,6 @@ const ButtonBase = forwardRef(function (
     fullWidth,
     disabled,
   });
-  console.log(theme.components.button.variants.container);
   const css = getButtonCss(theme, props);
   const TouchRippleRef = useRef<TouchRippleRefs>(null);
   const withTouchRipple = (callback?: Function) => {

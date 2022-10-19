@@ -84,12 +84,21 @@ export const colors = {
 export const backgrounds = {
   primary: (theme: ThemeProps) => `
     background-color: ${theme.palette.primary.main};
+    .cds-ripple-root {
+      background: white;
+    }
   `,
   secondary: (theme: ThemeProps) => `
     background-color: ${theme.palette.secondary.main};
+    .cds-ripple-root {
+      background: white;
+    }
   `,
   ternary: (theme: ThemeProps) => `
     background-color: ${theme.palette.ternary.main};
+    .cds-ripple-root {
+      background: white;
+    }
   `,
 };
 

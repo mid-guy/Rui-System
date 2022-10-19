@@ -7,56 +7,26 @@ import {
   variants,
 } from "../components/ButtonBase/constants";
 import { blue, green, orange, pink, red } from "../core-colors/colors";
-import { BreakpointsValuesProps } from "./themeProvider";
+import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
 
-function createTheme(theme?: any, options?: Object) {
+function createTheme(theme?: ThemeProps, options?: Object) {
   if (!theme) return defaultTheme;
-  const outerTheme = mapValueKeys(options ? options : theme);
-  // console.log("input", outerTheme.components.button.variants)
-  const _outerTheme = _deepMerge(outerTheme, options ? theme : defaultTheme);
-  // console.log("output", outerTheme.components.button.variants)
-  return _outerTheme;
+  const outerTheme = merge(
+    options ? theme : defaultTheme,
+    options ? options : theme
+  );
+  return outerTheme;
 }
 
-function mapValueKeys(target: any) {
-  Object.keys(target).forEach((key: string) => {
-    if (
-      typeof target[key] === "object" &&
-      !Array.isArray(target[key]) &&
-      target[key] !== null
-    ) {
-      Object.assign(target[key], mapValueKeys(target[key]));
+const merge = (target: any, source: any) => {
+  for (const key of Object.keys(source)) {
+    if (source[key] instanceof Object) {
+      Object.assign(source[key], merge(target[key], source[key]));
     }
-    getStylesOverride(target, key);
-  });
-  Object.assign(target || {}, target);
-  return target;
-}
-
-function getStylesOverride(target: any, key: string) {
-  if (Array.isArray(target[key])) {
-    const style = target[key].map(
-      (item: { props: { [key: string]: string }; style: string }) => ({
-        [item.props[Object.keys(item.props)[0]]]: item.style,
-      })
-    );
-    Object.assign(target, { [key]: Object.assign({}, ...style) });
   }
-}
-
-function _deepMerge(target: any, source: any) {
-  Object.keys(target).forEach((key: string): any => {
-    if (
-      typeof target[key] === "object" &&
-      !Array.isArray(target[key]) &&
-      target[key] !== null
-    ) {
-      Object.assign(source[key], _deepMerge(target[key], source[key]));
-    }
-  });
   Object.assign(target || {}, source);
   return target;
-}
+};
 
 export const palette = {
   primary: {

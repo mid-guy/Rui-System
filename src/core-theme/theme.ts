@@ -8,35 +8,34 @@ declare module "../components/ButtonBase/ButtonBase" {
     ghost: true;
   }
 }
-// let theme = createTheme() as ThemeProps;
-// // console.log("adding dashed", theme.components.button.variants)
+let theme = createTheme() as ThemeProps;
 // theme = createTheme({
 //   components: {
 //     button: {
 //       variants: {
-//         container: `
-//           background-color: green;
+//         dashed: (theme: ThemeProps) => `
+//         background-color: blue;
+//         color: red;
 //         `,
 //         ghost: (theme: ThemeProps) => `
-//           background-color: blue;
+//         background-color: blue;
+//         color: red;
+//       `,
+//       },
+//     },
+//   },
+// });
+// theme = createTheme(theme, {
+//   components: {
+//     button: {
+//       variants: {
+//         container: (theme: ThemeProps) => `
+//         background-color: blue;
+//         color: red;
 //         `,
 //       },
 //     },
 //   },
-// })
-// console.log("adding ghost", theme.components.button.variants.container(theme))
-export default createTheme({
-  components: {
-    button: {
-      variants: [
-        {
-          props: { variant: "dashed" },
-          style: (theme: any): SerializedStyles => css`
-              background-color: blue;
-              color: red;
-            `,
-        },
-      ],
-    },
-  },
-})
+// });
+
+export default theme;
