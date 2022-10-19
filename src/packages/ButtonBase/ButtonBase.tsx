@@ -7,12 +7,12 @@ import React, {
   useRef,
 } from "react";
 import { types } from "./constants";
-import { SerializedStyles, useTheme } from "@emotion/react";
+import { SerializedStyles } from "@emotion/react";
 import {
   OverridableMapType,
   OverridableStringUnion,
 } from "../../core/types/type";
-import { ThemeProps } from "../../core/theme/themeProvider";
+import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 
 const ButtonBase = forwardRef(function (
   props: OverridableMapType<React.HTMLProps<HTMLButtonElement>, BaseProps>,

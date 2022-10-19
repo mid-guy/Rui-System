@@ -24,17 +24,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          {/* <LocalButton style={{ marginTop: 10 }}>
-            This is Local Button
-          </LocalButton> */}
-          {/* <ButtonBase
-            variant={"container"}
-            animationframe="scale"
-            size="lg"
-            style={{ marginTop: 10 }}
-          >
-            This is Button Scale
-          </ButtonBase> */}
           <ButtonBase
             onClick={withLoading((e: any) => console.log(e))}
             variant="container"
@@ -43,7 +32,6 @@ function App() {
             This is Button Ripple
           </ButtonBase>
         </ThemeProvider>
-        {/* <Button variant="contained">THIS IS A BUTTON</Button> */}
       </header>
     </div>
   );

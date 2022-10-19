@@ -98,7 +98,17 @@ export type ThemeProps = {
     between: (breakpoint: BreakpointsValuesProps) => string;
   };
   typography: any;
-  transitions: any;
+  transitions: {
+    duration: {
+      shortest: number;
+      shorter: number;
+      short: number;
+      standard: number;
+      complex: number;
+      enteringScreen: number;
+      leavingScreen: number;
+    };
+  };
   spacing: any;
   zIndex: any;
 };
