@@ -63,7 +63,11 @@ const ButtonBase = forwardRef(function (
     };
   };
   const _onClick =
-    animationframe === "ripple" ? withTouchRipple(onClick) : onClick;
+    animationframe === "ripple"
+      ? onClick
+        ? withTouchRipple(onClick)
+        : withTouchRipple()
+      : onClick;
 
   return (
     <button
@@ -74,9 +78,7 @@ const ButtonBase = forwardRef(function (
       className={[buttonClasses, className].join(" ")}
       onClick={_onClick}
     >
-      {startIcon && startIcon}
       {children}
-      {endIcon && endIcon}
       <TouchRipple ref={TouchRippleRef} />
     </button>
   );
