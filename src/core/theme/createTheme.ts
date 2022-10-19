@@ -5,8 +5,8 @@ import {
   outlinedTheme,
   sizes,
   variants,
-} from "../components/ButtonBase/constants";
-import { blue, green, orange, pink, red } from "../core-colors/colors";
+} from "../../components/ButtonBase/constants";
+import { blue, green, orange, pink, red } from "../colors/colors";
 import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
 
 function createTheme(theme?: ThemeProps, options?: Object) {

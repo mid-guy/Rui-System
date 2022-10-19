@@ -1,6 +1,6 @@
-import { ThemeProps } from "./../../core-theme/themeProvider";
 import { css, SerializedStyles } from "@emotion/react";
-import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
+import capitalizeFirstLetter from "../../core/helpers/capitalizeFirstLetter";
+import { ThemeProps } from "../../core/theme/themeProvider";
 import {
   BaseProps,
   ButtonPropsAnimationFrame,

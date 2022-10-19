@@ -2,10 +2,10 @@
 import "./App.css";
 import { lazy, useState } from "react";
 import theme from "./core-theme/theme";
-import ThemeProvider from "./core-theme/themeProvider";
 import { Button } from "@mui/material";
 import ButtonBase from "./components/ButtonBase/ButtonBase";
 import LocalButton from "./components/LocalButton/LocalButton";
+import ThemeProvider from "./core/theme/themeProvider";
 // const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
 
 function App() {
@@ -50,37 +50,3 @@ function App() {
 }
 
 export default App;
-
-// const a = {
-//   components: {
-//     button: {
-//       variants: {
-//         container: "container",
-//         outlined: "outlined",
-//         text: "text",
-//       },
-//       backgrounds: {},
-//     },
-//   },
-// };
-
-// const b = {
-//   components: {
-//     button: {
-//       variants: {
-//         container: "container override",
-//       },
-//     },
-//   },
-// };
-
-// const merge = (target: any, source: any) => {
-//   for (const key of Object.keys(source)) {
-//     if (source[key] instanceof Object)
-//       Object.assign(source[key], merge(target[key], source[key]));
-//   }
-//   Object.assign(target || {}, source);
-//   return target;
-// };
-
-// console.log(merge(a, b));

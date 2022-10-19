@@ -1,4 +1,5 @@
-import { ThemeProps } from "./../core-theme/themeProvider";
+import { ThemeProps } from "../theme/themeProvider";
+
 export type OverridableStringUnion<
   T extends string | number,
   U = {}

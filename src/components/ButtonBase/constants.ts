@@ -1,6 +1,6 @@
-import { convertHEXtoRGB } from "../../utils/convertHEXtoRGB";
-import { palette } from "../../core-theme/createTheme";
-import { ThemeProps } from "../../core-theme/themeProvider";
+import { convertHEXtoRGB } from "../../core/helpers/convertHEXtoRGB";
+import { palette } from "../../core/theme/createTheme";
+import { ThemeProps } from "../../core/theme/themeProvider";
 export const types = { button: "button", submit: "submit" };
 
 export const sizes = {

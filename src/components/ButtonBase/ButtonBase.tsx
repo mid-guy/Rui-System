@@ -1,19 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import getButtonCss, { generateButtonClassNames } from "./getButtonCss";
 import React, {
-  CSSProperties,
   forwardRef,
   ReactNode,
   useImperativeHandle,
   useRef,
 } from "react";
 import { types } from "./constants";
-import { ThemeProps, useTheme } from "../../core-theme/themeProvider";
-import { SerializedStyles } from "@emotion/react";
+import { SerializedStyles, useTheme } from "@emotion/react";
 import {
   OverridableMapType,
   OverridableStringUnion,
-} from "../../core-types/type";
+} from "../../core/types/type";
+import { ThemeProps } from "../../core/theme/themeProvider";
 
 const ButtonBase = forwardRef(function (
   props: OverridableMapType<React.HTMLProps<HTMLButtonElement>, BaseProps>,
@@ -95,7 +94,7 @@ const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(
     function _onTouchRipple(e: React.MouseEvent<HTMLButtonElement>) {
       generateRippleButton(e);
     }
-    return <span className="cds-ripple-root" />;
+    return <span className="cds-ripple-root" {...props} />;
   }
 );
 
@@ -190,20 +189,10 @@ export type BaseProps = {
    */
   endIcon?: ReactNode;
   /**
-   * the dense to use
-   * @default sm
-   */
-  dense?: "sm" | "md" | "lg";
-  /**
    * The disable to disable button.
    * @default false
    */
   disabled?: boolean;
-  /**
-   * The disableElevation to disable box-shadow.
-   * @default false
-   */
-  disableElevation?: boolean;
   /**
    * The type to change type of button.
    * @default button
@@ -219,16 +208,6 @@ export type BaseProps = {
    * @default ripple
    */
   animationframe?: ButtonPropsAnimationFrame;
-  /**
-   * The Style to use as html style.
-   * @default {}
-   */
-  style?: CSSProperties;
-  /**
-   * className to use style
-   * @default {}
-   */
-  className?: string;
   /**
    * Children to use
    * @default {}

@@ -1,7 +1,8 @@
 import { css } from "@emotion/react";
-import makeStyles from "../../core-style/makeStyles";
-import { ThemeProps } from "../../core-theme/themeProvider";
+import makeStyles from "../../core/styles/makeStyles";
+import { ThemeProps } from "../../core/theme/themeProvider";
 import ButtonBase from "../ButtonBase/ButtonBase";
+
 const useStyles = makeStyles(
   (theme: ThemeProps) => css`
     &.cds-button-sizeXxl {
