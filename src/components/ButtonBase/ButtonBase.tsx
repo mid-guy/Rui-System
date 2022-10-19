@@ -238,17 +238,6 @@ export type BaseProps = {
 
 export default ButtonBase;
 
-// function _onClick(
-//   e: any,
-//   animationframe: "ripple" | "scale" = "ripple",
-//   onClick: any
-// ) {
-//   if (animationframe === "ripple") {
-//     generateRippleButton(e);
-//   }
-//   onClick && onClick(e);
-// }
-
 function generateRippleButton(e: React.MouseEvent<HTMLButtonElement>) {
   const clientRect = e.nativeEvent;
   const x = clientRect.offsetX;
