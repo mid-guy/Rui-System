@@ -5,7 +5,7 @@ import {
   outlinedTheme,
   sizes,
   variants,
-} from "../../components/ButtonBase/constants";
+} from "../../packages/ButtonBase/constants";
 import { blue, green, orange, pink, red } from "../colors/colors";
 import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
 

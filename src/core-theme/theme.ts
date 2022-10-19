@@ -1,6 +1,6 @@
 import createTheme from "../core/theme/createTheme";
 import { ThemeProps } from "../core/theme/themeProvider";
-declare module "../components/ButtonBase/ButtonBase" {
+declare module "../packages/ButtonBase/ButtonBase" {
   interface ButtonPropsVariantOverrides {
     dashed: true;
     ghost: true;

@@ -7,7 +7,7 @@ import {
   ButtonPropsTextColor,
   ButtonPropsOutlinedTheme,
   ButtonPropsAnimationFrame,
-} from "../../components/ButtonBase/ButtonBase";
+} from "../../packages/ButtonBase/ButtonBase";
 import {
   WrapThemeProps,
   GenerateObjectByStringUnion,

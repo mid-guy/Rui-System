@@ -3,8 +3,8 @@ import "./App.css";
 import { lazy, useState } from "react";
 import theme from "./core-theme/theme";
 import { Button } from "@mui/material";
-import ButtonBase from "./components/ButtonBase/ButtonBase";
-import LocalButton from "./components/LocalButton/LocalButton";
+import ButtonBase from "./packages/ButtonBase/ButtonBase";
+import LocalButton from "./packages/LocalButton/LocalButton";
 import ThemeProvider from "./core/theme/themeProvider";
 // const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
 
