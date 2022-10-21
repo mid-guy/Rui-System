@@ -6,6 +6,7 @@ import { Button } from "@mui/material";
 import ButtonBase from "./packages/ButtonBase/ButtonBase";
 import LocalButton from "./packages/LocalButton/LocalButton";
 import ThemeProvider from "./core/theme/themeProvider";
+import WithStylesButton from "./packages/WithStylesButton/WithStylesButton";
 // const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
 
 function App() {
@@ -26,11 +27,13 @@ function App() {
         <ThemeProvider theme={theme}>
           <ButtonBase
             onClick={withLoading((e: any) => console.log(e))}
-            variant="container"
+            variant="text"
+            color="primary"
             size={"lg"}
           >
             This is Button Ripple
           </ButtonBase>
+          <WithStylesButton>123123</WithStylesButton>
         </ThemeProvider>
       </header>
     </div>

@@ -2,7 +2,7 @@ import { css, SerializedStyles } from "@emotion/react";
 import capitalizeFirstLetter from "../../core/helpers/capitalizeFirstLetter";
 import { ThemeProps } from "../../core/theme/themeProvider";
 import {
-  BaseProps,
+  ButtonBaseProps,
   ButtonPropsAnimationFrame,
   ButtonPropsBackground,
   ButtonPropsOutlinedTheme,
@@ -69,7 +69,7 @@ const classNames: { [key: string]: string | any } = {
 
 const getButtonCss = (
   theme: ThemeProps,
-  props: BaseProps
+  props: ButtonBaseProps
 ): SerializedStyles => css`
   &.${classNames.root} {
     display: inline-flex;

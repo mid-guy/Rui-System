@@ -15,7 +15,7 @@ import {
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 
 const ButtonBase = forwardRef(function (
-  props: OverridableMapType<React.HTMLProps<HTMLButtonElement>, BaseProps>,
+  props: OverallButtonBaseProps,
   ref: React.Ref<HTMLButtonElement>
 ) {
   const theme = useTheme() as ThemeProps;
@@ -93,9 +93,6 @@ type TouchRippleProps = {};
 const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(
   (props, ref) => {
     useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
-    function _onTouchRipple(e: React.MouseEvent<HTMLButtonElement>) {
-      generateRippleButton(e);
-    }
     return <span className="cds-ripple-root" {...props} />;
   }
 );
@@ -111,6 +108,11 @@ ButtonBase.defaultProps = {
   isVisible: false,
   type: "button",
 };
+
+export type OverallButtonBaseProps = OverridableMapType<
+  React.HTMLProps<HTMLButtonElement>,
+  ButtonBaseProps
+>;
 
 export interface ButtonPropsVariantOverrides {}
 export interface ButtonPropsSizeOverrides {}
@@ -149,7 +151,7 @@ export type ButtonPropsAnimationFrame = OverridableStringUnion<
   ButtonPropsAnimationFrameOverrides
 >;
 
-export type BaseProps = {
+export type ButtonBaseProps = {
   /**
    * The variant to use.
    * @default container
@@ -219,7 +221,11 @@ export type BaseProps = {
 
 export default ButtonBase;
 
-function generateRippleButton(e: React.MouseEvent<HTMLButtonElement>) {
+export function _onTouchRipple(e: React.MouseEvent<HTMLButtonElement>) {
+  generateRippleButton(e);
+}
+
+export function generateRippleButton(e: React.MouseEvent<HTMLButtonElement>) {
   const clientRect = e.nativeEvent;
   const x = clientRect.offsetX;
   const y = clientRect.offsetY;
