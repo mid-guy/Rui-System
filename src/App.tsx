@@ -8,7 +8,6 @@ import LocalButton from "./packages/LocalButton/LocalButton";
 import ThemeProvider from "./core/theme/themeProvider";
 import WithStylesButton from "./packages/WithStylesButton/WithStylesButton";
 // const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
-
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const withLoading = (callback: any) => {
@@ -33,7 +32,7 @@ function App() {
           >
             This is Button Ripple
           </ButtonBase>
-          <WithStylesButton>123123</WithStylesButton>
+          <WithStylesButton>This is WithStylesButton</WithStylesButton>
         </ThemeProvider>
       </header>
     </div>

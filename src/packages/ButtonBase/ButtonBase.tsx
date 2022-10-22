@@ -221,6 +221,13 @@ export type ButtonBaseProps = {
 
 export default ButtonBase;
 
+export function sliceCSSOuter(): { [key: string]: string } {
+  return {
+    root: "cds-not",
+    ripple: "cds-ripple",
+  };
+}
+
 export function _onTouchRipple(e: React.MouseEvent<HTMLButtonElement>) {
   generateRippleButton(e);
 }
