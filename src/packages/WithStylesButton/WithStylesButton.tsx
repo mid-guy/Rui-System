@@ -2,11 +2,17 @@ import { css } from "@emotion/react";
 import { forwardRef } from "react";
 import withStyles from "../../core/styles/withStyles";
 import { ThemeProps } from "../../core/theme/themeProvider";
-import ButtonBase, { OverallButtonBaseProps } from "../ButtonBase/ButtonBase";
+import ButtonBase, {
+  ButtonBaseProps,
+  OverallButtonBaseProps,
+} from "../ButtonBase/ButtonBase";
 
 const useStyles = (theme: ThemeProps) => css`
-  &.cds-button-sizeSm {
-    background-color: red;
+  &.cds-button-sizeXl {
+    background-color: green;
+    ${theme.breakpoints.down("md")} {
+      background-color: red;
+    }
   }
 `;
 
@@ -14,7 +20,14 @@ const WithStylesButton = forwardRef(function (
   props: OverallButtonBaseProps,
   ref: React.Ref<HTMLButtonElement>
 ) {
-  return <ButtonBase variant={"container"} {...props} ref={ref} />;
+  return (
+    <ButtonBase
+      variant={"container"}
+      size={"lg"}
+      {...(props as ButtonBaseProps)}
+      ref={ref}
+    />
+  );
 });
 
 export default withStyles(useStyles)(WithStylesButton);

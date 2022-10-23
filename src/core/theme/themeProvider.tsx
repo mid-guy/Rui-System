@@ -95,23 +95,50 @@ export type ThemeProps = {
     values: GenerateObjectByStringUnion<BreakpointsValuesProps, number>;
     down: (breakpoint: BreakpointsValuesProps) => string;
     up: (breakpoint: BreakpointsValuesProps) => string;
-    between: (breakpoint: BreakpointsValuesProps) => string;
+    between: (
+      min: BreakpointsValuesProps,
+      max: BreakpointsValuesProps
+    ) => string;
   };
-  typography: any;
-  transitions: {
-    duration: {
-      shortest: number;
-      shorter: number;
-      short: number;
-      standard: number;
-      complex: number;
-      enteringScreen: number;
-      leavingScreen: number;
+  typography: {
+    global: {
+      fontSize: number;
     };
+    fontFamily: string;
+  } & Record<
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "h7"
+    | "subtitle1"
+    | "subtitle2"
+    | "body1"
+    | "body2",
+    { fontSize: number; fontWeight: number }
+  >;
+  transitions: {
+    duration: Record<
+      | "shortest"
+      | "shorter"
+      | "short"
+      | "standard"
+      | "complex"
+      | "enteringScreen"
+      | "leavingScreen",
+      number
+    >;
   };
   spacing: any;
   zIndex: any;
 };
+
+export type TypographyFontSize<T extends string> = Record<
+  T,
+  { fontSize: number }
+>;
 
 export type BreakpointsValuesProps = OverridableStringUnion<
   "xs" | "sm" | "md" | "lg" | "xl",

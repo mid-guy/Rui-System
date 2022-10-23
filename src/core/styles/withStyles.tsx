@@ -1,8 +1,8 @@
-import { SerializedStyles } from "@emotion/react";
-import React, { forwardRef, ReactNode } from "react";
-import { ThemeProps } from "../theme/themeProvider";
+import { forwardRef, ReactNode } from "react";
+import { StylesOrCreatorType } from "../types/type";
+import makeStyles from "./makeStyles";
 
-const withStyles = (stylesOrCreator: stylesOrCreator) => {
+const withStyles = (stylesOrCreator: StylesOrCreatorType) => {
   return function <T>(Component: React.ComponentType<T>) {
     const WithStyles = forwardRef(function WithStyles<
       P extends { children: ReactNode } & T
@@ -17,16 +17,11 @@ const withStyles = (stylesOrCreator: stylesOrCreator) => {
           );
         }
       }
-      return <Component {...props} cssOuter={stylesOrCreator} ref={ref} />;
+      const useStyles = makeStyles(stylesOrCreator);
+      const cssOuter = useStyles();
+      return <Component {...props} cssOuter={cssOuter} ref={ref} />;
     });
     return WithStyles;
   };
 };
-
-type stylesOrCreator = (theme: ThemeProps) =>
-  | SerializedStyles
-  | {
-      [key: string]: (theme: ThemeProps) => SerializedStyles;
-    };
-
 export default withStyles;

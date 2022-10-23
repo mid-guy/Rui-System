@@ -37,7 +37,7 @@ const ButtonBase = forwardRef(function (
     endIcon,
     ...rest
   } = props;
-  const buttonClasses = generateButtonClassNames({
+  const buttonBaseClasses = generateButtonClassNames({
     root: true,
     variant: variant,
     size: size,
@@ -74,28 +74,47 @@ const ButtonBase = forwardRef(function (
       {...rest}
       ref={ref}
       css={[css, cssOuter]}
+      className={[buttonBaseClasses, className].join("")}
       disabled={disabled}
-      className={[buttonClasses, className].join(" ")}
       onClick={_onClick}
     >
+      {startIcon && <StartIcon content={startIcon} />}
       {children}
-      <TouchRipple ref={TouchRippleRef} />
+      {endIcon && <EndIcon content={endIcon} />}
+      {animationframe === "ripple" && <TouchRipple ref={TouchRippleRef} />}
     </button>
   );
 });
 
-export type TouchRippleRefs = {
+export interface TouchRippleRefs {
   _onTouchRipple: (e: React.MouseEvent<HTMLButtonElement>) => void;
-};
+}
 
-type TouchRippleProps = {};
+export interface TouchRippleProps {
+  classesTouchRipple?: string;
+}
 
 const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(
   (props, ref) => {
     useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
-    return <span className="cds-ripple-root" {...props} />;
+    const { classesTouchRipple, ...more } = props;
+    return <span className={`cds-ripple-root`} {...more} />;
   }
 );
+
+export interface IconPropsType {
+  content?: ReactNode;
+}
+
+const StartIcon = (props: IconPropsType & { classesStartIcon?: string }) => {
+  const { content } = props;
+  return <div className={`cds-startIcon`}>{content}</div>;
+};
+
+const EndIcon = (props: IconPropsType & { classesEndIcon?: string }) => {
+  const { content } = props;
+  return <div className={`cds-endIcon`}>{content}</div>;
+};
 
 ButtonBase.defaultProps = {
   variant: "container",
@@ -220,13 +239,6 @@ export type ButtonBaseProps = {
 };
 
 export default ButtonBase;
-
-export function sliceCSSOuter(): { [key: string]: string } {
-  return {
-    root: "cds-not",
-    ripple: "cds-ripple",
-  };
-}
 
 export function _onTouchRipple(e: React.MouseEvent<HTMLButtonElement>) {
   generateRippleButton(e);

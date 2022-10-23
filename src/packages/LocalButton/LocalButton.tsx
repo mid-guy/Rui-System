@@ -1,12 +1,15 @@
 import { css } from "@emotion/react";
 import makeStyles from "../../core/styles/makeStyles";
 import { ThemeProps } from "../../core/theme/themeProvider";
-import ButtonBase from "../ButtonBase/ButtonBase";
+import ButtonBase, { ButtonBaseProps } from "../ButtonBase/ButtonBase";
 
 const useStyles = makeStyles(
   (theme: ThemeProps) => css`
-    &.cds-button-sizeXxl {
-      background-color: red;
+    &.cds-button-sizeLg {
+      background-color: green;
+      ${theme.breakpoints.between("md", "lg")} {
+        background-color: red;
+      }
     }
   `
 );
@@ -15,10 +18,10 @@ export default function LocalButton(props: any) {
   const classes = useStyles();
   return (
     <ButtonBase
-      size="xxl"
+      size="lg"
       variant={"container"}
       cssOuter={classes}
-      {...props}
+      {...(props as ButtonBaseProps)}
     />
   );
 }

@@ -29,9 +29,11 @@ function App() {
             variant="text"
             color="primary"
             size={"lg"}
+            animationframe="scale"
           >
             This is Button Ripple
           </ButtonBase>
+          <LocalButton>This is MakeStyles Button</LocalButton>
           <WithStylesButton>This is WithStylesButton</WithStylesButton>
         </ThemeProvider>
       </header>

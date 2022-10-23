@@ -109,8 +109,11 @@ export const defaultTheme = {
     up: function (breakpoint: BreakpointsValuesProps) {
       return `@media (max-width: ${this.values[breakpoint]}px)`;
     },
-    between: function (breakpoint: BreakpointsValuesProps) {
-      return `@media (max-width: ${this.values[breakpoint]}px)`;
+    between: function (
+      min: BreakpointsValuesProps,
+      max: BreakpointsValuesProps
+    ) {
+      return `@media only screen and (min-width: ${this.values[min]}px) amd (max-width: ${this.values[max]}px)`;
     },
   },
   typography: {
@@ -120,41 +123,47 @@ export const defaultTheme = {
     fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
     h1: {
       fontSize: 32,
+      fontWeight: 700,
     },
     h2: {
       fontSize: 24,
+      fontWeight: 700,
     },
     h3: {
       fontSize: 18.72,
+      fontWeight: 700,
     },
     h4: {
       fontSize: 16,
+      fontWeight: 700,
     },
     h5: {
       fontSize: 13.28,
+      fontWeight: 500,
     },
     h6: {
       fontSize: 10.72,
+      fontWeight: 500,
     },
     subtitle1: {
       fontSize: 12,
+      fontWeight: 500,
     },
     subtitle2: {
       fontSize: 12,
+      fontWeight: 500,
     },
     body1: {
+      fontSize: 14,
       fontWeight: 500,
     },
     body2: {
+      fontSize: 12,
       fontWeight: 500,
     },
   },
   transitions: transitions,
-  spacing: {
-    1: 16,
-    2: 18,
-    3: 20,
-  },
+  spacing: {},
   zIndex: {},
 };
 

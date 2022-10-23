@@ -1,15 +1,14 @@
-import { SerializedStyles } from "@emotion/react";
 import { ThemeProps, useTheme } from "../theme/themeProvider";
-const makeStyles = (
-  innerComponentProps: (theme: ThemeProps) => SerializedStyles
-) => {
+import { StylesOrCreatorType } from "../types/type";
+const makeStyles = (stylesOrCreator: StylesOrCreatorType) => {
   return (props?: any) => {
-    if (props)
-      return innerComponentProps({
+    if (props && props instanceof Object)
+      return stylesOrCreator({
         theme: useTheme() as ThemeProps,
         ...(props && { props }),
       });
-    return innerComponentProps(useTheme() as ThemeProps);
+    return stylesOrCreator(useTheme() as ThemeProps);
   };
 };
+
 export default makeStyles;
