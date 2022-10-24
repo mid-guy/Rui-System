@@ -24,18 +24,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <ButtonBase
-            onClick={withLoading((e: any) => console.log(e))}
-            variant="text"
-            color="primary"
-            size={"lg"}
-            animationframe="scale"
-          >
-            This is Button Ripple
-          </ButtonBase>
-          <LocalButton>This is MakeStyles Button</LocalButton>
-          <WithStylesButton>This is WithStylesButton</WithStylesButton>
+          <ButtonBase variant="container">This is Button Base</ButtonBase>
         </ThemeProvider>
+        <Button variant="contained">This is Button Material UI</Button>
+        {/* <LocalButton>This is MakeStyles Button</LocalButton>
+          <WithStylesButton>This is WithStylesButton</WithStylesButton> */}
       </header>
     </div>
   );

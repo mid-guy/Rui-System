@@ -49,6 +49,8 @@
     "@emotion/babel-plugin": "^11.9.2",
     "@testing-library/react": "^13.4.0",
     "jest": "^29.1.2",
-    "react-test-renderer": "^18.2.0"
+    "react-addons-perf": "^15.4.2",
+    "react-test-renderer": "^18.2.0",
+    "tsconfig-paths-webpack-plugin": "^4.0.0"
   }
 }

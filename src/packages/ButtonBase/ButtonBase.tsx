@@ -1,11 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import getButtonCss, { generateButtonClassNames } from "./getButtonCss";
-import React, {
-  forwardRef,
-  ReactNode,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import { forwardRef, ReactNode, useImperativeHandle, useRef } from "react";
 import { types } from "./constants";
 import { SerializedStyles } from "@emotion/react";
 import {
@@ -13,6 +8,7 @@ import {
   OverridableStringUnion,
 } from "../../core/types/type";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
+import { _onTouchRipple } from "../../core/helpers/generateRipple";
 
 const ButtonBase = forwardRef(function (
   props: OverallButtonBaseProps,
@@ -239,23 +235,3 @@ export type ButtonBaseProps = {
 };
 
 export default ButtonBase;
-
-export function _onTouchRipple(e: React.MouseEvent<HTMLButtonElement>) {
-  generateRippleButton(e);
-}
-
-export function generateRippleButton(e: React.MouseEvent<HTMLButtonElement>) {
-  const clientRect = e.nativeEvent;
-  const x = clientRect.offsetX;
-  const y = clientRect.offsetY;
-  const ripple = document.createElement("span");
-  ripple.classList.add("cds-animation-ripple");
-  const childNodes = e.currentTarget.childNodes;
-  const touchRippleComponent = childNodes[childNodes.length - 1];
-  touchRippleComponent.appendChild(ripple);
-  ripple.onanimationend = () => {
-    ripple.remove();
-  };
-  ripple.style.left = `${x}px`;
-  ripple.style.top = `${y}px`;
-}
