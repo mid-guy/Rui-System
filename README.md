@@ -83,7 +83,7 @@ Lợi ích có được tự xây dựng thư viên UI mang lại là vô cùng 
 
 Từ đây, để tìm ra một hướng đi đúng đắn nhất cho việc phát triển thư viện đó là `Học từ những người đúng đầu biến cái hay của người ta thành của mình`.
 
-## 2.2. CÁC THƯ VIỆN UI PHỔ BIẾN NHẤT.
+## 3. CÁC THƯ VIỆN UI PHỔ BIẾN NHẤT.
 
 Ứng cử viên sáng giá nhất cho việc học hỏi đường lối phát triển cũng như là về mức độ hài lòng từ các lập trình ( trong đó có cả mình ) chính là `Material UI`.
 
@@ -91,6 +91,107 @@ Ra đời từ năm 2014 và được sử dụng cực kỳ phổ biến trong 
 
 Ngoài ra còn có các thư viện đang đi lên rất nhanh khác nhưng cũng sử dụng đường lối phát triển tương tự là `Charka UI`.
 
-## 2.3. ƯU NHƯỢC ĐIỂM CỦA THƯ VIỆN MATERIAL UI.
+## 4. ƯU NHƯỢC ĐIỂM CỦA THƯ VIỆN MATERIAL UI.
 
-Chúng ta sẽ tập chung vào phiên bản `v4` của `Material UI` vì nó
+Chúng ta sẽ tập chung vào phiên bản `v4` của `Material UI`
+
+## 5. TIẾN HÀNH XÂY DỰNG THƯ VIỆN UI
+
+### 5.1. Các yêu cầu cần phải đạt được khi xây dựng thư viện UI
+
+<ul>
+  <li>Chạy được trên các dự án trên môi trường <code>Javascript</code> và <code>Typescript</code>
+  đây là yếu tô quan trọng nhất khi xây dưng thư viện UI nói riêng và các thư viện <code>Bên thứ 3</code> nói chung.
+  </li>
+  <li>Có khả năng mở rộng một cách rõ ràng, mạch lạc</li>
+  <li>Phải có Unit Testing.</li>
+</ul>
+
+### 5.2. Lựa chọn các thành phần xây dựng thư viện
+
+`Style` lựa chọn [Emotion](https://emotion.sh/docs/introduction) vì có thể viết `css` ngay trong `javascript`.
+
+`Module bundler` lựa chọn [Webpack](https://webpack.js.org/) có đóng gói các file `javascript`.
+
+`Testing` lựa chọn [Jest](https://jestjs.io/) đi kèm với [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) để kiểm tra phần render các `base component` được xây dựng
+
+### 5.3. Xây dựng các phương thức quan trọng cho thư viện
+
+<ul>
+  <li>
+    <code>defaultTheme</code> là hàm cung cấp các thông số, giá trị mặc định ban đầu chung sẽ được sử dung <code>đồng bộ</code> trên toàn bộ thư viện. 
+  </li>
+  <li>
+    <code>createTheme</code> Tạo, cập nhật sửa đổi lại các thuộc tính <code>defaultTheme</code> như đã nói ở trên.
+  </li>
+  <li>
+    <code>makeStyles</code> Tiến hành ghi đè các thuộc tính có sẵn của <code>Base Component</code> từ đó tạo ra một bản sao riêng biệt để phục vụ cho một số trường hợp cần sửa đổi lại <code>Component</code>.
+  </li>
+  <li>
+    <code>withStyles</code> tương tự <code>makeStyles</code> như đã nói ở trên. Nhưng cách thức sử dụng dựa trên <code>High Order Component</code>.
+  </li>
+</ul>
+
+> Còn một vài phương thức nữa nhưng nhìn chung thì sau khi xây dựng xong các phương thức trên thì việc xây dưng nốt các phương thức còn lại chỉ là vấn đề thời gian. Cụ thể hơn là các phương liên quan đến Responsive
+
+#### Chi tiết phương thức <code>defaultTheme</code>
+
+Đây sẽ là một biến được khai báo dạng `Object` bao gồm các `keys` chính `component`, `palette`, `animationframe`, `breakpoints`, `transitions` sẽ được nói đến dưới đây. còn một vài `keys` cũng quan trọng nhưng chỉ mang tính chất khai báo như là `typography`, `spacing`, `zIndex`... sẽ được nói đến trong các phần của bài blog tiếp theo
+
+`Component` đây là `keys` chứa các thuộc tính của `base component`. Ta sẽ lấy ví dụ điển hình là `button` như dưới đây.
+
+![The best thing to hold onto in life is each other.!](/src/img/defaultTheme--components--button.png)
+
+`variants` là `keys` nắm giữa các dạng của `button component`. Có các giá trị mặc định là `container`, `outlined`, `text`.
+
+`sizes` là `keys` quyết định kích thước hiển thị của `button component`. Có các giá trị mặc định là `sm`, `md`, `lg`.
+
+`backgrounds` là `keys` quyết định màu nền hiển thị của `button component` - Đây là `keys bắt buộc` phải đi cùng với `keys variants="container"`.
+
+`colors` là `keys` quyết định màu sắc của chữ nền hiển thị của `button component` - Đây là `keys bắt buộc` phải đi cùng với `keys variants="text"`.
+
+`outlinedTheme` là `keys` quyết định màu sắc của chữ, viền hiển thị của`button component`- Đây là `keys bắt buộc` phải đi cùng với `keys variants="outlined"`.
+
+> Ảnh chi tiết code từng `Props` của biến `button component`
+
+![button-variants!](/src/img/defaultTheme--components--button--variants.png)
+
+![button-sizes!](/src/img/defaultTheme--components--button--sizes.png)
+
+![button-backgrounds!](/src/img/defaultTheme--components--button--backgrounds.png)
+
+![button-colors!](/src/img/defaultTheme--components--button--colors.png)
+
+![button-themeOutlined!](/src/img/defaultTheme--components--button--themeOutlined.png)
+
+> Các `Keys` đều có một hướng xây dựng chung là các `value` của `keys` đều trả về một hàm mà ở đó nhận vào một `theme` được khai báo kiểu `ThemeProps`.
+
+Như đã thấy ở trên thì mọi người sẽ thắc mắc là viết thế này thì mở rộng thêm các biến ví dụ như `variants` có giá trị là `ghost` chẳng hạn thì làm thế nào?
+
+Đây là một vấn đề mà ở `Material UI v4` trước đây không làm được. Đây chính là điểm mấu chốt của việc xây dựng thư viện UI mà mình đã nói ở đầu bài viết. Vậy thì câu trả lời nằm ở đâu?
+
+`Tiến đến phía dưới sẽ có ở phần dưới để có câu trả lời`
+
+`palette` là bộ màu định nghĩa sẵn cho các `component` trên toàn bộ thư viện. Giúp toàn bộ thư viện có sự đồng bộ về màu sắc.
+
+Trong quá trình thiết kế `component` thường sẽ kế thừa giá trị `palette` để tiện cho việc thiết kế.
+
+> Ảnh chi tiết code của `palette`
+
+![theme-palette!](/src/img/defaultTheme--components--button--palette.png)
+
+> Ảnh chi tiết code của bộ màu định nghĩa sẵn cho `palette` được tham khảo trực tiếp từ [Material UI](https://mui.com/material-ui/customization/color/)
+
+![theme-palette!](/src/img/defaultTheme--components--palette--colors.png)
+
+`animationframe` là `keys` nắm giữa các dạng `hiệu ứng` của các `component` ( nếu có ) . Có các giá trị mặc định với `button component` là `ripple`, `scale`.
+
+> Ảnh chi tiết code `animationframes` của `button component`
+
+![button-animations!](/src/img/defaultTheme--components--button--animationFrames.png)
+
+#### Chi tiết phương thức <code>createTheme</code>
+
+#### Chi tiết phương thức <code>makeStyles</code>
+
+#### Chi tiết phương thức <code>withStyles</code>

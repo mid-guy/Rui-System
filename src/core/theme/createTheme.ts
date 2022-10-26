@@ -88,6 +88,7 @@ export const defaultTheme = {
       colors: colors,
       outlinedTheme: outlinedTheme,
     },
+    // key ứng với từng component của thư viện
   },
   palette: palette,
   animationframe: {

@@ -33,7 +33,6 @@ export const animationframes = {
     }
   `,
 };
-
 export const variants = {
   container: (theme: ThemeProps) => `
     color: ${palette.primary.contrastText};
@@ -137,3 +136,4 @@ export const outlinedTheme = {
     }
   `,
 };
+
