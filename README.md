@@ -186,14 +186,57 @@ Trong quá trình thiết kế `component` thường sẽ kế thừa giá trị
 
 ![button-animations!](/src/img/defaultTheme--components--button--animationFrames.png)
 
+`breakpoints` đây là `keys` chứa các thông số về kích thuớc màn hình chỉ định và cung cấp thêm một vài phương thức hỗ trợ cho việc định vị khoảng giới hạn màn hình nhằm phục vụ cho việc `responsive`.
 
-`breakpoints` đây là `keys` chứa các thông số về kích thuớc màn hình chỉ định và cung cấp thêm một vài phương thức hỗ trợ cho việc định vị khoảng giới hạn màn hình nhằm phục vụ cho việc `responsive`. Ta sẽ lấy ví dụ điển hình là `button` như dưới đây.
+> Ảnh chi tiết code `breakpoints` được định nghĩa
+
+![breakpoints!](/src/img/breakpoints.png)
+
+Như có thể thấy rất rõ là `values` được dùng để khai báo các `mốc` kích thước màn hình nhất định.
+
+> Các mốc kích thước màn hình được tham khảo trực tiếp từ [Material UI/Responsive](https://mui.com/material-ui/customization/breakpoints/)
+
+<ul>
+  <li>
+
+`down` là biểu thị cho `từ kích thước màn hình nhỏ nhất` của màn hình.
+
+  </li>
+  <li>
+
+`up` là biểu thị cho `từ kích thước màn hình lớn nhất` của màn hình.
+
+  </li>
+  <li>
+
+`between` là biểu thị cho `từ kích thước màn hình nhỏ nhất đến kích thước lớn nhất` của màn hình.
+
+  </li>
+</ul>
+
+`typography` đây là `keys` chứa các thông số về kích thuớc kiểu chữ, phông chữ... cho toàn bộ thư viện.
+
+> Ảnh chi tiết code `typography` được định nghĩa
+
+![defaultTheme-typography!](/src/img/defaultTheme-typo.png)
+
+> Tham khảo các quy tắc lựa chọn kích thước chữ của [Material UI/Typography](https://mui.com/material-ui/customization/typography/)
+
+`transitions` đây là `keys` chứa các thông số mặc định về thời gian thực hiện các `animations`
+
+> Ảnh chi tiết code `transitions` được định nghĩa
+
+![defaultTheme-transitions!](/src/img/defaultTheme-transitions.png)
+
+> Tham khảo các quy tắc của [Material UI/Transitions](https://mui.com/material-ui/customization/transitions/)
 
 #### Chi tiết phương thức <code>createTheme</code>
 
 #### Chi tiết phương thức <code>makeStyles</code>
 
 #### Chi tiết phương thức <code>withStyles</code>
+
+### 5.4. Xây dựng Button component ( Component Tiêu biểu )
 
 > Các `Keys` đều có một hướng xây dựng chung là các `value` của `keys` đều trả về một hàm mà ở đó nhận vào một `theme` được khai báo kiểu `ThemeProps`.
 

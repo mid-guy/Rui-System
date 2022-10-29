@@ -79,6 +79,53 @@ export const transitions = {
   },
 };
 
+export const Typography = {
+  global: {
+    fontSize: 16,
+  },
+  fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
+  h1: {
+    fontSize: 32,
+    fontWeight: 700,
+  },
+  h2: {
+    fontSize: 24,
+    fontWeight: 700,
+  },
+  h3: {
+    fontSize: 18.72,
+    fontWeight: 700,
+  },
+  h4: {
+    fontSize: 16,
+    fontWeight: 700,
+  },
+  h5: {
+    fontSize: 13.28,
+    fontWeight: 500,
+  },
+  h6: {
+    fontSize: 10.72,
+    fontWeight: 500,
+  },
+  subtitle1: {
+    fontSize: 12,
+    fontWeight: 500,
+  },
+  subtitle2: {
+    fontSize: 12,
+    fontWeight: 500,
+  },
+  body1: {
+    fontSize: 14,
+    fontWeight: 500,
+  },
+  body2: {
+    fontSize: 12,
+    fontWeight: 500,
+  },
+};
+
 export const defaultTheme = {
   components: {
     button: {
@@ -117,53 +164,8 @@ export const defaultTheme = {
       return `@media only screen and (min-width: ${this.values[min]}px) amd (max-width: ${this.values[max]}px)`;
     },
   },
-  typography: {
-    global: {
-      fontSize: 16,
-    },
-    fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
-    h1: {
-      fontSize: 32,
-      fontWeight: 700,
-    },
-    h2: {
-      fontSize: 24,
-      fontWeight: 700,
-    },
-    h3: {
-      fontSize: 18.72,
-      fontWeight: 700,
-    },
-    h4: {
-      fontSize: 16,
-      fontWeight: 700,
-    },
-    h5: {
-      fontSize: 13.28,
-      fontWeight: 500,
-    },
-    h6: {
-      fontSize: 10.72,
-      fontWeight: 500,
-    },
-    subtitle1: {
-      fontSize: 12,
-      fontWeight: 500,
-    },
-    subtitle2: {
-      fontSize: 12,
-      fontWeight: 500,
-    },
-    body1: {
-      fontSize: 14,
-      fontWeight: 500,
-    },
-    body2: {
-      fontSize: 12,
-      fontWeight: 500,
-    },
-  },
   transitions: transitions,
+  typography: Typography,
   spacing: {},
   zIndex: {},
 };
