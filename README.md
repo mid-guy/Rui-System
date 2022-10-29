@@ -138,7 +138,7 @@ Chúng ta sẽ tập chung vào phiên bản `v4` của `Material UI`
 
 Đây sẽ là một biến được khai báo dạng `Object` bao gồm các `keys` chính `component`, `palette`, `animationframe`, `breakpoints`, `transitions` sẽ được nói đến dưới đây. còn một vài `keys` cũng quan trọng nhưng chỉ mang tính chất khai báo như là `typography`, `spacing`, `zIndex`... sẽ được nói đến trong các phần của bài blog tiếp theo
 
-`Component` đây là `keys` chứa các thuộc tính của `base component`. Ta sẽ lấy ví dụ điển hình là `button` như dưới đây.
+`components` đây là `keys` chứa các thuộc tính của `base component`. Ta sẽ lấy ví dụ điển hình là `button` như dưới đây.
 
 ![The best thing to hold onto in life is each other.!](/src/img/defaultTheme--components--button.png)
 
@@ -152,6 +152,10 @@ Chúng ta sẽ tập chung vào phiên bản `v4` của `Material UI`
 
 `outlinedTheme` là `keys` quyết định màu sắc của chữ, viền hiển thị của`button component`- Đây là `keys bắt buộc` phải đi cùng với `keys variants="outlined"`.
 
+> Ảnh thể hiện thiết kế điển hình của `button componenet`
+
+![button-variants!](/src/img/preview--component.jpg)
+
 > Ảnh chi tiết code từng `Props` của biến `button component`
 
 ![button-variants!](/src/img/defaultTheme--components--button--variants.png)
@@ -163,14 +167,6 @@ Chúng ta sẽ tập chung vào phiên bản `v4` của `Material UI`
 ![button-colors!](/src/img/defaultTheme--components--button--colors.png)
 
 ![button-themeOutlined!](/src/img/defaultTheme--components--button--themeOutlined.png)
-
-> Các `Keys` đều có một hướng xây dựng chung là các `value` của `keys` đều trả về một hàm mà ở đó nhận vào một `theme` được khai báo kiểu `ThemeProps`.
-
-Như đã thấy ở trên thì mọi người sẽ thắc mắc là viết thế này thì mở rộng thêm các biến ví dụ như `variants` có giá trị là `ghost` chẳng hạn thì làm thế nào?
-
-Đây là một vấn đề mà ở `Material UI v4` trước đây không làm được. Đây chính là điểm mấu chốt của việc xây dựng thư viện UI mà mình đã nói ở đầu bài viết. Vậy thì câu trả lời nằm ở đâu?
-
-`Tiến đến phía dưới sẽ có ở phần dưới để có câu trả lời`
 
 `palette` là bộ màu định nghĩa sẵn cho các `component` trên toàn bộ thư viện. Giúp toàn bộ thư viện có sự đồng bộ về màu sắc.
 
@@ -190,8 +186,21 @@ Trong quá trình thiết kế `component` thường sẽ kế thừa giá trị
 
 ![button-animations!](/src/img/defaultTheme--components--button--animationFrames.png)
 
+
+`breakpoints` đây là `keys` chứa các thông số về kích thuớc màn hình chỉ định và cung cấp thêm một vài phương thức hỗ trợ cho việc định vị khoảng giới hạn màn hình nhằm phục vụ cho việc `responsive`. Ta sẽ lấy ví dụ điển hình là `button` như dưới đây.
+
 #### Chi tiết phương thức <code>createTheme</code>
 
 #### Chi tiết phương thức <code>makeStyles</code>
 
 #### Chi tiết phương thức <code>withStyles</code>
+
+> Các `Keys` đều có một hướng xây dựng chung là các `value` của `keys` đều trả về một hàm mà ở đó nhận vào một `theme` được khai báo kiểu `ThemeProps`.
+
+Như đã thấy ở trên thì mọi người sẽ thắc mắc là viết thế này thì mở rộng thêm các biến ví dụ như `variants` có giá trị là `ghost` chẳng hạn thì làm thế nào?
+
+Đây là một vấn đề mà ở `Material UI v4` trước đây không làm được. Đây chính là điểm mấu chốt của việc xây dựng thư viện UI mà mình đã nói ở đầu bài viết. Vậy thì câu trả lời nằm ở đâu?
+
+Vấn đề nằm ở cách mà ta khai báo `typescript` cho từng `keys` tương ứng.
+
+Thử xem phản ứng của `variant` có không có `ghost` là giá trị mặc định có trong `typescript`

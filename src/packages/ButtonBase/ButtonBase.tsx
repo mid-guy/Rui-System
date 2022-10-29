@@ -33,6 +33,7 @@ const ButtonBase = forwardRef(function (
     endIcon,
     ...rest
   } = props;
+
   const buttonBaseClasses = generateButtonClassNames({
     root: true,
     variant: variant,
@@ -50,6 +51,7 @@ const ButtonBase = forwardRef(function (
     fullWidth,
     disabled,
   });
+
   const css = getButtonCss(theme, props);
   const TouchRippleRef = useRef<TouchRippleRefs>(null);
   const withTouchRipple = (callback?: Function) => {
