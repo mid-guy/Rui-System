@@ -1,5 +1,6 @@
 import { ThemeProps, useTheme } from "../theme/themeProvider";
 import { StylesOrCreatorType } from "../types/type";
+
 const makeStyles = (stylesOrCreator: StylesOrCreatorType) => {
   return (props?: any) => {
     if (props && props instanceof Object)

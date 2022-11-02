@@ -9,25 +9,6 @@ import {
 import { blue, green, orange, pink, red } from "../colors/colors";
 import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
 
-function createTheme(theme?: ThemeProps, options?: Object) {
-  if (!theme) return defaultTheme;
-  const outerTheme = merge(
-    options ? theme : defaultTheme,
-    options ? options : theme
-  );
-  return outerTheme;
-}
-
-const merge = (target: any, source: any) => {
-  for (const key of Object.keys(source)) {
-    if (source[key] instanceof Object) {
-      Object.assign(source[key], merge(target[key], source[key]));
-    }
-  }
-  Object.assign(target || {}, source);
-  return target;
-};
-
 export const palette = {
   primary: {
     main: blue[700],
@@ -168,6 +149,25 @@ export const defaultTheme = {
   typography: Typography,
   spacing: {},
   zIndex: {},
+};
+
+function createTheme(theme?: ThemeProps, options?: Object) {
+  if (!theme) return defaultTheme;
+  const outerTheme = merge(
+    options ? theme : defaultTheme,
+    options ? options : theme
+  );
+  return outerTheme;
+}
+
+const merge = (target: any, source: any) => {
+  for (const key of Object.keys(source)) {
+    if (source[key] instanceof Object) {
+      Object.assign(source[key], merge(target[key], source[key]));
+    }
+  }
+  Object.assign(target || {}, source);
+  return target;
 };
 
 export default createTheme;

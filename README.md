@@ -232,9 +232,73 @@ Như có thể thấy rất rõ là `values` được dùng để khai báo các
 
 #### Chi tiết phương thức <code>createTheme</code>
 
+Đơn giản có thể hiểu đây là phương thức dùng để thiết lập `defaultTheme` mới cho toàn bộ dự án.
+
+Phương thức này được thiết kế dựa trên `recursion` cho phép nó ghi đè chính bản thân nó trước đó nhiều lần tùy thích
+
+> Ảnh chi tiết code `createTheme` được định nghĩa
+
+![createTheme!](/src/img/createTheme.png)
+
+> Ví dụ về sử dụng `createTheme`
+
+![createTheme!](/src/img/createTheme--demo.png)
+
+Khởi đầu `defaultTheme` chắc chắn sẽ là `theme` mặc định
+
+Ta có thể bổ sung thêm vào trong bộ `palette` 2 nhóm mới là `ghost` và `innerGhost` bằng việc kết thừa trực tiếp giá trị của `defaultTheme` trước đó.
+
+Lúc này bạn có thể kế thừa tiếp giá trị `palette` ở trong `overridePaletteTheme` và sử dụng nó cho việc tạo mới các biến `variants` mới là `ghost` và `innerGhost`.
+
+> Bạn sẽ thấy sự vô lý khi ta có thể sử dụng `palette` có giá trị `ghost`, `innerGhost` mà nó thậm trí còn chưa được tồn tại trong `ThemeProps`. Phần cuối sẽ trả lời.
+
 #### Chi tiết phương thức <code>makeStyles</code>
 
+Phương thức `makeStyles` nhận vào một `function` và trả ra `styles` mới.
+
+Phương thức `makeStyles` cho phép người dùng ghi đè các `biến` đã có từ trước nhằm phục vụ cho một số trường hợp mà ta chỉ muốn ghi đè `biến` đó trong phạm vị hiện tại mà ta sử dụng.
+
+> Ví dụ về sử dụng `makeStyles` để ghi đè `biến` đã có từ trước đó của `button component`
+
+![makeStyles--demo!](/src/img/makeStyles--demo.png)
+
+Có thể thấy ta thực hiện việc `responsive` cho className `.cds-button-sizeLg` sẽ thay đổi màu sắc trong phạm vi `md` & `lg`
+
+Chú ý rằng `button component` ban đầu không hề có `responsive` và việc ghi đè trên chỉ có tác dụng với các `button component` nào nhận `classes` thôi.
+
+Có thể thấy việc đưa được `useStyles` ra làm một biến sẽ có ích lợi vô cùng lớn cho việc tái sử dụng trên toàn bộ dự án. Vì ta coi nó như là một `biến` mang tính chất tùy chọn.
+
+Thêm nữa nếu ai là người khó tính thì sẽ không thể bắt lỗi được bạn vì bản chất việc bạn đưa `useStyles` ra ngoài `Component` sẽ khiến nó chỉ được khởi tạo `một lần duy nhất` nên sẽ loại bỏ các hàm gây tốn bộ nhớ như là `useCallback` hay là `useMemo` để `"tăng tốc"` mà vốn dĩ đã được các lập trình viên `làm quá lên` trong quá trình tối ưu hiệu năng
+
+Và cuối cùng đó là ta có thể sử dụng được `hook` nằm ngoài phạm vi của `component` ( vì ta đang kế thừa `theme` từ `useContext` của `ThemeProvider` ). Đây là điều gần như không thể nếu viết code theo lối tư duy truyền thống.
+
+Từ đó tăng tối đa khả năng mở rộng cũng như là việc tái sử dụng
+
+> Chi tiết code `makeStyles`
+
+![makeStyles!](/src/img/makeStyles.png)
+
+`styleOrCreator` là một hàm được truyền từ ngoài vào nhằm tái cấu trúc lại `biến` của `button component`. Hàm này có tham số đầu vào chính là `useTheme`.
+
+> `useTheme` chính một `custom hook` được gọi ở `ngoài component`
+
+ngoài ra `props` là một biến tùy chọn dùng để tăng tính linh hoạt cho `stylesOrCreator`
+
 #### Chi tiết phương thức <code>withStyles</code>
+
+Tương tư như `makeStyles` thì `withStyles` sẽ nhận `Component` và trả ra `Component` có `styles` mới.
+
+Điểm khác biết là cách sử dụng vì `withStyles` thường dùng riêng biết trong một `file` mà ở đó ta định nghĩa ra một `component` mới và sử dụng nó như một `component chính` chứ không phải mang tinh chất tuỳ thích như `makeStyles`
+
+> Ví dụ sử dụng `withStyles` để tạo ra một biến thể mới cho `button component` có tên là `WithStylesButton`
+
+![withStyles--demo!](/src/img/withStyles--demo.png)
+
+> Công ty Airbnb cũng sử dụng cách như trên để tạo ra hàng loạt các biến thể của một `button comppnent` từ một `component gốc`.
+
+> Chi tiết code `withStyles`
+
+![withStyles!](/src/img/withStyles.png)
 
 ### 5.4. Xây dựng Button component ( Component Tiêu biểu )
 
