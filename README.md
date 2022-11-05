@@ -49,12 +49,6 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 > NHỮNG LÝ THUYẾT VÀ CÁC ĐỊNH NGHĨA DƯỚI ĐÂY CHỈ PHÙ HỢP VỚI WEBSITE.
 
-## 1. Lý do cho sự tồn tại của bài blog này
-
-Trong quá trình thực hiện các bài phỏng vấn, mà mình hoàn thành tốt. Mình luôn tìm kiếm những thứ kiến thức giúp mình trở nết xuất sắc hơn.. Mình thường đặt câu hỏi thêm hỏi cho nhà tuyển dụng rằng `Liệu có thứ gì em cần lưu tâm ngoài những thứ em và anh vừa trao đổi trong cuộc phỏng vấn vừa rồi không ạ ?` thì câu trả lời nhìn thấy xuát hiện `nhiều nhất` đó là `Em nên thử tìm hiểu về cách xây dựng một thư viện UI cho công ty`.
-
-Đó là câu trả lời đã thôi thúc mình thực hiện một bản demo mà chắc chắn trong tương lai mình sẽ được sử dụng. Cũng như để khép lại một năm đầu tiên mình bước chân vào nghề lập trình này.
-
 ## 2. Thư viện UI là gì? Tại sao lại cần phải tự xây dựng một thư viện UI riêng?
 
 ### 2.1. Thư viện UI là gì?

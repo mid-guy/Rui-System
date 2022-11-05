@@ -23,10 +23,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <ThemeProvider theme={theme}>
-          <ButtonBase variant="ghost">This is Button Base</ButtonBase>
-        </ThemeProvider>
-        <Button variant="contained">This is Button Material UI</Button>
+        {/* <ThemeProvider theme={theme}></ThemeProvider> */}
+
+        {/* <Button variant="contained">This is Button Material UI</Button> */}
+        {/* <ButtonBase variant="container">This is Button Base</ButtonBase> */}
         {/* <LocalButton>This is MakeStyles Button</LocalButton>
           <WithStylesButton>This is WithStylesButton</WithStylesButton> */}
       </header>

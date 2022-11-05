@@ -69,12 +69,12 @@ const ButtonBase = forwardRef(function (
 
   return (
     <button
-      {...rest}
       ref={ref}
       css={[css, cssOuter]}
       className={[buttonBaseClasses, className].join("")}
       disabled={disabled}
       onClick={_onClick}
+      {...rest}
     >
       {startIcon && <StartIcon content={startIcon} />}
       {children}
@@ -95,8 +95,8 @@ export interface TouchRippleProps {
 const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(
   (props, ref) => {
     useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
-    const { classesTouchRipple, ...more } = props;
-    return <span className={`cds-ripple-root`} {...more} />;
+    const { ...more } = props;
+    return <span className="cds-ripple-root" {...more} />;
   }
 );
 

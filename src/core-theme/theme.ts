@@ -21,14 +21,14 @@ const theme = createTheme(overridePaletteTheme, {
   components: {
     button: {
       variants: {
-        ghost: (theme: ThemeProps) => `
-          color: ${theme.palette.ghost.main};
-          box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
-        `,
-        innerGhost: (theme: ThemeProps) => `
-          color: ${theme.palette.innerGhost.main};
-          box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
-        `,
+        // ghost: (theme: ThemeProps) => `
+        //   color: ${theme.palette.ghost.main};
+        //   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+        // `,
+        // innerGhost: (theme: ThemeProps) => `
+        //   color: ${theme.palette.innerGhost.main};
+        //   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+        // `,
       },
     },
   },

@@ -47,7 +47,6 @@ const classNames: { [key: string]: string | any } = {
   fullWidth: "cds-button-fullWidth",
   disabled: "cds-button-disabled",
   visible: "cds-button-visible",
-  touchRipple: "cds-ripple-root",
   variant: (value: ButtonPropsVariant): string => {
     return value && `cds-button-${capitalizeFirstLetter(value)}`;
   },
@@ -139,27 +138,6 @@ const getButtonCss = (
   }
   &.${classNames.visible} {
     display: ${props.isVisible ? "block" : "none"};
-  }
-  .${classNames.touchRipple} {
-    > .cds-animation-ripple {
-      position: absolute;
-      background: inherit;
-      transform: translate(-50%, -50%);
-      animation: ripples 650ms linear;
-      border-radius: 50%;
-      @keyframes ripples {
-        0% {
-          width: 0px;
-          height: 0px;
-          opacity: 0.15;
-        }
-        100% {
-          width: 500px;
-          height: 500px;
-          opacity: 0;
-        }
-      }
-    }
   }
 `;
 
