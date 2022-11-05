@@ -12,7 +12,6 @@ import {
 } from "./ButtonBase";
 
 export const generateButtonClassNames = (props: {
-  root: boolean;
   fullWidth?: boolean;
   disabled?: boolean;
   variant?: ButtonPropsVariant;

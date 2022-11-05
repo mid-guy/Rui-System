@@ -8,8 +8,8 @@ import ButtonBase, {
 } from "../ButtonBase/ButtonBase";
 
 const useStyles = (theme: ThemeProps) => css`
-  &.cds-button-sizeXl {
-    background-color: green;
+  &.cds-button-sizeLg {
+    background-color: red;
     ${theme.breakpoints.down("md")} {
       background-color: red;
     }

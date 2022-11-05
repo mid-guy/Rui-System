@@ -20,7 +20,7 @@ export default function LocalButton(props: any) {
     <ButtonBase
       size="lg"
       variant={"container"}
-      cssOuter={classes}
+      outerCSS={classes}
       {...(props as ButtonBaseProps)}
     />
   );

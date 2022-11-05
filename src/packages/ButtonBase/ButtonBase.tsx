@@ -9,6 +9,8 @@ import {
 } from "../../core/types/type";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import { _onTouchRipple } from "../../core/helpers/generateRipple";
+import getButtonRootCss from "./getButtonRootCss";
+import getButtonRippleCss from "./getButtonRippleCss";
 
 const ButtonBase = forwardRef(function (
   props: OverallButtonBaseProps,
@@ -26,16 +28,14 @@ const ButtonBase = forwardRef(function (
     outlinedTheme,
     fullWidth,
     disabled,
-    cssOuter,
-    className,
+    outerCSS,
     children,
     startIcon,
     endIcon,
     ...rest
   } = props;
 
-  const buttonBaseClasses = generateButtonClassNames({
-    root: true,
+  const scopeButtonBaseClasses = generateButtonClassNames({
     variant: variant,
     size: size,
     ...(variant === "text" && {
@@ -52,7 +52,7 @@ const ButtonBase = forwardRef(function (
     disabled,
   });
 
-  const css = getButtonCss(theme, props);
+  const scopeButtonBaseCSS = getButtonCss(theme, props);
   const TouchRippleRef = useRef<TouchRippleRefs>(null);
   const withTouchRipple = (callback?: Function) => {
     return (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -60,6 +60,7 @@ const ButtonBase = forwardRef(function (
       callback && callback(e);
     };
   };
+
   const _onClick =
     animationframe === "ripple"
       ? onClick
@@ -68,19 +69,23 @@ const ButtonBase = forwardRef(function (
       : onClick;
 
   return (
-    <button
-      ref={ref}
-      css={[css, cssOuter]}
-      className={[buttonBaseClasses, className].join("")}
-      disabled={disabled}
+    <ButtonRoot
+      ref={ref as any}
+      theme={theme}
       onClick={_onClick}
+      disabled={disabled}
+      scopeButtonBaseClasses={scopeButtonBaseClasses}
+      scopeButtonBaseCSS={scopeButtonBaseCSS}
+      outerCSS={outerCSS}
       {...rest}
     >
       {startIcon && <StartIcon content={startIcon} />}
       {children}
       {endIcon && <EndIcon content={endIcon} />}
-      {animationframe === "ripple" && <TouchRipple ref={TouchRippleRef} />}
-    </button>
+      {animationframe === "ripple" && (
+        <TouchRipple ref={TouchRippleRef} theme={theme} />
+      )}
+    </ButtonRoot>
   );
 });
 
@@ -90,15 +95,49 @@ export interface TouchRippleRefs {
 
 export interface TouchRippleProps {
   classesTouchRipple?: string;
+  theme: ThemeProps;
 }
 
 const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(
   (props, ref) => {
     useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
-    const { ...more } = props;
-    return <span className="cds-ripple-root" {...more} />;
+    const { theme, ...more } = props;
+    const css = getButtonRippleCss(theme);
+    return <span className="cds-ripple-root" css={css} {...more} />;
   }
 );
+
+const ButtonRoot = forwardRef<
+  React.Ref<HTMLButtonElement>,
+  OverallButtonBaseProps & {
+    theme: ThemeProps;
+    scopeButtonBaseClasses: string;
+    scopeButtonBaseCSS: SerializedStyles;
+  }
+>(function (props, ref) {
+  const {
+    theme,
+    className,
+    scopeButtonBaseClasses,
+    scopeButtonBaseCSS,
+    outerCSS,
+    children,
+    ...more
+  } = props;
+  const scopeButtonRootCSS = getButtonRootCss(theme);
+  return (
+    <button
+      ref={ref as any}
+      className={["cds-button-root", scopeButtonBaseClasses, className].join(
+        " "
+      )}
+      css={[scopeButtonRootCSS, scopeButtonBaseCSS, outerCSS]}
+      {...more}
+    >
+      {children}
+    </button>
+  );
+});
 
 export interface IconPropsType {
   content?: ReactNode;
@@ -106,12 +145,12 @@ export interface IconPropsType {
 
 const StartIcon = (props: IconPropsType & { classesStartIcon?: string }) => {
   const { content } = props;
-  return <div className={`cds-startIcon`}>{content}</div>;
+  return <div className={`cds-button-startIcon`}>{content}</div>;
 };
 
 const EndIcon = (props: IconPropsType & { classesEndIcon?: string }) => {
   const { content } = props;
-  return <div className={`cds-endIcon`}>{content}</div>;
+  return <div className={`cds-button-endIcon`}>{content}</div>;
 };
 
 ButtonBase.defaultProps = {
@@ -233,7 +272,11 @@ export type ButtonBaseProps = {
    * Children to use
    * @default {}
    */
-  cssOuter?: SerializedStyles;
+  outerCSS?: SerializedStyles;
 };
+
+ButtonBase.displayName = "ButtonBase";
+TouchRipple.displayName = "TouchRipple";
+ButtonRoot.displayName = "ButtonRoot";
 
 export default ButtonBase;

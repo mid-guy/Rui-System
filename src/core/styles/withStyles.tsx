@@ -18,8 +18,8 @@ const withStyles = (stylesOrCreator: StylesOrCreatorType) => {
         }
       }
       const useStyles = makeStyles(stylesOrCreator);
-      const cssOuter = useStyles();
-      return <Component {...props} cssOuter={cssOuter} ref={ref} />;
+      const outerCSS = useStyles();
+      return <Component {...props} outerCSS={outerCSS} ref={ref} />;
     });
     return WithStyles;
   };

@@ -1,6 +1,7 @@
+import { ThemeProps } from "./../../core/theme/themeProvider";
 import { css, SerializedStyles } from "@emotion/react";
 
-const getButtonRippleCss = (): SerializedStyles => css`
+const getButtonRippleCss = (theme: ThemeProps): SerializedStyles => css`
   &.cds-ripple-root {
     > .cds-animation-ripple {
       position: absolute;

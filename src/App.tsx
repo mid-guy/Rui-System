@@ -24,11 +24,19 @@ function App() {
     <div className="App">
       <header className="App-header">
         {/* <ThemeProvider theme={theme}></ThemeProvider> */}
+        <Button variant="contained">This is Button Material UI</Button>
 
-        {/* <Button variant="contained">This is Button Material UI</Button> */}
-        {/* <ButtonBase variant="container">This is Button Base</ButtonBase> */}
-        {/* <LocalButton>This is MakeStyles Button</LocalButton>
-          <WithStylesButton>This is WithStylesButton</WithStylesButton> */}
+        <ButtonBase variant="container" size="lg" className="mt-10 mb-10">
+          This is Button Base
+        </ButtonBase>
+
+        <LocalButton size="lg" className="mb-10">
+          This is MakeStyles Button
+        </LocalButton>
+
+        <WithStylesButton className="mb-10">
+          This is WithStylesButton
+        </WithStylesButton>
       </header>
     </div>
   );
