@@ -41,6 +41,7 @@ export const generateButtonClassNames = (props: {
     }, [])
     .join(" ");
 };
+
 const classNames: { [key: string]: string | any } = {
   root: "cds-button-root",
   fullWidth: "cds-button-fullWidth",

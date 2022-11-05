@@ -286,15 +286,58 @@ Tương tư như `makeStyles` thì `withStyles` sẽ nhận `Component` và tr�
 
 > Ví dụ sử dụng `withStyles` để tạo ra một biến thể mới cho `button component` có tên là `WithStylesButton`
 
-![withStyles--demo!](/src/img/withStyles--demo.png)
+> [Airbnb](https://www.airbnb.com.vn/) cũng sử dụng cách như trên để tạo ra hàng loạt các biến thể của một `button comppnent` từ một `component gốc`.
 
-> Công ty Airbnb cũng sử dụng cách như trên để tạo ra hàng loạt các biến thể của một `button comppnent` từ một `component gốc`.
+![withStyles--demo!](/src/img/withStyles--demo.png)
 
 > Chi tiết code `withStyles`
 
 ![withStyles!](/src/img/withStyles.png)
 
 ### 5.4. Xây dựng Button component ( Component Tiêu biểu )
+
+Do yêu cầu về việc mở rộng và dễ dàng biết chính xác các `style` có nguồn gốc từ đâu thì ta sẽ lựa chọn việc tạo ra các `classNames` và `css`
+dựa theo giá trị `props`.
+
+> Hình ảnh mô tả luồng của `button component`
+
+hàm `getButtonClassNames`sẽ nhận vào `props` và trả ra các `className riêng biệt` tương ứng với nó và chúng sẽ được nối thành một chuỗi với nhau. Mục đích của việc này là để có thể dễ dàng `nối thêm` các `className` khác từ bên ngoài `component` nhằm tăng độ linh hoạt ( điển hình là [Tailwindcss](https://tailwindcss.com/docs/installation/) )
+
+> Hình ảnh chi tiết code `getButtonClassNames`
+
+![getButtonClassNames!](/src/img/getButtonClassNames.png)
+
+> Hình ảnh chi tiết code `classNames`
+
+![constantClassNames!](/src/img/constantClassNames.png)
+
+> Hình ảnh `button component` nhận các `props` và `classNames` bên ngoài
+
+![classNames--using!](/src/img/classNames--using.png)
+
+> Hình ảnh các `className` được tách riêng và nối thành chuỗi
+
+![button-classNames-html!](/src/img/button-classNames-html.png)
+
+> Hình ảnh `css` của `root`
+
+![button-root-classNames-html!](/src/img/button-root-classNames-html.png)
+
+> Hình ảnh `css` của các `props`
+
+![button-props-classNames-html!](/src/img/button-props-classNames-html.png)
+
+> Hình ảnh `css` của các `className` truyền từ ngoài vào
+
+![button-outer-classNames-html!](/src/img/button-outer-classNames-html.png)
+
+hàm `getButtonCSS` sẽ nhận vào `props` và `theme` rồi cho ra các `styles` tương ứng
+
+> Hình ảnh chi tiết code `getButtonCSS`
+
+![getButtonCSS!](/src/img/getButtonCSS.png)
+
+### 5.5. Mở rộng và ghi đè component
 
 > Các `Keys` đều có một hướng xây dựng chung là các `value` của `keys` đều trả về một hàm mà ở đó nhận vào một `theme` được khai báo kiểu `ThemeProps`.
 
