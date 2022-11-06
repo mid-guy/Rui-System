@@ -23,12 +23,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <ThemeProvider theme={theme}>
-          <ButtonBase variant="ghost" size="lg" className="mt-10 mb-10">
-            This is Button Base
-          </ButtonBase>
-        </ThemeProvider>
-        <Button variant="contained">This is Button Material UI</Button>
+        {/* <ThemeProvider theme={theme}></ThemeProvider> */}
+        {/* <Button variant="contained">This is Button Material UI</Button>
 
         <LocalButton size="lg" className="mb-10">
           This is MakeStyles Button
@@ -36,7 +32,11 @@ function App() {
 
         <WithStylesButton className="mb-10">
           This is WithStylesButton
-        </WithStylesButton>
+        </WithStylesButton> */}
+
+        <ButtonBase variant="container" size="lg" className="mt-10 mb-10">
+          This is Button Base
+        </ButtonBase>
       </header>
     </div>
   );

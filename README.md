@@ -306,4 +306,24 @@ Vậy nếu không thể ghi đè nó ở thời điểm `khởi tạo` thì hã
 
 Hiểu đơn giản là những thứ bạn nhìn thấy từ `typescript` cho bạn thấy qua các thông báo là kết quả của những gì mà `sau khi thực hiện biên dịch` code và từ đây ta có thể thực hiện khai báo bổ sung cho `variant`.
 
-![missing-variant-error!](/src/img/missing-variant-error.png)
+> Hình ảnh mô tả `ButtonBaseProps` của `Button Component`
+
+![button-base-props!](/src/img/button-base-props.png)
+
+> Hình ảnh mô tả `ButtonBaseVariant`
+
+![button-props-variant!](/src/img/button-props-variant.png)
+
+Để có thể tạo thêm được `biến` mới vào trong `variants` ta cần tạo một `interface ButtonPropsVariantOverrides = {} ` và các giá trị mới được thêm vào sẽ được nạp vào đó
+
+> Hình ảnh mô tả `ButtonPropsVariantOverrides`
+
+![button-props-variant-overrides!](/src/img/button-props-variant-overrides.png)
+
+Tiến hành ghi đè `ButtonPropsVariant` thông qua `ButtonPropsVariantOverrides`
+
+![override-props!](/src/img/override-props.png)
+
+Lưu ý là việc khai báo `ghost: true` có ý nghĩa là cho phép `ghost` được phép hoạt động, dẫn đến là ví dụ nếu đặt `container: false ` thì `container` sẽ không được phép hoạt động ( `OverridableStringUnion` chịu trách nhiệm cho việc làm trên ).
+
+### 5.6. So sánh hiệu năng

@@ -9,8 +9,9 @@ import {
 } from "../../core/types/type";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import { _onTouchRipple } from "../../core/helpers/generateRipple";
-import getButtonRootCss from "./getButtonRootCss";
 import getButtonRippleCss from "./getButtonRippleCss";
+import ButtonRoot from "./ButtonRoot";
+import TouchRipple, { TouchRippleRefs } from "./TouchRipple";
 
 const ButtonBase = forwardRef(function (
   props: OverallButtonBaseProps,
@@ -88,57 +89,6 @@ const ButtonBase = forwardRef(function (
     </ButtonRoot>
   );
 });
-
-export interface TouchRippleRefs {
-  _onTouchRipple: (e: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-export interface TouchRippleProps {
-  classesTouchRipple?: string;
-  theme: ThemeProps;
-}
-
-const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(
-  (props, ref) => {
-    useImperativeHandle(ref, () => ({ _onTouchRipple: _onTouchRipple }));
-    const { theme, ...more } = props;
-    const css = getButtonRippleCss(theme);
-    return <span className="cds-ripple-root" css={css} {...more} />;
-  }
-);
-
-const ButtonRoot = forwardRef<
-  React.Ref<HTMLButtonElement>,
-  OverallButtonBaseProps & {
-    theme: ThemeProps;
-    scopeButtonBaseClasses: string;
-    scopeButtonBaseCSS: SerializedStyles;
-  }
->(function (props, ref) {
-  const {
-    theme,
-    className,
-    scopeButtonBaseClasses,
-    scopeButtonBaseCSS,
-    outerCSS,
-    children,
-    ...more
-  } = props;
-  const scopeButtonRootCSS = getButtonRootCss(theme);
-  return (
-    <button
-      ref={ref as any}
-      className={["cds-button-root", scopeButtonBaseClasses, className].join(
-        " "
-      )}
-      css={[scopeButtonRootCSS, scopeButtonBaseCSS, outerCSS]}
-      {...more}
-    >
-      {children}
-    </button>
-  );
-});
-
 export interface IconPropsType {
   content?: ReactNode;
 }
