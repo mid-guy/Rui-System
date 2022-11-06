@@ -2,7 +2,8 @@
 import "./App.css";
 import { lazy, useState } from "react";
 import theme from "./core-theme/theme";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
+// import { Button } from "@material-ui/core";
 import ButtonBase from "./packages/ButtonBase/ButtonBase";
 import LocalButton from "./packages/LocalButton/LocalButton";
 import ThemeProvider from "./core/theme/themeProvider";
@@ -24,9 +25,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         {/* <ThemeProvider theme={theme}></ThemeProvider> */}
-        {/* <Button variant="contained">This is Button Material UI</Button>
+        {/* <Button variant="contained">This is Button Material UI</Button> */}
 
-        <LocalButton size="lg" className="mb-10">
+        {/* <LocalButton size="lg" className="mb-10">
           This is MakeStyles Button
         </LocalButton>
 
@@ -34,9 +35,12 @@ function App() {
           This is WithStylesButton
         </WithStylesButton> */}
 
-        <ButtonBase variant="container" size="lg" className="mt-10 mb-10">
+        {/* <ButtonBase variant="container" size="lg">
           This is Button Base
-        </ButtonBase>
+        </ButtonBase> */}
+        {/* <Button variant="contained" color="primary">
+          This is Button Material UI v4
+        </Button> */}
       </header>
     </div>
   );

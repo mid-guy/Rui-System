@@ -2,15 +2,15 @@
 
 > NHỮNG LÝ THUYẾT VÀ CÁC ĐỊNH NGHĨA DƯỚI ĐÂY CHỈ PHÙ HỢP VỚI WEBSITE.
 
-## 2. Thư viện UI là gì? Tại sao lại cần phải tự xây dựng một thư viện UI riêng?
+## 1. Thư viện UI là gì? Tại sao lại cần phải tự xây dựng một thư viện UI riêng?
 
-### 2.1. Thư viện UI là gì?
+### 1.1. Thư viện UI là gì?
 
 Thư viện UI là tập hơp các thành phần hay còn gọi là các `Component` được xây dựng có sẵn từ trước và được `tái sử dụng` trong quá trình phát triển giao diện cho một website.
 
 > Hình ảnh thực tế của các `Component`
 
-### 2.2. Tại sao cần phải xây dựng thư viện UI
+### 1.2. Tại sao cần phải xây dựng thư viện UI
 
 Lợi ích có được tự xây dựng thư viên UI mang lại là vô cùng hấp dẫn và nó lại càng khó từ chối khi bản thân sản phẩm mà bạn đang làm việc để xây dựng nên nó là một sản phẩm `Product`. Các lợi ích cụ thể như sau:
 
@@ -30,7 +30,7 @@ Lợi ích có được tự xây dựng thư viên UI mang lại là vô cùng 
 
 Từ đây, để tìm ra một hướng đi đúng đắn nhất cho việc phát triển thư viện đó là `Học từ những người đúng đầu biến cái hay của người ta thành của mình`.
 
-## 3. CÁC THƯ VIỆN UI PHỔ BIẾN NHẤT.
+## 2. CÁC THƯ VIỆN UI PHỔ BIẾN NHẤT.
 
 Ứng cử viên sáng giá nhất cho việc học hỏi đường lối phát triển cũng như là về mức độ hài lòng từ các lập trình ( trong đó có cả mình ) chính là `Material UI`.
 
@@ -38,9 +38,9 @@ Ra đời từ năm 2014 và được sử dụng cực kỳ phổ biến trong 
 
 Ngoài ra còn có các thư viện đang đi lên rất nhanh khác nhưng cũng sử dụng đường lối phát triển tương tự là `Charka UI`.
 
-## 4. TIẾN HÀNH XÂY DỰNG THƯ VIỆN UI
+## 3. TIẾN HÀNH XÂY DỰNG THƯ VIỆN UI
 
-### 4.1. Các yêu cầu cần phải đạt được khi xây dựng thư viện UI
+### 3.1. Các yêu cầu cần phải đạt được khi xây dựng thư viện UI
 
 <ul>
   <li>Chạy được trên các dự án trên môi trường <code>Javascript</code> và <code>Typescript</code>
@@ -50,7 +50,7 @@ Ngoài ra còn có các thư viện đang đi lên rất nhanh khác nhưng cũn
   <li>Phải có Unit Testing.</li>
 </ul>
 
-### 4.2. Lựa chọn các thành phần xây dựng thư viện
+### 3.2. Lựa chọn các thành phần xây dựng thư viện
 
 `Style` lựa chọn [Emotion](https://emotion.sh/docs/introduction) vì có thể viết `css` ngay trong `javascript`.
 
@@ -58,7 +58,7 @@ Ngoài ra còn có các thư viện đang đi lên rất nhanh khác nhưng cũn
 
 `Testing` lựa chọn [Jest](https://jestjs.io/) đi kèm với [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) để kiểm tra phần render các `base component` được xây dựng
 
-### 5.3. Xây dựng các phương thức quan trọng cho thư viện
+### 3.3. Xây dựng các phương thức quan trọng cho thư viện
 
 <ul>
   <li>
@@ -85,21 +85,21 @@ Ngoài ra còn có các thư viện đang đi lên rất nhanh khác nhưng cũn
 
 ![The best thing to hold onto in life is each other.!](/src/img/defaultTheme--components--button.png)
 
-`variants` là `keys` nắm giữa các dạng của `button component`. Có các giá trị mặc định là `container`, `outlined`, `text`.
+`variants` là `keys` nắm giữa các dạng của `Button Component`. Có các giá trị mặc định là `container`, `outlined`, `text`.
 
-`sizes` là `keys` quyết định kích thước hiển thị của `button component`. Có các giá trị mặc định là `sm`, `md`, `lg`.
+`sizes` là `keys` quyết định kích thước hiển thị của `Button Component`. Có các giá trị mặc định là `sm`, `md`, `lg`.
 
-`backgrounds` là `keys` quyết định màu nền hiển thị của `button component` - Đây là `keys bắt buộc` phải đi cùng với `keys variants="container"`.
+`backgrounds` là `keys` quyết định màu nền hiển thị của `Button Component` - Đây là `keys bắt buộc` phải đi cùng với `keys variants="container"`.
 
-`colors` là `keys` quyết định màu sắc của chữ nền hiển thị của `button component` - Đây là `keys bắt buộc` phải đi cùng với `keys variants="text"`.
+`colors` là `keys` quyết định màu sắc của chữ nền hiển thị của `Button Component` - Đây là `keys bắt buộc` phải đi cùng với `keys variants="text"`.
 
-`outlinedTheme` là `keys` quyết định màu sắc của chữ, viền hiển thị của`button component`- Đây là `keys bắt buộc` phải đi cùng với `keys variants="outlined"`.
+`outlinedTheme` là `keys` quyết định màu sắc của chữ, viền hiển thị của`Button Component`- Đây là `keys bắt buộc` phải đi cùng với `keys variants="outlined"`.
 
-> Ảnh thể hiện thiết kế điển hình của `button component`
+> Ảnh thể hiện thiết kế điển hình của `Button Component`
 
 ![button-variants!](/src/img/preview--component.jpg)
 
-> Ảnh chi tiết code từng `Props` của biến `button component`
+> Ảnh chi tiết code từng `Props` của biến `Button Component`
 
 ![button-variants!](/src/img/defaultTheme--components--button--variants.png)
 
@@ -123,9 +123,9 @@ Trong quá trình thiết kế `component` thường sẽ kế thừa giá trị
 
 ![theme-palette!](/src/img/defaultTheme--components--palette--colors.png)
 
-`animationframe` là `keys` nắm giữa các dạng `hiệu ứng` của các `component` ( nếu có ) . Có các giá trị mặc định với `button component` là `ripple`, `scale`.
+`animationframe` là `keys` nắm giữa các dạng `hiệu ứng` của các `component` ( nếu có ) . Có các giá trị mặc định với `Button Component` là `ripple`, `scale`.
 
-> Ảnh chi tiết code `animationframes` của `button component`
+> Ảnh chi tiết code `animationframes` của `Button Component`
 
 ![button-animations!](/src/img/defaultTheme--components--button--animationFrames.png)
 
@@ -201,13 +201,13 @@ Phương thức `makeStyles` nhận vào một `function` và trả ra `styles` 
 
 Phương thức `makeStyles` cho phép người dùng ghi đè các `biến` đã có từ trước nhằm phục vụ cho một số trường hợp mà ta chỉ muốn ghi đè `biến` đó trong phạm vị hiện tại mà ta sử dụng.
 
-> Ví dụ về sử dụng `makeStyles` để ghi đè `biến` đã có từ trước đó của `button component`
+> Ví dụ về sử dụng `makeStyles` để ghi đè `biến` đã có từ trước đó của `Button Component`
 
 ![makeStyles--demo!](/src/img/makeStyles--demo.png)
 
 Có thể thấy ta thực hiện việc `responsive` cho className `.cds-button-sizeLg` sẽ thay đổi màu sắc trong phạm vi `md` & `lg`
 
-Chú ý rằng `button component` ban đầu không hề có `responsive` và việc ghi đè trên chỉ có tác dụng với các `button component` nào nhận `classes` thôi.
+Chú ý rằng `Button Component` ban đầu không hề có `responsive` và việc ghi đè trên chỉ có tác dụng với các `Button Component` nào nhận `classes` thôi.
 
 Có thể thấy việc đưa được `useStyles` ra làm một biến sẽ có ích lợi vô cùng lớn cho việc tái sử dụng trên toàn bộ dự án. Vì ta coi nó như là một `biến` mang tính chất tùy chọn.
 
@@ -221,7 +221,7 @@ Từ đó tăng tối đa khả năng mở rộng cũng như là việc tái s�
 
 ![makeStyles!](/src/img/makeStyles.png)
 
-`styleOrCreator` là một hàm được truyền từ ngoài vào nhằm tái cấu trúc lại `biến` của `button component`. Hàm này có tham số đầu vào chính là `useTheme`.
+`styleOrCreator` là một hàm được truyền từ ngoài vào nhằm tái cấu trúc lại `biến` của `Button Component`. Hàm này có tham số đầu vào chính là `useTheme`.
 
 > `useTheme` chính một `custom hook` được gọi ở `ngoài component`
 
@@ -233,9 +233,9 @@ Tương tư như `makeStyles` thì `withStyles` sẽ nhận `Component` và tr�
 
 Điểm khác biết là cách sử dụng vì `withStyles` thường dùng riêng biết trong một `file` mà ở đó ta định nghĩa ra một `component` mới và sử dụng nó như một `component chính` chứ không phải mang tinh chất tuỳ thích như `makeStyles`
 
-> Ví dụ sử dụng `withStyles` để tạo ra một biến thể mới cho `button component` có tên là `WithStylesButton`
+> Ví dụ sử dụng `withStyles` để tạo ra một biến thể mới cho `Button Component` có tên là `WithStylesButton`
 
-> [Airbnb](https://www.airbnb.com.vn/) cũng sử dụng cách như trên để tạo ra hàng loạt các biến thể của một `button comppnent` từ một `component gốc`.
+> [Airbnb](https://www.airbnb.com.vn/) cũng sử dụng cách như trên để tạo ra hàng loạt các biến thể của một `Button Component` từ một `component gốc`.
 
 ![withStyles--demo!](/src/img/withStyles--demo.png)
 
@@ -243,12 +243,12 @@ Tương tư như `makeStyles` thì `withStyles` sẽ nhận `Component` và tr�
 
 ![withStyles!](/src/img/withStyles.png)
 
-### 5.4. Xây dựng Button component ( Component Tiêu biểu )
+### 3.4. Xây dựng Button component ( Component Tiêu biểu )
 
 Do yêu cầu về việc mở rộng và dễ dàng biết chính xác các `style` có nguồn gốc từ đâu thì ta sẽ lựa chọn việc tạo ra các `classNames` và `css`
 dựa theo giá trị `props`.
 
-> Hình ảnh mô tả luồng của `button component`
+> Hình ảnh mô tả luồng của `Button Component`
 
 hàm `getButtonClassNames`sẽ nhận vào `props` và trả ra các `className riêng biệt` tương ứng với nó và chúng sẽ được nối thành một chuỗi với nhau. Mục đích của việc này là để có thể dễ dàng `nối thêm` các `className` khác từ bên ngoài `component` nhằm tăng độ linh hoạt ( điển hình là [Tailwindcss](https://tailwindcss.com/docs/installation/) )
 
@@ -260,7 +260,7 @@ hàm `getButtonClassNames`sẽ nhận vào `props` và trả ra các `className 
 
 ![constantClassNames!](/src/img/constantClassNames.png)
 
-> Hình ảnh `button component` nhận các `props` và `classNames` bên ngoài
+> Hình ảnh `Button Component` nhận các `props` và `classNames` bên ngoài
 
 ![classNames--using!](/src/img/classNames--using.png)
 
@@ -286,7 +286,7 @@ hàm `getButtonCSS` sẽ nhận vào `props` và `theme` rồi cho ra các `styl
 
 ![getButtonCSS!](/src/img/getButtonCSS.png)
 
-### 5.5. Mở rộng và ghi đè component
+### 3.5. Mở rộng và ghi đè component
 
 Đây là một vấn đề mà ở `Material UI v4` trước đây không làm được và như đã thấy ở trên `mục 5.3` thì mọi người sẽ thắc mắc là khai báo các biến `variants` bao gồm `container`, `text`, `outlined` thì việc mở rộng thêm các `key` mới thì ta sẽ làm như nào ? vấn đề nằm ở cách mà ta khai báo `typescript` cho từng `keys` tương ứng.
 
@@ -326,4 +326,4 @@ Tiến hành ghi đè `ButtonPropsVariant` thông qua `ButtonPropsVariantOverrid
 
 Lưu ý là việc khai báo `ghost: true` có ý nghĩa là cho phép `ghost` được phép hoạt động, dẫn đến là ví dụ nếu đặt `container: false ` thì `container` sẽ không được phép hoạt động ( `OverridableStringUnion` chịu trách nhiệm cho việc làm trên ).
 
-### 5.6. So sánh hiệu năng
+### 3.6. So sánh hiệu năng
