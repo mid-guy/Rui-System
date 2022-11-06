@@ -23,12 +23,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <ThemeProvider theme={theme}></ThemeProvider> */}
+        <ThemeProvider theme={theme}>
+          <ButtonBase variant="ghost" size="lg" className="mt-10 mb-10">
+            This is Button Base
+          </ButtonBase>
+        </ThemeProvider>
         <Button variant="contained">This is Button Material UI</Button>
-
-        <ButtonBase variant="container" size="lg" className="mt-10 mb-10">
-          This is Button Base
-        </ButtonBase>
 
         <LocalButton size="lg" className="mb-10">
           This is MakeStyles Button

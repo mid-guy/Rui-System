@@ -11,36 +11,37 @@ import {
   ButtonPropsVariant,
 } from "./ButtonBase";
 
-export const generateButtonClassNames = (props: {
-  fullWidth?: boolean;
-  disabled?: boolean;
-  variant?: ButtonPropsVariant;
-  size?: ButtonPropsSize;
-  background?: ButtonPropsBackground;
-  outlinedTheme?: ButtonPropsOutlinedTheme;
-  color?: ButtonPropsTextColor;
-  animationframe?: ButtonPropsAnimationFrame;
-}) => {
-  const _props: { [key: string]: boolean | string } = props;
-  return Object.keys(props)
-    .reduce((prevClasses: any, key: any) => {
-      if (_props[key]) {
-        if (
-          key === "size" ||
-          key === "background" ||
-          key === "variant" ||
-          key === "color" ||
-          key === "outlinedTheme" ||
-          key === "animationframe"
-        ) {
-          return [...prevClasses, classNames[key](_props[key])];
+export
+  const generateButtonClassNames = (props: {
+    fullWidth?: boolean;
+    disabled?: boolean;
+    variant?: ButtonPropsVariant;
+    size?: ButtonPropsSize;
+    background?: ButtonPropsBackground;
+    outlinedTheme?: ButtonPropsOutlinedTheme;
+    color?: ButtonPropsTextColor;
+    animationframe?: ButtonPropsAnimationFrame;
+  }) => {
+    const _props: { [key: string]: boolean | string } = props;
+    return Object.keys(props)
+      .reduce((prevClasses: any, key: any) => {
+        if (_props[key]) {
+          if (
+            key === "size" ||
+            key === "background" ||
+            key === "variant" ||
+            key === "color" ||
+            key === "outlinedTheme" ||
+            key === "animationframe"
+          ) {
+            return [...prevClasses, classNames[key](_props[key])];
+          }
+          return [...prevClasses, classNames[key]];
         }
-        return [...prevClasses, classNames[key]];
-      }
-      return prevClasses;
-    }, [])
-    .join(" ");
-};
+        return prevClasses;
+      }, [])
+      .join(" ");
+  }
 
 const classNames: { [key: string]: string | any } = {
   root: "cds-button-root",
@@ -65,7 +66,7 @@ const classNames: { [key: string]: string | any } = {
   animationframe: (value: ButtonPropsAnimationFrame): string => {
     return value && `cds-button-animation${capitalizeFirstLetter(value)}`;
   },
-};
+}
 
 const getButtonCss = (
   theme: ThemeProps,
@@ -90,41 +91,41 @@ const getButtonCss = (
   }
   &.${classNames.variant(props.variant)} {
     ${theme.components.button.variants[
-      props.variant as NonNullable<
-        keyof typeof theme.components.button.variants
-      >
-    ](theme)};
+    props.variant as NonNullable<
+      keyof typeof theme.components.button.variants
+    >
+  ](theme)};
   }
   &.${classNames.color(props.color)} {
     ${theme.components.button.colors[
-      props.color as NonNullable<keyof typeof theme.components.button.colors>
-    ](theme)};
+    props.color as NonNullable<keyof typeof theme.components.button.colors>
+  ](theme)};
   }
   &.${classNames.background(props.background)} {
     ${theme.components.button.backgrounds[
-      props.background as NonNullable<
-        keyof typeof theme.components.button.backgrounds
-      >
-    ](theme)};
+    props.background as NonNullable<
+      keyof typeof theme.components.button.backgrounds
+    >
+  ](theme)};
   }
   &.${classNames.outlinedTheme(props.outlinedTheme)} {
     ${theme.components.button.outlinedTheme[
-      props.outlinedTheme as NonNullable<
-        keyof typeof theme.components.button.outlinedTheme
-      >
-    ](theme)};
+    props.outlinedTheme as NonNullable<
+      keyof typeof theme.components.button.outlinedTheme
+    >
+  ](theme)};
   }
   &.${classNames.size(props.size)} {
     ${theme.components.button.sizes[
-      props.size as NonNullable<keyof typeof theme.components.button.sizes>
-    ](theme)};
+    props.size as NonNullable<keyof typeof theme.components.button.sizes>
+  ](theme)};
   }
   &.${classNames.animationframe(props.animationframe)} {
     ${theme.animationframe.button.animationframe[
-      props.animationframe as NonNullable<
-        keyof typeof theme.animationframe.button.animationframe
-      >
-    ](theme)};
+    props.animationframe as NonNullable<
+      keyof typeof theme.animationframe.button.animationframe
+    >
+  ](theme)};
   }
   font-family: inherit;
   &.${classNames.fullWidth} {

@@ -1,50 +1,3 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
 # XÂY DỰNG THƯ VIỆN UI CHO REACTJS TỪ CON SỐ "0" `PHẦN 1`
 
 > NHỮNG LÝ THUYẾT VÀ CÁC ĐỊNH NGHĨA DƯỚI ĐÂY CHỈ PHÙ HỢP VỚI WEBSITE.
@@ -85,13 +38,9 @@ Ra đời từ năm 2014 và được sử dụng cực kỳ phổ biến trong 
 
 Ngoài ra còn có các thư viện đang đi lên rất nhanh khác nhưng cũng sử dụng đường lối phát triển tương tự là `Charka UI`.
 
-## 4. ƯU NHƯỢC ĐIỂM CỦA THƯ VIỆN MATERIAL UI.
+## 4. TIẾN HÀNH XÂY DỰNG THƯ VIỆN UI
 
-Chúng ta sẽ tập chung vào phiên bản `v4` của `Material UI`
-
-## 5. TIẾN HÀNH XÂY DỰNG THƯ VIỆN UI
-
-### 5.1. Các yêu cầu cần phải đạt được khi xây dựng thư viện UI
+### 4.1. Các yêu cầu cần phải đạt được khi xây dựng thư viện UI
 
 <ul>
   <li>Chạy được trên các dự án trên môi trường <code>Javascript</code> và <code>Typescript</code>
@@ -101,7 +50,7 @@ Chúng ta sẽ tập chung vào phiên bản `v4` của `Material UI`
   <li>Phải có Unit Testing.</li>
 </ul>
 
-### 5.2. Lựa chọn các thành phần xây dựng thư viện
+### 4.2. Lựa chọn các thành phần xây dựng thư viện
 
 `Style` lựa chọn [Emotion](https://emotion.sh/docs/introduction) vì có thể viết `css` ngay trong `javascript`.
 
@@ -146,7 +95,7 @@ Chúng ta sẽ tập chung vào phiên bản `v4` của `Material UI`
 
 `outlinedTheme` là `keys` quyết định màu sắc của chữ, viền hiển thị của`button component`- Đây là `keys bắt buộc` phải đi cùng với `keys variants="outlined"`.
 
-> Ảnh thể hiện thiết kế điển hình của `button componenet`
+> Ảnh thể hiện thiết kế điển hình của `button component`
 
 ![button-variants!](/src/img/preview--component.jpg)
 
@@ -339,12 +288,22 @@ hàm `getButtonCSS` sẽ nhận vào `props` và `theme` rồi cho ra các `styl
 
 ### 5.5. Mở rộng và ghi đè component
 
-> Các `Keys` đều có một hướng xây dựng chung là các `value` của `keys` đều trả về một hàm mà ở đó nhận vào một `theme` được khai báo kiểu `ThemeProps`.
+Đây là một vấn đề mà ở `Material UI v4` trước đây không làm được và như đã thấy ở trên `mục 5.3` thì mọi người sẽ thắc mắc là khai báo các biến `variants` bao gồm `container`, `text`, `outlined` thì việc mở rộng thêm các `key` mới thì ta sẽ làm như nào ? vấn đề nằm ở cách mà ta khai báo `typescript` cho từng `keys` tương ứng.
 
-Như đã thấy ở trên thì mọi người sẽ thắc mắc là viết thế này thì mở rộng thêm các biến ví dụ như `variants` có giá trị là `ghost` chẳng hạn thì làm thế nào?
-
-Đây là một vấn đề mà ở `Material UI v4` trước đây không làm được. Đây chính là điểm mấu chốt của việc xây dựng thư viện UI mà mình đã nói ở đầu bài viết. Vậy thì câu trả lời nằm ở đâu?
-
-Vấn đề nằm ở cách mà ta khai báo `typescript` cho từng `keys` tương ứng.
+![all-variants-buttons-p!](/src/img/all-variants-buttons-p.png)
 
 Thử xem phản ứng của `variant` có không có `ghost` là giá trị mặc định có trong `typescript`
+
+![missing-variant-error!](/src/img/missing-variant-error.png)
+
+`typescript` báo cho ta thấy rằng ta đang nhập vào một biến không hề được khai báo trước. Mặc dù trước đó ta có thể đã tạo cho `variants` một `key` là `ghost`.
+
+Gần như không có cách nào để có thể khai báo thêm `ghost` khi ta đã cố định biến `variant` với `typescript` trước đó.
+
+Vấn đề kiên quyết đặt ra ở đây là ta phải buộc cho `typescript` phải `chấp nhận` và ` gợi ý` cho ta khi ta sử dụng biến `variant`
+
+Vậy nếu không thể ghi đè nó ở thời điểm `khởi tạo` thì hãy khai báo thêm ở thời điểm `cuối cùng`.
+
+Hiểu đơn giản là những thứ bạn nhìn thấy từ `typescript` cho bạn thấy qua các thông báo là kết quả của những gì mà `sau khi thực hiện biên dịch` code và từ đây ta có thể thực hiện khai báo bổ sung cho `variant`.
+
+![missing-variant-error!](/src/img/missing-variant-error.png)
