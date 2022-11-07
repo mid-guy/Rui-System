@@ -28,8 +28,6 @@ Lợi ích có được tự xây dựng thư viên UI mang lại là vô cùng 
   <li>Giai đoạn phát triển ban đầu tương đối mất thời gian</li>
 </ul>
 
-Từ đây, để tìm ra một hướng đi đúng đắn nhất cho việc phát triển thư viện đó là `Học từ những người đúng đầu biến cái hay của người ta thành của mình`.
-
 ## 2. CÁC THƯ VIỆN UI PHỔ BIẾN NHẤT.
 
 Ứng cử viên sáng giá nhất cho việc học hỏi đường lối phát triển cũng như là về mức độ hài lòng từ các lập trình ( trong đó có cả mình ) chính là `Material UI`.
