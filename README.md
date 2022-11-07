@@ -54,7 +54,7 @@ Ngoài ra còn có các thư viện đang đi lên rất nhanh khác nhưng cũn
 
 `Module bundler` lựa chọn [Webpack](https://webpack.js.org/) có đóng gói các file `javascript`.
 
-`Testing` lựa chọn [Jest](https://jestjs.io/) đi kèm với [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) để kiểm tra phần render các `base component` được xây dựng
+`Testing` lựa chọn [Jest](https://jestjs.io/) đi kèm với [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) để kiểm tra phần render các `Base Component` được xây dựng
 
 ### 3.3. Xây dựng các phương thức quan trọng cho thư viện
 
@@ -325,3 +325,6 @@ Tiến hành ghi đè `ButtonPropsVariant` thông qua `ButtonPropsVariantOverrid
 Lưu ý là việc khai báo `ghost: true` có ý nghĩa là cho phép `ghost` được phép hoạt động, dẫn đến là ví dụ nếu đặt `container: false ` thì `container` sẽ không được phép hoạt động ( `OverridableStringUnion` chịu trách nhiệm cho việc làm trên ).
 
 ### 3.6. So sánh hiệu năng
+
+Đây là kết quả so sánh hiệu năng, dung lương của thư viện trên với các thư viện Material UI V5, Marterial ui V4.
+
