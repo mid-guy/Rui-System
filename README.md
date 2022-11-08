@@ -32,7 +32,7 @@ Lợi ích có được tự xây dựng thư viên UI mang lại là vô cùng 
 
 Ứng cử viên sáng giá nhất cho việc học hỏi đường lối phát triển cũng như là về mức độ hài lòng từ các lập trình ( trong đó có cả mình ) chính là `Material UI`.
 
-Ra đời từ năm 2014 và được sử dụng cực kỳ phổ biến trong các Công ty, Start-ups kỳ lân trên thế giới như `Airbnb`, `Spotify`, `Netflix`, `Coursera`...
+Ra đời từ năm 2014 và được sử dụng cực kỳ phổ biến trong các công ty startup kỳ lân trên thế giới như `Airbnb`, `Spotify`, `Netflix`, `Coursera`...
 
 Ngoài ra còn có các thư viện đang đi lên rất nhanh khác nhưng cũng sử dụng đường lối phát triển tương tự là `Charka UI`.
 
