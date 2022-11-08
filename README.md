@@ -1,6 +1,6 @@
 # XÂY DỰNG THƯ VIỆN UI CHO REACTJS TỪ CON SỐ "0" `PHẦN 1`
 
-> NHỮNG LÝ THUYẾT VÀ CÁC ĐỊNH NGHĨA DƯỚI ĐÂY CHỈ PHÙ HỢP VỚI WEBSITE.
+> TOÀN BỘ CODE DƯỚI ĐÂY CHỈ MANG NHIỀU Ý NGHĨA TRUYỀN ĐẠT LẠI Ý TƯỞNG, HƯỚNG ĐI TRONG VIỆC XÂY DỰNG THƯ VIỆN VÀ ĐƯỢC VIẾT ĐỂ CÓ THỂ HOÀN THÀNH NHANH NHẤT BÀI BLOG CÓ THỂ!!!
 
 ## 1. Thư viện UI là gì? Tại sao lại cần phải tự xây dựng một thư viện UI riêng?
 
