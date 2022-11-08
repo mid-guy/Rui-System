@@ -286,7 +286,7 @@ hàm `getButtonCSS` sẽ nhận vào `props` và `theme` rồi cho ra các `styl
 
 ### 3.5. Mở rộng và ghi đè component
 
-Đây là một vấn đề mà ở `Material UI v4` trước đây không làm được và như đã thấy ở trên `mục 5.3` thì mọi người sẽ thắc mắc là khai báo các biến `variants` bao gồm `container`, `text`, `outlined` thì việc mở rộng thêm các `key` mới thì ta sẽ làm như nào ? vấn đề nằm ở cách mà ta khai báo `typescript` cho từng `keys` tương ứng.
+Đây là một vấn đề mà ở `Material UI v4` trước đây không làm được và như đã thấy ở trên `mục 3.3` thì mọi người sẽ thắc mắc là khai báo các biến `variants` bao gồm `container`, `text`, `outlined` thì việc mở rộng thêm các `key` mới thì ta sẽ làm như nào ? vấn đề nằm ở cách mà ta khai báo `typescript` cho từng `keys` tương ứng.
 
 ![all-variants-buttons-p!](/src/img/all-variants-buttons-p.png)
 
