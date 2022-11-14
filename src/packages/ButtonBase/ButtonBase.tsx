@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import getButtonCss, { generateButtonClassNames } from "./getButtonCss";
-import { forwardRef, ReactNode, useImperativeHandle, useRef } from "react";
+import { forwardRef, ReactNode, useRef } from "react";
 import { types } from "./constants";
 import { SerializedStyles } from "@emotion/react";
 import {
@@ -8,8 +8,6 @@ import {
   OverridableStringUnion,
 } from "../../core/types/type";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
-import { _onTouchRipple } from "../../core/helpers/generateRipple";
-import getButtonRippleCss from "./getButtonRippleCss";
 import ButtonRoot from "./ButtonRoot";
 import TouchRipple, { TouchRippleRefs } from "./TouchRipple";
 

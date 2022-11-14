@@ -2,13 +2,10 @@
 import "./App.css";
 import { lazy, useState } from "react";
 import theme from "./core-theme/theme";
-// import { Button } from "@mui/material";
-// import { Button } from "@material-ui/core";
 import ButtonBase from "./packages/ButtonBase/ButtonBase";
 import LocalButton from "./packages/LocalButton/LocalButton";
 import ThemeProvider from "./core/theme/themeProvider";
 import WithStylesButton from "./packages/WithStylesButton/WithStylesButton";
-// const ButtonBase = lazy(() => import("./components/ButtonBase/ButtonBase"));
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const withLoading = (callback: any) => {
@@ -24,8 +21,21 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <ThemeProvider theme={theme}></ThemeProvider> */}
-        {/* <Button variant="contained">This is Button Material UI</Button> */}
+        <ThemeProvider theme={theme}>
+          <div style={{ display: "flex", gap: 10 }}>
+            <ButtonBase variant="container" background="primary">
+              Module color 1
+            </ButtonBase>
+
+            <ButtonBase variant="container" background="secondary">
+              Module color 2
+            </ButtonBase>
+
+            <ButtonBase variant="container" background="ternary">
+              Module color 3
+            </ButtonBase>
+          </div>
+        </ThemeProvider>
 
         {/* <LocalButton size="lg" className="mb-10">
           This is MakeStyles Button
@@ -34,13 +44,6 @@ function App() {
         <WithStylesButton className="mb-10">
           This is WithStylesButton
         </WithStylesButton> */}
-
-        {/* <ButtonBase variant="container" size="lg">
-          This is Button Base
-        </ButtonBase> */}
-        {/* <Button variant="contained" color="primary">
-          This is Button Material UI v4
-        </Button> */}
       </header>
     </div>
   );
