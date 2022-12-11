@@ -1,9 +1,4 @@
 
-
-export function _onTouchRipple(e: React.MouseEvent<HTMLButtonElement>) {
-  generateRippleButton(e);
-}
-
 export function generateRippleButton(e: React.MouseEvent<HTMLButtonElement>) {
   const clientRect = e.nativeEvent;
   const x = clientRect.offsetX;

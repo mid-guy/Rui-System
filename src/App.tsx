@@ -23,17 +23,21 @@ function App() {
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <div style={{ display: "flex", gap: 10 }}>
-            <ButtonBase variant="container" background="primary">
+            <ButtonBase
+              variant="container"
+              background="primary"
+              animationframe="ripple"
+            >
               Module color 1
             </ButtonBase>
 
-            <ButtonBase variant="container" background="secondary">
+            {/* <ButtonBase variant="container" background="secondary">
               Module color 2
             </ButtonBase>
 
             <ButtonBase variant="container" background="ternary">
               Module color 3
-            </ButtonBase>
+            </ButtonBase> */}
           </div>
         </ThemeProvider>
 

@@ -29,6 +29,7 @@ const ButtonRoot = forwardRef<
       className={["cds-button-root", scopeButtonBaseClasses, className].join(
         " "
       )}
+      data-testid="cds-button-root"
       css={[scopeButtonRootCSS, scopeButtonBaseCSS, outerCSS]}
       {...more}
     >
