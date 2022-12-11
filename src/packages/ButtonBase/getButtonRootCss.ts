@@ -12,7 +12,7 @@ const getButtonRootCss = (theme: ThemeProps): SerializedStyles => css`
     border: none;
     cursor: pointer;
     min-width: 64px;
-    border-radius: 0.375rem;
+    border-radius: 4px;
     transition: ${theme.transitions.duration.standard}ms ease;
     box-sizing: border-box;
     > * {

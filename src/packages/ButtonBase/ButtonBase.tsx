@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import getButtonCss, { generateButtonClassNames } from "./getButtonCss";
-import { forwardRef, ReactNode, useRef } from "react";
+import { forwardRef, ReactNode } from "react";
 import { types } from "./constants";
 import { SerializedStyles } from "@emotion/react";
 import {
@@ -9,7 +9,9 @@ import {
 } from "../../core/types/type";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import ButtonRoot from "./ButtonRoot";
-import TouchRipple, { TouchRippleRefs } from "./TouchRipple";
+import TouchRipple from "./TouchRipple";
+import onClickButton from "../../core/helpers/onClickButton";
+// import { _onTouchRipple } from "../../core/helpers/generateRipple";
 
 const ButtonBase = forwardRef(function (
   props: OverallButtonBaseProps,
@@ -52,38 +54,25 @@ const ButtonBase = forwardRef(function (
   });
 
   const scopeButtonBaseCSS = getButtonCss(theme, props);
-  const TouchRippleRef = useRef<TouchRippleRefs>(null);
-  const withTouchRipple = (callback?: Function) => {
-    return (e: React.MouseEvent<HTMLButtonElement>) => {
-      TouchRippleRef.current?._onTouchRipple(e);
-      callback && callback(e);
-    };
-  };
-
-  const _onClick =
-    animationframe === "ripple"
-      ? onClick
-        ? withTouchRipple(onClick)
-        : withTouchRipple()
-      : onClick;
+  // const TouchRippleRef = useRef<any>(null);
 
   return (
     <ButtonRoot
       ref={ref as any}
       theme={theme}
-      onClick={_onClick}
+      onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+        onClickButton(e, onClick, animationframe)
+      }
       disabled={disabled}
       scopeButtonBaseClasses={scopeButtonBaseClasses}
       scopeButtonBaseCSS={scopeButtonBaseCSS}
       outerCSS={outerCSS}
       {...rest}
     >
-      {startIcon && <StartIcon content={startIcon} />}
+      {/* {startIcon && <StartIcon content={startIcon} />} */}
       {children}
-      {endIcon && <EndIcon content={endIcon} />}
-      {animationframe === "ripple" && (
-        <TouchRipple ref={TouchRippleRef} theme={theme} />
-      )}
+      {/* {endIcon && <EndIcon content={endIcon} />} */}
+      {animationframe === "ripple" && <TouchRipple theme={theme} />}
     </ButtonRoot>
   );
 });
@@ -91,15 +80,15 @@ export interface IconPropsType {
   content?: ReactNode;
 }
 
-const StartIcon = (props: IconPropsType & { classesStartIcon?: string }) => {
-  const { content } = props;
-  return <div className={`cds-button-startIcon`}>{content}</div>;
-};
+// const StartIcon = (props: IconPropsType & { classesStartIcon?: string }) => {
+//   const { content } = props;
+//   return <div className={`cds-button-startIcon`}>{content}</div>;
+// };
 
-const EndIcon = (props: IconPropsType & { classesEndIcon?: string }) => {
-  const { content } = props;
-  return <div className={`cds-button-endIcon`}>{content}</div>;
-};
+// const EndIcon = (props: IconPropsType & { classesEndIcon?: string }) => {
+//   const { content } = props;
+//   return <div className={`cds-button-endIcon`}>{content}</div>;
+// };
 
 ButtonBase.defaultProps = {
   variant: "container",
@@ -224,7 +213,7 @@ export type ButtonBaseProps = {
 };
 
 ButtonBase.displayName = "ButtonBase";
-TouchRipple.displayName = "TouchRipple";
+// TouchRipple.displayName = "TouchRipple";
 ButtonRoot.displayName = "ButtonRoot";
 
 export default ButtonBase;
