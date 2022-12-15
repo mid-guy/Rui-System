@@ -103,6 +103,7 @@ export type ThemeProps = {
   typography: {
     global: {
       fontSize: number;
+      fontWeight: number;
     };
     fontFamily: string;
   } & Record<

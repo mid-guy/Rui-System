@@ -60,9 +60,10 @@ export const transitions = {
   },
 };
 
-export const Typography = {
+export const typography = {
   global: {
     fontSize: 16,
+    fontWeight: 500,
   },
   fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
   h1: {
@@ -107,6 +108,8 @@ export const Typography = {
   },
 };
 
+export const spacing = {};
+
 export const defaultTheme = {
   components: {
     button: {
@@ -116,7 +119,6 @@ export const defaultTheme = {
       colors: colors,
       outlinedTheme: outlinedTheme,
     },
-    // key ứng với từng component của thư viện
   },
   palette: palette,
   animationframe: {
@@ -146,8 +148,8 @@ export const defaultTheme = {
     },
   },
   transitions: transitions,
-  typography: Typography,
-  spacing: {},
+  typography: typography,
+  spacing: spacing,
   zIndex: {},
 };
 

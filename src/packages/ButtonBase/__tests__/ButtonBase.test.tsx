@@ -2,10 +2,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import onClickButton from "../../../core/helpers/onClickButton";
 import ButtonBase from "../ButtonBase";
+import { onClickButton } from "../../../core/utils/onClickButton";
 
-jest.mock("../../../core/helpers/onClickButton");
+jest.mock("../../../core/utils/onClickButton");
 
 test("render button", () => {
   render(<ButtonBase animationframe="ripple">This Test Button</ButtonBase>);
@@ -123,20 +123,3 @@ test("behavior when click on Button", () => {
 //   const callbackAnimation = jest.fn((e) => _onTouchRipple(e));
 //   // const callback3 = jest.fn((e) => generateRippleButton(e));
 //   // ARRANGE
-//   render(
-//     <ButtonBase onClick={(e) => callback(e)} animationframe="ripple">
-//       This Test Button
-//     </ButtonBase>
-//   );
-
-//   const button = screen.getByRole("button", { name: "This Test Button" });
-
-//   userEvent.click(button);
-
-//   expect(callback).toHaveBeenCalled();
-//   // expect(callback3).toHaveBeenCalled();
-//   expect(button).toHaveClass("cds-button-animationRipple");
-//   expect(button).toBeInTheDocument();
-// });
-
-// call callback function when click

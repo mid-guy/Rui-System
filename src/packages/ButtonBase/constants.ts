@@ -1,4 +1,4 @@
-import { convertHEXtoRGB } from "../../core/helpers/convertHEXtoRGB";
+import { convertHEXtoRGB } from "../../core/utils/convertHEXtoRGB";
 import { palette } from "../../core/theme/createTheme";
 import { ThemeProps } from "../../core/theme/themeProvider";
 export const types = { button: "button", submit: "submit" };
@@ -6,17 +6,20 @@ export const types = { button: "button", submit: "submit" };
 export const sizes = {
   sm: (theme: ThemeProps) => `
     padding: 6px 12px;
-    font-size: 12px;
+    font-size: ${theme.typography.body2.fontSize};
+    font-weight: ${theme.typography.body2.fontWeight};
     height: 30px;
   `,
   md: (theme: ThemeProps) => `
     padding: 8px 16px;
-    font-size: 14px;
+    font-size: ${theme.typography.body1.fontSize};
+    font-weight: ${theme.typography.body1.fontWeight};
     height: 36px;
   `,
   lg: (theme: ThemeProps) => `
     padding: 8px 24px;
-    font-size: 16px;
+    font-size: ${theme.typography.global.fontSize};
+    font-weight: ${theme.typography.global.fontWeight};
     height: 42px;
   `,
 };
@@ -127,4 +130,3 @@ export const outlinedTheme = {
     }
   `,
 };
-

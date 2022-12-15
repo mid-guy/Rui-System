@@ -1,4 +1,3 @@
-
 export function generateRippleButton(e: React.MouseEvent<HTMLButtonElement>) {
   const clientRect = e.nativeEvent;
   const x = clientRect.offsetX;

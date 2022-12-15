@@ -10,8 +10,7 @@ import {
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import ButtonRoot from "./ButtonRoot";
 import TouchRipple from "./TouchRipple";
-import onClickButton from "../../core/helpers/onClickButton";
-// import { _onTouchRipple } from "../../core/helpers/generateRipple";
+import { onClickButton } from "../../core/utils/onClickButton";
 
 const ButtonBase = forwardRef(function (
   props: OverallButtonBaseProps,
@@ -213,7 +212,6 @@ export type ButtonBaseProps = {
 };
 
 ButtonBase.displayName = "ButtonBase";
-// TouchRipple.displayName = "TouchRipple";
 ButtonRoot.displayName = "ButtonRoot";
 
 export default ButtonBase;
