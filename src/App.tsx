@@ -6,6 +6,7 @@ import ButtonBase from "./packages/ButtonBase/ButtonBase";
 import LocalButton from "./packages/LocalButton/LocalButton";
 import ThemeProvider from "./core/theme/themeProvider";
 import WithStylesButton from "./packages/WithStylesButton/WithStylesButton";
+import Input from "./packages/Input";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const withLoading = (callback: any) => {
@@ -22,15 +23,15 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
+          <Input />
           <div style={{ display: "flex", gap: 10 }}>
-            <ButtonBase
+            {/* <ButtonBase
               variant="container"
               background="primary"
               animationframe="ripple"
             >
               Module color 1
-            </ButtonBase>
-
+            </ButtonBase> */}
             {/* <ButtonBase variant="container" background="secondary">
               Module color 2
             </ButtonBase>
