@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import getButtonCss, { generateButtonClassNames } from "./getButtonCss";
-import { forwardRef, ReactNode } from "react";
+import { forwardRef, ReactNode, useRef } from "react";
 import { types } from "./constants";
 import { SerializedStyles } from "@emotion/react";
 import {
@@ -9,14 +9,14 @@ import {
 } from "../../core/types/type";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import ButtonRoot from "./ButtonRoot";
-import TouchRipple from "./TouchRipple";
-import { onClickButton } from "../../core/utils/onClickButton";
+import TouchRipple, { TouchRippleRefs } from "./TouchRipple";
 
 const ButtonBase = forwardRef(function (
   props: OverallButtonBaseProps,
   ref: React.Ref<HTMLButtonElement>
 ) {
   const theme = useTheme() as ThemeProps;
+  const touchRippleRef = useRef<TouchRippleRefs | null>(null);
   const {
     onClick,
     isVisible,
@@ -50,17 +50,17 @@ const ButtonBase = forwardRef(function (
     animationframe: animationframe,
     fullWidth,
     disabled,
+    visible: isVisible,
   });
 
   const scopeButtonBaseCSS = getButtonCss(theme, props);
-  // const TouchRippleRef = useRef<any>(null);
 
   return (
     <ButtonRoot
       ref={ref as any}
       theme={theme}
       onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-        onClickButton(e, onClick, animationframe)
+        touchRippleRef.current?.onCreateAnimation(e)
       }
       disabled={disabled}
       scopeButtonBaseClasses={scopeButtonBaseClasses}
@@ -71,7 +71,9 @@ const ButtonBase = forwardRef(function (
       {/* {startIcon && <StartIcon content={startIcon} />} */}
       {children}
       {/* {endIcon && <EndIcon content={endIcon} />} */}
-      {animationframe === "ripple" && <TouchRipple theme={theme} />}
+      {animationframe === "ripple" && (
+        <TouchRipple theme={theme} ref={touchRippleRef} />
+      )}
     </ButtonRoot>
   );
 });
@@ -97,7 +99,7 @@ ButtonBase.defaultProps = {
   color: "primary",
   background: "primary",
   outlinedTheme: "primary",
-  isVisible: false,
+  isVisible: true,
   type: "button",
 };
 

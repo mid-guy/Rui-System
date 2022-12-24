@@ -20,6 +20,8 @@ export const generateButtonClassNames = (props: {
   outlinedTheme?: ButtonPropsOutlinedTheme;
   color?: ButtonPropsTextColor;
   animationframe?: ButtonPropsAnimationFrame;
+  visible?: boolean;
+  invisible?: boolean;
 }) => {
   const _props: { [key: string]: boolean | string } = props;
   return Object.keys(props)
@@ -47,6 +49,7 @@ const classNames: { [key: string]: string | any } = {
   fullWidth: "cds-button-fullWidth",
   disabled: "cds-button-disabled",
   visible: "cds-button-visible",
+  invisible: "cds-button-invisible",
   variant: (value: ButtonPropsVariant): string => {
     return value && `cds-button-${capitalizeFirstLetter(value)}`;
   },
@@ -72,7 +75,6 @@ const getButtonCss = (
   props: ButtonBaseProps
 ): SerializedStyles => css`
   &.${classNames.root} {
-    display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
@@ -95,25 +97,25 @@ const getButtonCss = (
       >
     ](theme)};
   }
-  &.${classNames.color(props.color)} {
-    ${theme.components.button.colors[
-      props.color as NonNullable<keyof typeof theme.components.button.colors>
-    ](theme)};
-  }
-  &.${classNames.background(props.background)} {
-    ${theme.components.button.backgrounds[
-      props.background as NonNullable<
-        keyof typeof theme.components.button.backgrounds
-      >
-    ](theme)};
-  }
+  ${props.variant === "container" &&
+  `
+    &.${classNames.background(props.background)} {
+      ${theme.components.button.backgrounds[
+        props.background as NonNullable<
+          keyof typeof theme.components.button.backgrounds
+        >
+      ](theme)};
+    }`}
+
+  ${props.variant === "outlined" &&
+  `
   &.${classNames.outlinedTheme(props.outlinedTheme)} {
     ${theme.components.button.outlinedTheme[
       props.outlinedTheme as NonNullable<
         keyof typeof theme.components.button.outlinedTheme
       >
     ](theme)};
-  }
+  }`}
   &.${classNames.size(props.size)} {
     ${theme.components.button.sizes[
       props.size as NonNullable<keyof typeof theme.components.button.sizes>
@@ -126,6 +128,15 @@ const getButtonCss = (
       >
     ](theme)};
   }
+
+  ${props.variant === "text" &&
+  `
+    &.${classNames.color(props.color)} {
+      ${theme.components.button.colors[
+        props.color as NonNullable<keyof typeof theme.components.button.colors>
+      ](theme)};
+    }`}
+
   font-family: inherit;
   &.${classNames.fullWidth} {
     width: 100%;
@@ -137,7 +148,10 @@ const getButtonCss = (
     background-color: ${theme.palette.action.disabledBackground};
   }
   &.${classNames.visible} {
-    display: ${props.isVisible ? "block" : "none"};
+    display: inline-flex;
+  }
+  &.${classNames.invisible} {
+    display: none;
   }
 `;
 

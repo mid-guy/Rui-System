@@ -6,19 +6,19 @@ export const types = { button: "button", submit: "submit" };
 export const sizes = {
   sm: (theme: ThemeProps) => `
     padding: 6px 12px;
-    font-size: ${theme.typography.body2.fontSize};
+    font-size: ${theme.typography.body2.fontSize}px;
     font-weight: ${theme.typography.body2.fontWeight};
     height: 30px;
   `,
   md: (theme: ThemeProps) => `
     padding: 8px 16px;
-    font-size: ${theme.typography.body1.fontSize};
+    font-size: ${theme.typography.body1.fontSize}px;
     font-weight: ${theme.typography.body1.fontWeight};
     height: 36px;
   `,
   lg: (theme: ThemeProps) => `
     padding: 8px 24px;
-    font-size: ${theme.typography.global.fontSize};
+    font-size: ${theme.typography.global.fontSize}px;
     font-weight: ${theme.typography.global.fontWeight};
     height: 42px;
   `,
@@ -30,7 +30,7 @@ export const animationframes = {
     overflow: hidden;
   `,
   scale: (theme: ThemeProps) => `
-    transition-duration: ${theme.transitions.duration.shortest}ms;
+    transition-duration: ${theme.transitions.duration.shortest}ms ease-in;
     &:active {
       transform: scale(0.95);
     }
