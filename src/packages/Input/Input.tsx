@@ -2,25 +2,23 @@
 import {
   forwardRef,
   Fragment,
-  useEffect,
+  ReactNode,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
+import debounceTyping from "../../core/utils/debounceTyping";
 
 function Input() {
-  const [value, setValue] = useState<string>("");
   const [isFocus, setFocus] = useState<boolean>(false);
   const [isTyping, setTyping] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState("");
   const [portalRect, setPortalRect] = useState({
     height: 50,
   });
-  // const portalRef = useRef();
-  const inProgressRef = useRef<any>();
-  function getRef(ref: any) {
+  const optionsContainerRef = useRef<HTMLDivElement>(null);
+  function getBoundingRefRect(ref: { current: HTMLDivElement }) {
     const client = ref.current.getBoundingClientRect();
-    console.log(client.height);
     setPortalRect({
       height: client.height,
     });
@@ -45,17 +43,19 @@ function Input() {
             return setTyping(true);
           }
         }}
-        onChange={debounce((e) => {
-          console.log(e.target.value);
+        onChange={debounceTyping((e) => {
           setTyping(false);
           setSearchValue(e.target.value);
         })}
         onFocus={() => setFocus(true)}
-        // onBlur={() => setFocus(false)}
+        onBlur={() => setFocus(false)}
       />
       {isFocus && (
         <PortalContainer isTyping={isTyping} portalRect={portalRect}>
-          <InProgressContainer ref={inProgressRef} getRef={getRef}>
+          <OptionsContainer
+            ref={optionsContainerRef}
+            getBoundingRefRect={getBoundingRefRect}
+          >
             {mockArray.map((item: any) => {
               if (searchValue !== "" && item.name.includes(searchValue)) {
                 return (
@@ -69,9 +69,15 @@ function Input() {
                     <Span>{item.name}</Span>
                   </Fragment>
                 );
+              } else {
+                return (
+                  <Fragment key={item.id}>
+                    <Span>Nothing to display</Span>
+                  </Fragment>
+                );
               }
             })}
-          </InProgressContainer>
+          </OptionsContainer>
         </PortalContainer>
       )}
     </div>
@@ -119,25 +125,18 @@ const Span = ({ children }: any) => {
   );
 };
 
-const InProgressContainer = forwardRef<any, any>(function (props, ref) {
+const OptionsContainer = forwardRef<
+  HTMLDivElement,
+  {
+    children: ReactNode;
+    getBoundingRefRect: Function;
+  }
+>(function (props, ref) {
   useLayoutEffect(() => {
-    props.getRef(ref);
+    props.getBoundingRefRect(ref);
   }, []);
   return <div ref={ref}>{props.children}</div>;
 });
-
-function debounce<T extends unknown[]>(
-  func: (...args: T) => void,
-  delay: number = 1000
-): (...args: T) => void {
-  let timer: any;
-  return (...args: T) => {
-    if (timer && timer !== null) clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.call(null, ...args);
-    }, delay);
-  };
-}
 function uuid() {
   let r = (Math.random() + 1).toString(36).substring(7);
   return r;
@@ -233,4 +232,5 @@ const mockArray = [
     name: `Asd1 ${uuid()}`,
   },
 ];
+
 export default Input;

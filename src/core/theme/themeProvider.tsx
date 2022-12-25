@@ -8,6 +8,7 @@ import {
   ButtonPropsOutlinedTheme,
   ButtonPropsAnimationFrame,
 } from "../../packages/ButtonBase/ButtonBase";
+import { InputBasePropsVariant } from "../../packages/InputBase/InputBase";
 import {
   WrapThemeProps,
   GenerateObjectByStringUnion,
@@ -47,6 +48,11 @@ export type ThemeProps = {
         GenerateObjectByStringUnion<ButtonPropsOutlinedTheme>
       >;
     };
+    input: {
+      variants: WrapThemeProps<
+        GenerateObjectByStringUnion<InputBasePropsVariant>
+      >;
+    };
     // ...
   };
   palette: {
@@ -81,6 +87,10 @@ export type ThemeProps = {
     };
     shape: {
       borderRadius: number;
+      borderWidth: number;
+      borderStyle: {
+        solid: "solid";
+      };
     };
   };
   animationframe: {

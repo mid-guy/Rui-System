@@ -4,11 +4,11 @@ import {
   colors,
   outlinedTheme,
   sizes,
-  variants,
+  variants as buttonBaseVariants,
 } from "../../packages/ButtonBase/constants";
 import { blue, green, orange, pink, red } from "../colors/colors";
 import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
-
+import { variants as inputBaseVariants } from "../../packages/InputBase/constants";
 export const palette = {
   primary: {
     main: blue[700],
@@ -41,6 +41,10 @@ export const palette = {
   },
   shape: {
     borderRadius: 4,
+    borderWidth: 1,
+    borderStyle: {
+      solid: "solid",
+    }
   },
 };
 
@@ -113,12 +117,15 @@ export const spacing = {};
 export const defaultTheme = {
   components: {
     button: {
-      variants: variants,
+      variants: buttonBaseVariants,
       sizes: sizes,
       backgrounds: backgrounds,
       colors: colors,
       outlinedTheme: outlinedTheme,
     },
+    input: {
+      variants: inputBaseVariants,
+    }
   },
   palette: palette,
   animationframe: {

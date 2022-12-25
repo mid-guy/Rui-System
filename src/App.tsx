@@ -6,7 +6,7 @@ import ButtonBase from "./packages/ButtonBase/ButtonBase";
 import LocalButton from "./packages/LocalButton/LocalButton";
 import ThemeProvider from "./core/theme/themeProvider";
 import WithStylesButton from "./packages/WithStylesButton/WithStylesButton";
-import Input from "./packages/Input";
+import InputBase from "./packages/InputBase";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const withLoading = (callback: any) => {
@@ -23,7 +23,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <Input />
+          <InputBase variant="outlined" />
           <div style={{ display: "flex", gap: 10 }}>
             {/* <ButtonBase
               variant="container"
