@@ -11,6 +11,7 @@ import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
 import {
   variants as inputBaseVariants,
   sizes as inputBaseSizes,
+  colors as inputBaseColors
 } from "../../packages/InputBase/constants";
 export const palette = {
   primary: {
@@ -129,6 +130,7 @@ export const defaultTheme = {
     input: {
       variants: inputBaseVariants,
       sizes: inputBaseSizes,
+      colors: inputBaseColors
     },
   },
   palette: palette,

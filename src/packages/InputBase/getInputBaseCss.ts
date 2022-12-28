@@ -4,6 +4,7 @@ import capitalizeFirstLetter from "../../core/utils/capitalizeFirstLetter";
 import {
   InputBaseProps,
   InputBasePropsSize,
+  InputBasePropsTextColor,
   InputBasePropsVariant,
 } from "./InputBase";
 
@@ -12,37 +13,22 @@ const getInputBaseCss = (
   props: InputBaseProps
 ): SerializedStyles => css`
   &.${classNames.formControlRoot} {
-    background: inherit;
     box-sizing: border-box;
     display: inline-flex;
     color: rgba(0, 0, 0, 0.87);
     &.${classNames.variant(props.variant)} {
-      ${theme.components.input.variants[
-        props.variant as NonNullable<
-          keyof typeof theme.components.input.variants
-        >
-      ](theme)}
+      ${theme.components.input.variants[props.variant as NonNullable<keyof typeof theme.components.input.variants>](theme)}
     }
     &.${classNames.size(props.size)} {
-      ${theme.components.input.sizes[
-        props.size as NonNullable<keyof typeof theme.components.input.sizes>
-      ](theme)}
+      ${theme.components.input.sizes[props.size as NonNullable<keyof typeof theme.components.input.sizes>](theme)}
     }
-    ${props.variant !== "text" &&
-    ` 
-      border-radius: ${theme.palette.shape.borderRadius}px;
-    `}
-    border-width: ${theme.palette.shape.borderWidth}px;
-    border-style: ${theme.palette.shape.borderStyle.solid};
-    border-color: rgba(0, 0, 0, 0.23);
-    transition: border ${theme.transitions.duration.shortest}ms ease-in;
-    &:hover {
-      border-color: ${theme.palette.text.primary};
+    &.${classNames.color(props.color)} {
+      ${theme.components.input.colors[props.color as NonNullable<keyof typeof theme.components.input.colors>](theme)}
     }
-    &.${classNames.inputBaseFocused} {
-      border-color: ${theme.palette.primary.main};
-      transition: border ${theme.transitions.duration.shorter}ms ease-in;
+    &.${classNames.fullWidth} {
+      width: 100%;
     }
+    transition: all ${theme.transitions.duration.shortest}ms ease-in;
     > input {
       background: inherit;
       border: none;
@@ -52,11 +38,14 @@ const getInputBaseCss = (
   }
 `;
 
+
 export const generateInputBaseClassNames = (props: {
   formControlRoot: boolean;
   inputBaseRoot: boolean;
-  inputBaseFocused: boolean;
+  focused: boolean;
+  variant?: InputBasePropsVariant;
   size?: InputBasePropsSize;
+  color?: InputBasePropsTextColor;
   fullWidth?: boolean;
   disabled?: boolean;
 }) => {
@@ -68,9 +57,9 @@ export const generateInputBaseClassNames = (props: {
         key === "background" ||
         key === "variant" ||
         key === "color" ||
-        key === "outlinedTheme" ||
-        key === "animationframe"
+        key === "outlinedTheme"
       ) {
+
         return [...prevClasses, classNames[key](_props[key])];
       }
       return [...prevClasses, classNames[key]];
@@ -79,17 +68,20 @@ export const generateInputBaseClassNames = (props: {
   }, []);
 };
 
-const classNames: { [key: string]: string | any } = {
+export const classNames: { [key: string]: string | any } = {
   formControlRoot: "cds-formControl-root",
   inputBaseRoot: "cds-inputBase-root",
-  inputBaseFocused: "cds-inputBase-focused",
+  focused: "cds-inputBase-focused",
   fullWidth: "cds-inputBase-fullWidth",
   disabled: "cds-input-disabled",
   variant: (value: InputBasePropsVariant): string => {
-    return value && `cds-inputBase-${capitalizeFirstLetter(value)}`;
+    return `cds-inputBase-${capitalizeFirstLetter(value)}`;
   },
   size: (value: InputBasePropsSize): string => {
-    return value && `cds-inputBase-${capitalizeFirstLetter(value)}`;
+    return `cds-inputBase-${capitalizeFirstLetter(value)}`;
+  },
+  color: (value: InputBasePropsTextColor): string => {
+    return `cds-inputBase-${capitalizeFirstLetter(value)}`;
   },
 };
 

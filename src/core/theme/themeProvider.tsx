@@ -10,6 +10,7 @@ import {
 } from "../../packages/ButtonBase/ButtonBase";
 import {
   InputBasePropsSize,
+  InputBasePropsTextColor,
   InputBasePropsVariant,
 } from "../../packages/InputBase/InputBase";
 import {
@@ -56,6 +57,9 @@ export type ThemeProps = {
         GenerateObjectByStringUnion<InputBasePropsVariant>
       >;
       sizes: WrapThemeProps<GenerateObjectByStringUnion<InputBasePropsSize>>;
+      colors: WrapThemeProps<
+        GenerateObjectByStringUnion<InputBasePropsTextColor>
+      >;
     };
     // ...
   };
