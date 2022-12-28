@@ -14,15 +14,17 @@ const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
   ref
 ) {
   const theme = useTheme() as ThemeProps;
-  const { variant, onFocus, onBlur, ...rest } = props;
+  const { variant, size, onFocus, onBlur, ...rest } = props;
   const [isFocused, setFocused] = useState<boolean>(false);
   const scopeInputBaseClasses = generateInputBaseClassNames({
     inputBaseRoot: true,
     formControlRoot: true,
     inputBaseFocused: isFocused,
+    size: size,
   });
   const scopeInputBaseCss = getInputBaseCss(theme, {
     variant: variant,
+    size: size,
   });
   function onFocusInput() {
     setFocused(true);
@@ -44,6 +46,11 @@ const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
   );
 });
 
+InputBase.defaultProps = {
+  variant: "outlined",
+  size: "sm",
+};
+
 export type OverallInputBaseProps = OverridableMapType<
   React.HTMLProps<HTMLInputElement>,
   InputBaseProps
@@ -58,6 +65,7 @@ export interface InputBasePropsAnimationFrameOverrides {}
 
 export type InputBaseProps = {
   variant: InputBasePropsVariant;
+  size?: InputBasePropsSize;
 };
 
 export type InputBasePropsVariant = OverridableStringUnion<

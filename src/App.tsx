@@ -23,7 +23,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <InputBase variant="outlined" />
+          <InputBase variant="outlined" size="lg" />
           <div style={{ display: "flex", gap: 10 }}>
             {/* <ButtonBase
               variant="container"

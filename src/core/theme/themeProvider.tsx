@@ -8,7 +8,10 @@ import {
   ButtonPropsOutlinedTheme,
   ButtonPropsAnimationFrame,
 } from "../../packages/ButtonBase/ButtonBase";
-import { InputBasePropsVariant } from "../../packages/InputBase/InputBase";
+import {
+  InputBasePropsSize,
+  InputBasePropsVariant,
+} from "../../packages/InputBase/InputBase";
 import {
   WrapThemeProps,
   GenerateObjectByStringUnion,
@@ -52,6 +55,7 @@ export type ThemeProps = {
       variants: WrapThemeProps<
         GenerateObjectByStringUnion<InputBasePropsVariant>
       >;
+      sizes: WrapThemeProps<GenerateObjectByStringUnion<InputBasePropsSize>>;
     };
     // ...
   };

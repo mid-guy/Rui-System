@@ -8,7 +8,10 @@ import {
 } from "../../packages/ButtonBase/constants";
 import { blue, green, orange, pink, red } from "../colors/colors";
 import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
-import { variants as inputBaseVariants } from "../../packages/InputBase/constants";
+import {
+  variants as inputBaseVariants,
+  sizes as inputBaseSizes,
+} from "../../packages/InputBase/constants";
 export const palette = {
   primary: {
     main: blue[700],
@@ -44,7 +47,7 @@ export const palette = {
     borderWidth: 1,
     borderStyle: {
       solid: "solid",
-    }
+    },
   },
 };
 
@@ -112,7 +115,7 @@ export const typography = {
   },
 };
 
-export const spacing = {};
+export const spacing = (space: number) => `${8 * space}px`;
 
 export const defaultTheme = {
   components: {
@@ -125,7 +128,8 @@ export const defaultTheme = {
     },
     input: {
       variants: inputBaseVariants,
-    }
+      sizes: inputBaseSizes,
+    },
   },
   palette: palette,
   animationframe: {

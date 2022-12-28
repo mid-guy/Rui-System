@@ -14,4 +14,19 @@ export const variants = {
     text-decoration: none;
     border: none;
   `,
-}
+};
+
+export const sizes = {
+  sm: (theme: ThemeProps) => `
+    padding: ${theme.spacing(0.75)} ${theme.spacing(1.5)};
+    height: 30px;
+  `,
+  md: (theme: ThemeProps) => `
+    padding: ${theme.spacing(1)} ${theme.spacing(2)};
+    height: 36px;
+  `,
+  lg: (theme: ThemeProps) => `
+    padding: ${theme.spacing(1)} ${theme.spacing(3)};
+    height: 42px;
+  `,
+};
