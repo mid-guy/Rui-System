@@ -17,16 +17,43 @@ const getInputBaseCss = (
     display: inline-flex;
     color: rgba(0, 0, 0, 0.87);
     &.${classNames.variant(props.variant)} {
-      ${theme.components.input.variants[props.variant as NonNullable<keyof typeof theme.components.input.variants>](theme)}
+      ${theme.components.input.variants[
+        props.variant as NonNullable<
+          keyof typeof theme.components.input.variants
+        >
+      ](theme)}
     }
     &.${classNames.size(props.size)} {
-      ${theme.components.input.sizes[props.size as NonNullable<keyof typeof theme.components.input.sizes>](theme)}
+      ${theme.components.input.sizes[
+        props.size as NonNullable<keyof typeof theme.components.input.sizes>
+      ](theme, props.variant as InputBasePropsVariant)}
     }
     &.${classNames.color(props.color)} {
-      ${theme.components.input.colors[props.color as NonNullable<keyof typeof theme.components.input.colors>](theme)}
+      ${theme.components.input.colors[
+        props.color as NonNullable<keyof typeof theme.components.input.colors>
+      ](theme)}
+    }
+    &.${classNames.error} {
+      &.${classNames.focused} {
+        border-color: ${theme.palette.error.main};
+      }
+      border-color: ${theme.palette.error.main};
+      > input {
+        color: ${theme.palette.error.main};
+      }
+      color: ${theme.palette.error.contrastText};
+      &:hover {
+        border-color: ${theme.palette.error.main};
+      }
     }
     &.${classNames.fullWidth} {
       width: 100%;
+    }
+    &.${classNames.disabled} {
+      pointer-events: none;
+      > input: {
+        color: ${theme.palette.text.disabled};
+      }
     }
     transition: all ${theme.transitions.duration.shortest}ms ease-in;
     > input {
@@ -38,7 +65,6 @@ const getInputBaseCss = (
   }
 `;
 
-
 export const generateInputBaseClassNames = (props: {
   formControlRoot: boolean;
   inputBaseRoot: boolean;
@@ -48,6 +74,7 @@ export const generateInputBaseClassNames = (props: {
   color?: InputBasePropsTextColor;
   fullWidth?: boolean;
   disabled?: boolean;
+  error?: boolean;
 }) => {
   const _props: { [key: string]: boolean | string } = props;
   return Object.keys(props).reduce((prevClasses: any, key: any) => {
@@ -59,7 +86,6 @@ export const generateInputBaseClassNames = (props: {
         key === "color" ||
         key === "outlinedTheme"
       ) {
-
         return [...prevClasses, classNames[key](_props[key])];
       }
       return [...prevClasses, classNames[key]];
@@ -74,6 +100,7 @@ export const classNames: { [key: string]: string | any } = {
   focused: "cds-inputBase-focused",
   fullWidth: "cds-inputBase-fullWidth",
   disabled: "cds-input-disabled",
+  error: "cds-inputBase-error",
   variant: (value: InputBasePropsVariant): string => {
     return `cds-inputBase-${capitalizeFirstLetter(value)}`;
   },

@@ -13,6 +13,7 @@ import {
   InputBasePropsTextColor,
   InputBasePropsVariant,
 } from "../../packages/InputBase/InputBase";
+import { WrapThemeInputBaseProp } from "../types/InputBase/types";
 import {
   WrapThemeProps,
   GenerateObjectByStringUnion,
@@ -56,7 +57,10 @@ export type ThemeProps = {
       variants: WrapThemeProps<
         GenerateObjectByStringUnion<InputBasePropsVariant>
       >;
-      sizes: WrapThemeProps<GenerateObjectByStringUnion<InputBasePropsSize>>;
+      sizes: WrapThemeInputBaseProp<
+        GenerateObjectByStringUnion<InputBasePropsSize>,
+        InputBasePropsVariant
+      >;
       colors: WrapThemeProps<
         GenerateObjectByStringUnion<InputBasePropsTextColor>
       >;
@@ -96,6 +100,10 @@ export type ThemeProps = {
     shape: {
       borderRadius: number;
       borderWidth: number;
+      borderColor: {
+        default: string;
+        hover: string;
+      };
       borderStyle: {
         solid: "solid";
       };
