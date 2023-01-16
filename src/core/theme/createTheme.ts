@@ -11,8 +11,9 @@ import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
 import {
   variants as inputBaseVariants,
   sizes as inputBaseSizes,
-  colors as inputBaseColors
+  colors as inputBaseColors,
 } from "../../packages/InputBase/constants";
+
 export const palette = {
   primary: {
     main: blue[700],
@@ -46,6 +47,10 @@ export const palette = {
   shape: {
     borderRadius: 4,
     borderWidth: 1,
+    borderColor: {
+      default: "rgba(0, 0, 0, 0.42)",
+      hover: "rgba(0, 0, 0, 0.87)",
+    },
     borderStyle: {
       solid: "solid",
     },
@@ -130,7 +135,7 @@ export const defaultTheme = {
     input: {
       variants: inputBaseVariants,
       sizes: inputBaseSizes,
-      colors: inputBaseColors
+      colors: inputBaseColors,
     },
   },
   palette: palette,

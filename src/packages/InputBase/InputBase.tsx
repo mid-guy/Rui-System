@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { forwardRef, useState } from "react";
+import { forwardRef, useReducer, useState } from "react";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import {
   OverridableMapType,
@@ -14,7 +14,8 @@ const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
   ref
 ) {
   const theme = useTheme() as ThemeProps;
-  const { variant, size, color, onFocus, onBlur, ...rest } = props;
+  const { variant, size, color, error, disabled, onFocus, onBlur, ...rest } =
+    props;
   const [isFocused, setFocused] = useState<boolean>(false);
   const scopeInputBaseClasses = generateInputBaseClassNames({
     inputBaseRoot: true,
@@ -23,11 +24,15 @@ const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
     variant: variant,
     size: size,
     color: color,
+    error: error,
+    disabled: disabled,
   });
   const scopeInputBaseCss = getInputBaseCss(theme, {
     variant: variant,
     size: size,
     color: color,
+    error: error,
+    disabled: disabled,
   });
   function onFocusInput() {
     setFocused(true);
@@ -42,6 +47,7 @@ const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
         onFocus={onFocusInput}
         onBlur={onBlurInput}
         className={inputBaseRootClasses}
+        disabled={disabled}
         ref={ref}
         {...rest}
       />
@@ -53,8 +59,30 @@ InputBase.defaultProps = {
   variant: "outlined",
   size: "sm",
   color: "primary",
+  error: false,
 };
 
+const inputFocusReducer = (state: any, action: any) => {
+  switch (action.type) {
+    case "FOCUS":
+      return {};
+    case "BLUR":
+      return;
+    default:
+      return state;
+  }
+};
+const initialInputFocus = {
+  isFocus: false,
+};
+
+const useInputFocus = () => {
+  const [state, dispatch] = useReducer(inputFocusReducer, initialInputFocus);
+  return {
+    state,
+    dispatch,
+  };
+};
 export type OverallInputBaseProps = OverridableMapType<
   Omit<React.HTMLProps<HTMLInputElement>, "sizes">,
   InputBaseProps
@@ -71,6 +99,8 @@ export type InputBaseProps = {
   variant?: InputBasePropsVariant;
   size?: InputBasePropsSize;
   color?: InputBasePropsTextColor;
+  error?: boolean;
+  disabled?: boolean;
 };
 
 export type InputBasePropsVariant = OverridableStringUnion<

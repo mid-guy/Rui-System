@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import "./App.css";
-import { lazy, useState } from "react";
+import { lazy, useEffect, useRef, useState } from "react";
 import theme from "./core-theme/theme";
 import ButtonBase from "./packages/ButtonBase/ButtonBase";
 import LocalButton from "./packages/LocalButton/LocalButton";
@@ -19,11 +19,12 @@ function App() {
   function onClick(e: any, number: number) {
     console.log(e, number);
   }
+  const ref = useRef<any>();
   return (
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <InputBase variant="outlined" size="lg" color="primary" />
+          <InputBase variant="outlined" size="lg" color="primary" ref={ref} />
           <div style={{ display: "flex", gap: 10 }}>
             {/* <ButtonBase
               variant="container"
@@ -41,7 +42,6 @@ function App() {
             </ButtonBase> */}
           </div>
         </ThemeProvider>
-
         {/* <LocalButton size="lg" className="mb-10">
           This is MakeStyles Button
         </LocalButton>
