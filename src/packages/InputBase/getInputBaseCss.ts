@@ -10,7 +10,7 @@ import {
 
 const getInputBaseCss = (
   theme: ThemeProps,
-  props: InputBaseProps
+  props: Omit<InputBaseProps, "innerTheme">
 ): SerializedStyles => css`
   &.${classNames.formControlRoot} {
     box-sizing: border-box;
@@ -68,7 +68,7 @@ const getInputBaseCss = (
 export const generateInputBaseClassNames = (props: {
   formControlRoot: boolean;
   inputBaseRoot: boolean;
-  focused: boolean;
+  focused?: boolean;
   variant?: InputBasePropsVariant;
   size?: InputBasePropsSize;
   color?: InputBasePropsTextColor;
