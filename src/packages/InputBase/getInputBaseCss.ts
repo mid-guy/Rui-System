@@ -38,7 +38,7 @@ const getInputBaseCss = (
         border-color: ${theme.palette.error.main};
       }
       border-color: ${theme.palette.error.main};
-      > input {
+      > .${classNames.inputBaseRoot} {
         color: ${theme.palette.error.main};
       }
       color: ${theme.palette.error.contrastText};
@@ -51,12 +51,12 @@ const getInputBaseCss = (
     }
     &.${classNames.disabled} {
       pointer-events: none;
-      > input: {
+      > .${classNames.inputBaseRoot}: {
         color: ${theme.palette.text.disabled};
       }
     }
     transition: all ${theme.transitions.duration.shortest}ms ease-in;
-    > input {
+    > .${classNames.inputBaseRoot} {
       background: inherit;
       border: none;
       outline: none;

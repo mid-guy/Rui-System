@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { forwardRef, useReducer, useState } from "react";
+import { forwardRef, useState } from "react";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import {
   OverridableMapType,
@@ -34,18 +34,20 @@ const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
     error: error,
     disabled: disabled,
   });
-  function onFocusInput() {
+  function onFocusInput(onFocus?: Function) {
     setFocused(true);
+    onFocus && onFocus();
   }
-  function onBlurInput() {
+  function onBlurInput(onBlur?: Function) {
     setFocused(false);
+    onBlur && onBlur();
   }
   const [inputBaseRootClasses, ...restScopeClasses] = scopeInputBaseClasses;
   return (
     <div className={restScopeClasses.join(" ")} css={scopeInputBaseCss}>
       <input
-        onFocus={onFocusInput}
-        onBlur={onBlurInput}
+        onFocus={() => onFocusInput(onFocus)}
+        onBlur={() => onBlurInput(onBlur)}
         className={inputBaseRootClasses}
         disabled={disabled}
         ref={ref}
@@ -62,27 +64,6 @@ InputBase.defaultProps = {
   error: false,
 };
 
-const inputFocusReducer = (state: any, action: any) => {
-  switch (action.type) {
-    case "FOCUS":
-      return {};
-    case "BLUR":
-      return;
-    default:
-      return state;
-  }
-};
-const initialInputFocus = {
-  isFocus: false,
-};
-
-const useInputFocus = () => {
-  const [state, dispatch] = useReducer(inputFocusReducer, initialInputFocus);
-  return {
-    state,
-    dispatch,
-  };
-};
 export type OverallInputBaseProps = OverridableMapType<
   Omit<React.HTMLProps<HTMLInputElement>, "sizes">,
   InputBaseProps
