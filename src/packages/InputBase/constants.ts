@@ -12,8 +12,8 @@ export const variants = {
       border-color: ${theme.palette.shape.borderColor.hover};
       background-color: rgba(0, 0, 0, 0.09);
     }
-    > input {
-      background: none
+    > .${classNames.inputBaseRoot} {
+      background: none;
     }
   `,
   outlined: (theme: ThemeProps) => `
