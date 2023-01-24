@@ -1,57 +1,49 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import "./App.css";
-import { lazy, useEffect, useRef, useState } from "react";
-import theme from "./core-theme/theme";
-import ButtonBase from "./packages/ButtonBase/ButtonBase";
-import LocalButton from "./packages/LocalButton/LocalButton";
-import ThemeProvider from "./core/theme/themeProvider";
-import WithStylesButton from "./packages/WithStylesButton/WithStylesButton";
-import InputBase from "./packages/InputBase";
+import { useState } from "react";
+import MomentumScrollContainer from "./packages/MomentumScrollContainer";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [state, setState] = useState("");
+  const [options, setOptions] = useState<any[]>([]);
   const withLoading = (callback: any) => {
     return async (e: any) => {
       setLoading(true);
+      await delay(2000);
       await callback(e);
       setLoading(false);
     };
   };
+  function delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   function onClick(e: any, number: number) {
     console.log(e, number);
   }
-  const ref = useRef<any>();
+  function getBook(e: any) {
+    return fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => response.json())
+      .then((json) => {
+        const result = mapValue(e.target.value, json);
+        setOptions(result);
+      });
+  }
+  function mapValue(target: string, source: any[]) {
+    return source.filter((item: any) => item.title.includes(target));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <ThemeProvider theme={theme}>
-          <InputBase variant="outlined" size="lg" color="primary" ref={ref} />
-          <div style={{ display: "flex", gap: 10 }}>
-            {/* <ButtonBase
-              variant="container"
-              background="primary"
-              animationframe="ripple"
-            >
-              Module color 1
-            </ButtonBase> */}
-            {/* <ButtonBase variant="container" background="secondary">
-              Module color 2
-            </ButtonBase>
-
-            <ButtonBase variant="container" background="ternary">
-              Module color 3
-            </ButtonBase> */}
-          </div>
-        </ThemeProvider>
-        {/* <LocalButton size="lg" className="mb-10">
-          This is MakeStyles Button
-        </LocalButton>
-
-        <WithStylesButton className="mb-10">
-          This is WithStylesButton
-        </WithStylesButton> */}
-      </header>
+      <MomentumScrollContainer>
+        <div className="section one">Section One</div>
+        <div className="section two">Section Two</div>
+        <div id="three" className="section three">
+          Section Three
+        </div>
+        <div className="section four">Section Four</div>
+      </MomentumScrollContainer>
     </div>
   );
 }
-
 export default App;
