@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /** @jsxImportSource @emotion/react */
-import { forwardRef, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import { OverridableStringUnion } from "../../core/types/type";
+import OverlayPopover from "../OverlayPopover";
 import getPopoverCss, {
   classNames,
   generatePopoverClassNames,
@@ -16,6 +18,9 @@ const Popover = forwardRef<any, any>(function (props, ref) {
     isVisible = false,
     children,
     onAnimationEnd,
+    isLoadingOptions,
+    isUpdatingOptions,
+    onCompleteChangeOptions,
   } = props;
   const isMounted = useRef<boolean>(false);
   const theme = useTheme() as ThemeProps;
@@ -27,6 +32,8 @@ const Popover = forwardRef<any, any>(function (props, ref) {
     transitionContent: "flash",
     mounted: isMounted.current,
     mounting: isVisible,
+    disable: isLoadingOptions,
+    isUpdatingOptions: isUpdatingOptions,
   });
   const scopePopoverClasses = generatePopoverClassNames({
     root: true,
@@ -36,10 +43,19 @@ const Popover = forwardRef<any, any>(function (props, ref) {
     transitionContent: "flash",
     mounted: isVisible,
     mounting: isVisible,
+    disable: isLoadingOptions,
   });
+
+  useEffect(() => {
+    return () => onCompleteChangeOptions();
+  }, []);
+
   return (
     <div
-      className={scopePopoverClasses}
+      className={[
+        ...scopePopoverClasses.slice(0, 3),
+        ...scopePopoverClasses.slice(4),
+      ].join(" ")}
       css={[scopePopoverCSS]}
       onAnimationEnd={() => {
         isMounted.current = true;
@@ -47,7 +63,13 @@ const Popover = forwardRef<any, any>(function (props, ref) {
       }}
       ref={ref}
     >
-      <div className={classNames.overflowContainer}>{children}</div>
+      {isLoadingOptions && <OverlayPopover />}
+      <div
+        className={[classNames.paper, scopePopoverClasses[3]].join(" ")}
+        onAnimationEnd={onCompleteChangeOptions}
+      >
+        <div className={classNames.overflowContainer}>{children}</div>
+      </div>
     </div>
   );
 });

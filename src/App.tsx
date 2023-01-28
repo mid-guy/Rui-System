@@ -1,16 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import "./App.css";
 import { useState } from "react";
-import MomentumScrollContainer from "./packages/MomentumScrollContainer";
+import Select from "./packages/Select";
+import ConditionalRender from "./packages/ConditionalRender";
+import Span from "./demo/Span";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [state, setState] = useState("");
   const [options, setOptions] = useState<any[]>([]);
+  const [isUpdatingOptions, setUpdatingOptions] = useState<boolean>(false);
   const withLoading = (callback: any) => {
     return async (e: any) => {
       setLoading(true);
-      await delay(2000);
+      await delay(1000);
       await callback(e);
+      setUpdatingOptions(true);
       setLoading(false);
     };
   };
@@ -33,16 +37,32 @@ function App() {
     return source.filter((item: any) => item.title.includes(target));
   }
 
+  function onCompleteChangeOptions() {
+    console.log("COMPLETED-CHANGING-CONTENT");
+    setUpdatingOptions(false);
+  }
+
   return (
     <div className="App">
-      <MomentumScrollContainer>
-        <div className="section one">Section One</div>
-        <div className="section two">Section Two</div>
-        <div id="three" className="section three">
-          Section Three
-        </div>
-        <div className="section four">Section Four</div>
-      </MomentumScrollContainer>
+      <div className="App-content">
+        <Select
+          onLoadOptions={withLoading(getBook)}
+          onChange={(e) => setState(e.target.value)}
+          isLoadingOptions={isLoading}
+          isUpdatingOptions={isUpdatingOptions}
+          onCompleteChangeOptions={onCompleteChangeOptions}
+          value={state}
+        >
+          <ConditionalRender
+            conditional={options && options.length > 0}
+            fallback={<Span>No Value</Span>}
+          >
+            {options.map((option: any) => (
+              <Span key={option.id}>{option.title}</Span>
+            ))}
+          </ConditionalRender>
+        </Select>
+      </div>
     </div>
   );
 }

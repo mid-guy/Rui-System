@@ -4,20 +4,46 @@ import capitalizeFirstLetter from "../../core/utils/capitalizeFirstLetter";
 import { PopoverProps, PopoverPropsAnimationFrame, PopoverPropsTransitionStack, PopoverPropsTransitionContent } from "./Popover";
 const getPopoverCss = (
   theme: ThemeProps,
-  props: Omit<PopoverProps & { mounted: boolean, mounting: boolean }, "innerTheme" | "isVisible">
+  props: Omit<PopoverProps & { disable: boolean, isUpdatingOptions: boolean, mounted: boolean, mounting: boolean }, "innerTheme" | "isVisible">
 ): SerializedStyles => css`
   &.${classNames.root} {
     position: absolute;
-    width: calc(100% - ${theme.spacing(3)});
-    padding: ${theme.spacing(1)} ${theme.spacing(1.5)};
     color: ${theme.palette.text.primary};
+    width: 100%;
+    .${classNames.paper} {
+      position: relative;
+      width: calc(100% - ${theme.spacing(3)});
+      padding: ${theme.spacing(1)} ${theme.spacing(1.5)};
+      ${props.isUpdatingOptions && `
+        animation: change-content 1000ms;
+        animation-timing-function: ease-out;
+        @keyframes change-content {
+          0% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 0.5;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+      `}
+      &.${classNames.transitionStack(props.transitionStack)} {
+        ${theme.animationframe.popover.transitions[props.transitionStack as NonNullable<keyof typeof theme.animationframe.popover.transitions>
+  ](theme, {
+    popoverRect: props.popoverRect,
+    maxHeight: props.maxHeight,
+    mounted: props.mounted
+  })};
+    }
     .${classNames.overflowContainer} {
       position: relative; 
       overflow: auto;
       height: 100%;
       margin-right: -6px;
       color: rgba(0, 0, 0, 0);
-      transition: color ${theme.transitions.duration.enteringScreen}ms ease-in;
+      transition: color ${theme.transitions.duration.standard}ms ease-out;
       .${classNames.overflowContent} {
         padding-right: 6px;
       }
@@ -37,16 +63,6 @@ const getPopoverCss = (
       }
     }
   }
-  &.${classNames.transitionStack(props.transitionStack)} {
-    ${theme.animationframe.popover.transitions[
-    props.transitionStack as NonNullable<
-      keyof typeof theme.animationframe.popover.transitions
-    >
-  ](theme, {
-    popoverRect: props.popoverRect,
-    maxHeight: props.maxHeight,
-    mounted: props.mounted
-  })};
   &.${classNames.animationFrame(props.animationframe)} {
     ${theme.animationframe.popover.animationframe[
     props.animationframe as NonNullable<
@@ -70,7 +86,8 @@ export const generatePopoverClassNames = (props: {
   transitionStack: PopoverPropsTransitionStack,
   transitionContent: PopoverPropsTransitionContent,
   mounted: boolean,
-  mounting: boolean
+  mounting: boolean,
+  disable: boolean
 }) => {
   const _props: { [key: string]: boolean | string } = props;
   return Object.keys(props)
@@ -85,7 +102,6 @@ export const generatePopoverClassNames = (props: {
       }
       return prevClasses;
     }, [])
-    .join(" ");
 };
 
 export const classNames: { [key: string]: string | any } = {
@@ -93,8 +109,10 @@ export const classNames: { [key: string]: string | any } = {
   shape: "RuiPopoverShape",
   mounted: "RuiPopoverMounted",
   mounting: "RuiPopoverMounting",
-  overflowContainer: "RuiOverflowContainer",
-  overflowContent: "RuiOverflowContent",
+  paper: "RuiPaper",
+  overflowContainer: "RuiPopoverOverflowContainer",
+  overflowContent: "RuiPopoverOverflowContent",
+  disable: "RuiPopoverDisabled",
   animationFrame: (value: PopoverPropsAnimationFrame): string => {
     return value && `RuiPopoverAnimation${capitalizeFirstLetter(value)}`;
   },

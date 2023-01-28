@@ -50,9 +50,7 @@ export const transitions = {
   elasticity: (theme: ThemeProps, props: any) => `
     height: ${props.popoverRect.height > props.maxHeight ? props.maxHeight : props.popoverRect.height}px;
     ${props.mounted && `
-      transition: height ${theme.transitions.duration.enteringScreen}ms ease-in;
+      transition: height ${theme.transitions.duration.standard}ms ease-out;
     `}
   `
 }
-
-// transition: ${props.mount ? `height ${theme.transitions.duration.enteringScreen}ms ease-in` : `none`};

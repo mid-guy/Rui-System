@@ -18,10 +18,11 @@ const Select = forwardRef<
   HTMLInputElement,
   Omit<
     OverallInputBaseProps & {
-      options: any[];
       onChange: Function;
       onLoadOptions: (e: any) => Promise<void>;
+      onCompleteChangeOptions: Function;
       isLoadingOptions?: boolean;
+      isUpdatingOptions?: boolean;
     },
     "ref" | "innerTheme"
   >
@@ -32,10 +33,11 @@ const Select = forwardRef<
     onBlur,
     onChange,
     onLoadOptions,
-    options,
     value,
     children,
-    isLoadingOptions,
+    isLoadingOptions = false,
+    isUpdatingOptions = false,
+    onCompleteChangeOptions,
     ...rest
   } = props;
   const [isFocused, setFocused] = useState<boolean>(false);
@@ -61,10 +63,12 @@ const Select = forwardRef<
     setVisible(true);
     onFocus && onFocus(e);
   }
-  function onBlurInput({ e, onBlur }: { e: any; onBlur?: Function }) {
-    setFocused(false);
-    onBlur && onBlur(e);
-  }
+
+  // function onBlurInput({ e, onBlur }: { e: any; onBlur?: Function }) {
+  //   setFocused(false);
+  //   onBlur && onBlur(e);
+  // }
+
   function onChangeInput({ e, onChange }: { e: any; onChange?: Function }) {
     setTyping(true);
     setComplete(false);
@@ -85,11 +89,9 @@ const Select = forwardRef<
   useLayoutEffect(() => {
     isCompletedTyping && stackLoadOptions();
   }, [isCompletedTyping]);
-
   return (
     <div
       style={{
-        width: 150,
         position: "relative",
       }}
     >
@@ -108,18 +110,11 @@ const Select = forwardRef<
         <Popover
           popoverRect={popoverRect}
           isVisible={isFocused}
+          isLoadingOptions={isLoadingOptions}
+          isUpdatingOptions={isUpdatingOptions}
           onAnimationEnd={onRemovePopover}
+          onCompleteChangeOptions={onCompleteChangeOptions}
         >
-          {/* <div
-            style={{
-              position: "relative",
-              width: "100%",
-              height: "100%",
-              backgroundColor: "red",
-            }}
-          >
-            {isLoadingOptions && <OverlayLoading />}
-          </div> */}
           <OptionsContainer
             ref={optionsContainerRef}
             getBoundingRefRect={getBoundingRefRect}
@@ -150,9 +145,5 @@ const OptionsContainer = forwardRef<
     </div>
   );
 });
-
-const OverlayLoading = () => {
-  return <div style={{ position: "absolute", backgroundColor: "red" }} />;
-};
 
 export default Select;
