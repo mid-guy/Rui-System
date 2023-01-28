@@ -1,54 +1,29 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from "react";
 import "./App.css";
-import { lazy, useEffect, useRef, useState } from "react";
 import theme from "./core-theme/theme";
-import ButtonBase from "./packages/ButtonBase/ButtonBase";
-import LocalButton from "./packages/LocalButton/LocalButton";
 import ThemeProvider from "./core/theme/themeProvider";
-import WithStylesButton from "./packages/WithStylesButton/WithStylesButton";
-import InputBase from "./packages/InputBase";
+import ButtonBase from "./packages/ButtonBase";
+import Portal from "./packages/Portal";
 function App() {
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const withLoading = (callback: any) => {
-    return async (e: any) => {
-      setLoading(true);
-      await callback(e);
-      setLoading(false);
-    };
-  };
-  function onClick(e: any, number: number) {
-    console.log(e, number);
-  }
-  const ref = useRef<any>();
+  const [state, setState] = useState(false);
   return (
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <InputBase variant="outlined" size="lg" color="primary" ref={ref} />
           <div style={{ display: "flex", gap: 10 }}>
-            {/* <ButtonBase
+            <ButtonBase
               variant="container"
               background="primary"
-              animationframe="ripple"
+              onClick={() => setState(true)}
             >
               Module color 1
-            </ButtonBase> */}
-            {/* <ButtonBase variant="container" background="secondary">
-              Module color 2
             </ButtonBase>
-
-            <ButtonBase variant="container" background="ternary">
-              Module color 3
-            </ButtonBase> */}
+            <Portal render={state}>
+              <div>123</div>
+            </Portal>
           </div>
         </ThemeProvider>
-        {/* <LocalButton size="lg" className="mb-10">
-          This is MakeStyles Button
-        </LocalButton>
-
-        <WithStylesButton className="mb-10">
-          This is WithStylesButton
-        </WithStylesButton> */}
       </header>
     </div>
   );

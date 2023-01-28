@@ -59,9 +59,10 @@ const ButtonBase = forwardRef(function (
     <ButtonRoot
       ref={ref as any}
       theme={theme}
-      onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-        touchRippleRef.current?.onCreateAnimation(e)
-      }
+      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+        touchRippleRef.current?.onCreateAnimation(e);
+        onClick && onClick(e);
+      }}
       disabled={disabled}
       scopeButtonBaseClasses={scopeButtonBaseClasses}
       scopeButtonBaseCSS={scopeButtonBaseCSS}

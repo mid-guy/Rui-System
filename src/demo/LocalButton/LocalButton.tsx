@@ -1,7 +1,9 @@
 import { css } from "@emotion/react";
 import makeStyles from "../../core/styles/makeStyles";
 import { ThemeProps } from "../../core/theme/themeProvider";
-import ButtonBase, { ButtonBaseProps } from "../ButtonBase/ButtonBase";
+import ButtonBase, {
+  ButtonBaseProps,
+} from "../../packages/ButtonBase/ButtonBase";
 
 const useStyles = makeStyles(
   (theme: ThemeProps) => css`

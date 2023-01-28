@@ -5,7 +5,7 @@ import { ThemeProps } from "../../core/theme/themeProvider";
 import ButtonBase, {
   ButtonBaseProps,
   OverallButtonBaseProps,
-} from "../ButtonBase/ButtonBase";
+} from "../../packages/ButtonBase/ButtonBase";
 
 const useStyles = (theme: ThemeProps) => css`
   &.cds-button-sizeLg {
