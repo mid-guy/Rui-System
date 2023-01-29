@@ -87,10 +87,10 @@ export type PopoverProps = {
     height: number;
   };
   isVisible: boolean;
-  maxHeight: number;
-  animationframe: PopoverPropsAnimationFrame;
-  transitionStack: PopoverPropsTransitionStack;
-  transitionContent: PopoverPropsTransitionContent;
+  maxHeight?: number;
+  animationframe?: PopoverPropsAnimationFrame;
+  transitionStack?: PopoverPropsTransitionStack;
+  transitionContent?: PopoverPropsTransitionContent;
   children: ReactNode;
   isLoadingOptions?: boolean;
   isUpdatingOptions?: boolean;

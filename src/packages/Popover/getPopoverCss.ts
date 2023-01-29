@@ -14,21 +14,6 @@ const getPopoverCss = (
       position: relative;
       width: calc(100% - ${theme.spacing(3)});
       padding: ${theme.spacing(1)} ${theme.spacing(1.5)};
-      ${props.isUpdatingOptions && `
-        animation: change-content 1000ms;
-        animation-timing-function: ease-out;
-        @keyframes change-content {
-          0% {
-            opacity: 0;
-          }
-          50% {
-            opacity: 0.5;
-          }
-          100% {
-            opacity: 1;
-          }
-        }
-      `}
       &.${classNames.transitionStack(props.transitionStack)} {
         ${theme.animationframe.popover.transitions[props.transitionStack as NonNullable<keyof typeof theme.animationframe.popover.transitions>
   ](theme, {
@@ -62,15 +47,6 @@ const getPopoverCss = (
         box-shadow: inset 0 0 0 5px;
       }
     }
-  }
-  &.${classNames.animationFrame(props.animationframe)} {
-    ${theme.animationframe.popover.animationframe[
-    props.animationframe as NonNullable<
-      keyof typeof theme.animationframe.popover.animationframe
-    >
-  ](theme, {
-    mounting: props.mounting
-  })};
   }
   &.${classNames.shape} {
     border-radius: ${theme.palette.shape.borderRadius}px;
@@ -122,3 +98,14 @@ export const classNames: { [key: string]: string | any } = {
 };
 
 export default getPopoverCss;
+
+
+// &.${classNames.animationFrame(props.animationframe)} {
+//   ${theme.animationframe.popover.animationframe[
+//   props.animationframe as NonNullable<
+//     keyof typeof theme.animationframe.popover.animationframe
+//   >
+// ](theme, {
+//   mounting: props.mounting
+// })};
+// }
