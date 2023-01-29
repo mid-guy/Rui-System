@@ -4,7 +4,6 @@ import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
 import ButtonBase from "./packages/ButtonBase";
-import Portal from "./packages/Portal";
 function App() {
   const [state, setState] = useState(false);
   return (
@@ -19,9 +18,6 @@ function App() {
             >
               Module color 1
             </ButtonBase>
-            <Portal render={state}>
-              <div>123</div>
-            </Portal>
           </div>
         </ThemeProvider>
       </header>

@@ -1,5 +1,5 @@
 import {
-  animationframes,
+  animationframes as buttonAnimationframes,
   backgrounds,
   colors,
   outlinedTheme,
@@ -13,6 +13,7 @@ import {
   sizes as inputBaseSizes,
   colors as inputBaseColors,
 } from "../../packages/InputBase/constants";
+import { animationFrames as popoverAnimationframes, transitions as popoverTransitions } from "../../packages/Popover/constant";
 
 export const palette = {
   primary: {
@@ -141,8 +142,12 @@ export const defaultTheme = {
   palette: palette,
   animationframe: {
     button: {
-      animationframe: animationframes,
+      animationframe: buttonAnimationframes,
     },
+    popover: {
+      animationframe: popoverAnimationframes,
+      transitions: popoverTransitions
+    }
   },
   breakpoints: {
     values: {
