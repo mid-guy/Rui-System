@@ -14,7 +14,6 @@ export default function ClickOutsideEvent({
 
   const handleClick = (e: any) => {
     if (!isMounted.current) return (isMounted.current = true);
-    console.log(e.target);
     if (refs[0].current && refs[0].current.contains(e.target)) return;
     if (refs[1].current && !refs[1].current.contains(e.target))
       return callback();

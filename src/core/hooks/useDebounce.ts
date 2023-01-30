@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 
 function useDebounce(value: any, delay: number, isFocused: boolean) {
   const [, setDebouncedValue] = useState(value);
-  const [isCompletedTyping, setCompletedTyping] = useState(false)
-  const [event, setEvent] = useState<any>()
+  const [isCompletedTyping, setCompletedTyping] = useState<boolean>(false)
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(value);
@@ -15,7 +14,7 @@ function useDebounce(value: any, delay: number, isFocused: boolean) {
     };
   }, [value, delay]);
 
-  return [isCompletedTyping, event, setEvent, setCompletedTyping];
+  return { isCompletedTyping, setCompletedTyping };
 }
 
 export default useDebounce;

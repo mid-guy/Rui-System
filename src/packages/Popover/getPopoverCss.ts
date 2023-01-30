@@ -16,26 +16,29 @@ const getPopoverCss = (
     | "children"
     | "onAnimationEnd"
     | "onCompleteChangeOptions"
+    | "onUpdateRectPopover"
+    | "stackLoadOptions"
   >
 ): SerializedStyles => css`
   &.${classNames.root} {
     position: absolute;
+    pointer-events: auto;
     color: ${theme.palette.text.primary};
-    width: 100%;
+    width: ${props.popoverRect.width}px;
     .${classNames.paper} {
       position: relative;
       width: calc(100% - ${theme.spacing(3)});
       padding: ${theme.spacing(1)} ${theme.spacing(1.5)};
       &.${classNames.transitionStack(props.transitionStack)} {
         ${theme.animationframe.popover.transitions[
-          props.transitionStack as NonNullable<
-            keyof typeof theme.animationframe.popover.transitions
-          >
-        ](theme, {
-          popoverRect: props.popoverRect,
-          maxHeight: props.maxHeight,
-          mounted: props.mounted,
-        })};
+    props.transitionStack as NonNullable<
+      keyof typeof theme.animationframe.popover.transitions
+    >
+  ](theme, {
+    popoverRect: props.popoverRect,
+    maxHeight: props.maxHeight,
+    mounted: props.mounted,
+  })};
       }
       .${classNames.overflowContainer} {
         position: relative;
@@ -65,13 +68,13 @@ const getPopoverCss = (
     }
     &.${classNames.animationFrame(props.animationframe)} {
       ${theme.animationframe.popover.animationframe[
-        props.animationframe as NonNullable<
-          keyof typeof theme.animationframe.popover.animationframe
-        >
-      ](theme, {
-        mounting: props.mounting,
-        popoverRect: props.popoverRect,
-      })};
+    props.animationframe as NonNullable<
+      keyof typeof theme.animationframe.popover.animationframe
+    >
+  ](theme, {
+    mounting: props.mounting,
+    popoverRect: props.popoverRect,
+  })};
     }
     &.${classNames.shape} {
       border-radius: ${theme.palette.shape.borderRadius}px;

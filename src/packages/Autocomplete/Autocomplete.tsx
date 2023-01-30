@@ -40,13 +40,14 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
   const [isTyping, setTyping] = useState<boolean>(false);
   const target = useRef<HTMLDivElement>(null);
   const [popoverRect, setPopoverRect] = useState({
-    height: 0,
     x: 0,
     y: 0,
+    width: 0,
+    height: 0,
   });
-  const [isCompletedTyping, event, setEvent, setComplete] = useDebounce(
+  const { isCompletedTyping, setCompletedTyping } = useDebounce(
     value,
-    500,
+    1000,
     isFocused
   );
   function getBoundingRefRect(ref: { current: HTMLDivElement }) {
@@ -68,14 +69,18 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
 
   function onChangeInput({ e, onChange }: { e: any; onChange?: Function }) {
     setTyping(true);
-    setComplete(false);
-    setEvent(e);
+    setCompletedTyping(false);
     onChange && onChange(e);
   }
+  function withTyping(callback: Function) {
+    return () => {
+      setTyping(true);
+      setCompletedTyping(false);
+      callback();
+    };
+  }
   async function stackLoadOptions() {
-    console.log("START-FETCHING");
-    await onLoadOptions(event);
-    console.log("COMPLETED-FETCHING");
+    await onLoadOptions(value);
     setTyping(false);
   }
 
@@ -84,16 +89,17 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
   }
 
   useLayoutEffect(() => {
-    const { x, y } = getPositionTarget(target);
+    const rect = getPositionTarget(target);
     setPopoverRect((prev: any) => ({
       ...prev,
-      x: x,
-      y: y,
+      ...rect,
     }));
   }, []);
+
   useLayoutEffect(() => {
     isCompletedTyping && stackLoadOptions();
   }, [isCompletedTyping]);
+
   return (
     <div className={classesAutocomplete.root} ref={target}>
       <InputBase
@@ -114,6 +120,7 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
           isUpdatingOptions={isUpdatingOptions}
           onAnimationEnd={onRemovePopover}
           onCompleteChangeOptions={onCompleteChangeOptions}
+          stackLoadOptions={withTyping(stackLoadOptions)}
           ref={wrapperRefs}
         >
           <ClickOutsideEvent
@@ -139,6 +146,7 @@ const getPositionTarget = (target: any) => {
   return {
     x: rect.x,
     y: rect.y + rect.height,
+    width: rect.width,
   };
 };
 

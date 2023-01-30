@@ -28,11 +28,11 @@ function App() {
   function onClick(e: any, number: number) {
     console.log(e, number);
   }
-  function getBook(e: any) {
+  function getBook(value: any) {
     return fetch("https://jsonplaceholder.typicode.com/todos")
       .then((response) => response.json())
       .then((json) => {
-        const result = mapValue(e.target.value, json);
+        const result = mapValue(value, json);
         setOptions(result);
       });
   }

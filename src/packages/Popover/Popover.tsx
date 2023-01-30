@@ -26,7 +26,9 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
     onAnimationEnd,
     isLoadingOptions = false,
     isUpdatingOptions = false,
+    cacheOptions = false,
     onCompleteChangeOptions,
+    stackLoadOptions,
   } = props;
   const isMounted = useRef<boolean>(false);
   const isMounting = useRef<boolean>(false);
@@ -55,6 +57,7 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
 
   useLayoutEffect(() => {
     isMounting.current = true;
+    stackLoadOptions();
   }, []);
 
   useEffect(() => {
@@ -63,7 +66,6 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
 
   return (
     <div
-      style={{ width: 209.71 }}
       className={[
         ...scopePopoverClasses.slice(0, 3),
         ...scopePopoverClasses.slice(4),
@@ -77,9 +79,7 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
       }}
       ref={ref}
     >
-      {isLoadingOptions && (
-        <OverlayPopover isLoadingOptions={isLoadingOptions} />
-      )}
+      <OverlayPopover isLoadingOptions={isLoadingOptions} />
       <div
         className={[classNames.paper, scopePopoverClasses[3]].join(" ")}
         onAnimationEnd={() => onCompleteChangeOptions()}
@@ -97,7 +97,11 @@ export interface PopoverPropsTransitionContentOverrides {}
 export type PopoverProps = {
   popoverRect: {
     height: number;
+    width: number;
+    x: number;
+    y: number;
   };
+  cacheOptions?: boolean;
   isVisible: boolean;
   maxHeight?: number;
   animationframe?: PopoverPropsAnimationFrame;
@@ -108,6 +112,7 @@ export type PopoverProps = {
   isUpdatingOptions?: boolean;
   onAnimationEnd: Function;
   onCompleteChangeOptions: Function;
+  stackLoadOptions: Function;
 };
 
 export type PopoverPropsAnimationFrame = OverridableStringUnion<

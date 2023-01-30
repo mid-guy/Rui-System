@@ -35,13 +35,13 @@ export const getOverlayPopoverCss = (
   &.${classNames.root} {
     position: absolute;
     inset: 0px;
-    background: inherit;
-    zIndex: 1;
+    background: white;
+    border-radius: ${theme.palette.shape.borderRadius}px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 300ms ease-out;
     &.${classNames.mounting} {
-
-    }
-    &.${classNames.unmount} {
-
+      opacity: 0.5;
     }
   }
 `;
