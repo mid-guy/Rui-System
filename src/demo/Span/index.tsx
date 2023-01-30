@@ -9,6 +9,7 @@ export default function Span({ children, ...rest }: any) {
         whiteSpace: "nowrap",
         overflow: "hidden",
         textOverflow: "ellipsis",
+        cursor: "pointer",
       }}
       {...rest}
     >

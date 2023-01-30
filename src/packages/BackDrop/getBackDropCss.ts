@@ -2,15 +2,14 @@ import { css, SerializedStyles } from "@emotion/react";
 import { ThemeProps } from "../../core/theme/themeProvider";
 
 export const classNames: { [key: string]: string | any } = {
-  root: "MuiBackDropRoot",
-  blankBackDrop: "MuiBlankBackDrop",
-  overlayBackDrop: "MuiOverlayBackDrop"
+  root: "RuiBackDropRoot",
+  background: (background: any) => `RuiBackDropBackground${background}`,
 };
 
 export const getBackDropCss = (
   theme: ThemeProps,
   props: {
-    blankBackDrop?: boolean
+    background?: "blank" | "filled";
   }
 ): SerializedStyles => css`
   &.${classNames.root} {
@@ -19,16 +18,25 @@ export const getBackDropCss = (
     display: flex;
     align-items: center;
     justify-content: center;
-    ${props.blankBackDrop && `
-    .${classNames.blankBackDrop} {
+    user-select: none;
+    .${classNames.background(props.background)} {
+      ${
+        props.background === "blank" &&
+        `
       position: relative;
       width: 100%;
       height: 100%;
-    }`}
-    ${!props.blankBackDrop && `
-    .${classNames.overlayBackDrop} {
+      user-select: none;
+      `
+      }
+      ${
+        props.background === "filled" &&
+        `
       position: relative;
-      background-color: rgba(0, 0, 0, 0.5);
-    }`}
-  }
-`
+      width: 100%;
+      height: 100%;
+      user-select: none;
+      `
+      }
+    }
+`;

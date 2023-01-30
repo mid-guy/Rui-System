@@ -5,26 +5,18 @@ import { classNames, getBackDropCss } from "./getBackDropCss";
 
 export type BackDropProps = {
   children: ReactNode;
-  blankBackDrop?: boolean;
+  background?: "blank" | "filled";
 };
 
 export default function BackDrop(props: BackDropProps) {
-  const { children, blankBackDrop } = props;
+  const { children, background } = props;
   const theme = useTheme() as ThemeProps;
   const scopeBackDropCSS = getBackDropCss(theme, {
-    blankBackDrop: blankBackDrop,
+    background: background,
   });
   return (
     <div css={scopeBackDropCSS} className={classNames.root}>
-      <div
-        className={
-          props.blankBackDrop
-            ? classNames.blankBackDrop
-            : classNames.overlayBackDrop
-        }
-      >
-        {children}
-      </div>
+      <div className={classNames.background(props.background)}>{children}</div>
     </div>
   );
 }

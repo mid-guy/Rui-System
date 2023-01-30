@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /** @jsxImportSource @emotion/react */
-import { forwardRef, useEffect, useRef, ReactNode } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  ReactNode,
+} from "react";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import { OverridableStringUnion } from "../../core/types/type";
 import OverlayPopover from "./OverlayPopover";
@@ -23,6 +29,7 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
     onCompleteChangeOptions,
   } = props;
   const isMounted = useRef<boolean>(false);
+  const isMounting = useRef<boolean>(false);
   const theme = useTheme() as ThemeProps;
   const scopePopoverCSS = getPopoverCss(theme, {
     popoverRect,
@@ -31,7 +38,7 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
     transitionStack: transitionStack,
     transitionContent: "flash",
     mounted: isMounted.current,
-    mounting: isVisible,
+    mounting: isMounting.current,
     disable: isLoadingOptions,
     isUpdatingOptions: isUpdatingOptions,
   });
@@ -46,12 +53,17 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
     disable: isLoadingOptions,
   });
 
+  useLayoutEffect(() => {
+    isMounting.current = true;
+  }, []);
+
   useEffect(() => {
     return () => onCompleteChangeOptions();
   }, []);
 
   return (
     <div
+      style={{ width: 209.71 }}
       className={[
         ...scopePopoverClasses.slice(0, 3),
         ...scopePopoverClasses.slice(4),
@@ -59,7 +71,7 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
         .filter((classes: string | undefined) => classes !== undefined)
         .join(" ")}
       css={[scopePopoverCSS]}
-      onAnimationEnd={() => {
+      onTransitionEnd={() => {
         isMounted.current = true;
         !isVisible && onAnimationEnd();
       }}
