@@ -6,13 +6,14 @@ export const getCollapseCss = (
 ): SerializedStyles => css`
   &.${classNames.root} {
     overflow: hidden;
-    height: ${props.isOpen ? `${props.rectQueue.height}px` : "0px"}
-      ${props.mounted &&
-      `transition: height ${theme.transitions.duration.standard}ms ease-out;`};
+    height: ${props.isOpen ? props.rectQueue.height : 0}px; 
+    &.${classNames.mounted} {
+      transition: height 500ms ease-in-out;
+    }
   }
 `;
 
-export const generateCollapseClassNames = (props: { root: boolean }) => {
+export const generateCollapseClassNames = (props: { root: boolean, mounted: boolean }) => {
   const _props: { [key: string]: boolean | string } = props;
   return Object.keys(props).reduce((prevClasses: any, key: any) => {
     if (_props[key]) {
@@ -27,7 +28,10 @@ export const generateCollapseClassNames = (props: { root: boolean }) => {
 
 export const classNames: { [key: string]: string | any } = {
   root: "RuiCollapseRoot",
+  mounted: "RuiCollapseMounted"
   // transitionStack: (value: PopoverPropsAnimationFrame): string => {
   //   return value && `RuiPopoverTransitionStack${capitalizeFirstLetter(value)}`;
   // },
 };
+
+      // height: ${props.rectQueue.height}px;

@@ -67,7 +67,7 @@ function App() {
                 ))}
               </ConditionalRender>
             </Autocomplete> */}
-            <Collapse>
+            <Collapse root={true}>
               <div
                 style={{
                   display: "flex",
@@ -75,8 +75,35 @@ function App() {
                   background: "green",
                 }}
               >
-                <div style={{ color: "black" }}>123</div>
-                <div style={{ color: "black" }}>123</div>
+                <div style={{ color: "black" }}>level 1</div>
+                <div style={{ color: "black" }}>level 1</div>
+                <div style={{ color: "black" }}>level 1</div>
+                <div style={{ color: "black" }}>level 1</div>
+                <div style={{ color: "black" }}>level 1</div>
+                <Collapse>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      background: "green",
+                    }}
+                  >
+                    <div style={{ color: "black" }}>level 2</div>
+                    <div style={{ color: "black" }}>level 2</div>
+                    <div style={{ color: "black" }}>level 2</div>
+                    <Collapse>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          background: "green",
+                        }}
+                      >
+                        <div style={{ color: "black" }}>level 3</div>
+                      </div>
+                    </Collapse>
+                  </div>
+                </Collapse>
               </div>
             </Collapse>
           </div>
