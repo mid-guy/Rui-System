@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /** @jsxImportSource @emotion/react */
-import { forwardRef, useEffect, useRef, ReactNode } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  ReactNode,
+} from "react";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import { OverridableStringUnion } from "../../core/types/type";
 import OverlayPopover from "./OverlayPopover";
@@ -20,9 +26,11 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
     onAnimationEnd,
     isLoadingOptions = false,
     isUpdatingOptions = false,
+    // cacheOptions = false,
     onCompleteChangeOptions,
   } = props;
   const isMounted = useRef<boolean>(false);
+  const isMounting = useRef<boolean>(false);
   const theme = useTheme() as ThemeProps;
   const scopePopoverCSS = getPopoverCss(theme, {
     popoverRect,
@@ -31,7 +39,7 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
     transitionStack: transitionStack,
     transitionContent: "flash",
     mounted: isMounted.current,
-    mounting: isVisible,
+    mounting: isMounting.current,
     disable: isLoadingOptions,
     isUpdatingOptions: isUpdatingOptions,
   });
@@ -46,6 +54,10 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
     disable: isLoadingOptions,
   });
 
+  useLayoutEffect(() => {
+    isMounting.current = true;
+  }, []);
+
   useEffect(() => {
     return () => onCompleteChangeOptions();
   }, []);
@@ -59,15 +71,13 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
         .filter((classes: string | undefined) => classes !== undefined)
         .join(" ")}
       css={[scopePopoverCSS]}
-      onAnimationEnd={() => {
+      onTransitionEnd={() => {
         isMounted.current = true;
         !isVisible && onAnimationEnd();
       }}
       ref={ref}
     >
-      {isLoadingOptions && (
-        <OverlayPopover isLoadingOptions={isLoadingOptions} />
-      )}
+      <OverlayPopover isLoadingOptions={isLoadingOptions} />
       <div
         className={[classNames.paper, scopePopoverClasses[3]].join(" ")}
         onAnimationEnd={() => onCompleteChangeOptions()}
@@ -84,13 +94,17 @@ export interface PopoverPropsTransitionContentOverrides {}
 
 export type PopoverProps = {
   popoverRect: {
+    x: number;
+    y: number;
+    width: number;
     height: number;
   };
+  cacheOptions?: boolean;
   isVisible: boolean;
-  maxHeight: number;
-  animationframe: PopoverPropsAnimationFrame;
-  transitionStack: PopoverPropsTransitionStack;
-  transitionContent: PopoverPropsTransitionContent;
+  maxHeight?: number;
+  animationframe?: PopoverPropsAnimationFrame;
+  transitionStack?: PopoverPropsTransitionStack;
+  transitionContent?: PopoverPropsTransitionContent;
   children: ReactNode;
   isLoadingOptions?: boolean;
   isUpdatingOptions?: boolean;

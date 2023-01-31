@@ -5,15 +5,18 @@ import { classNames, getBackDropCss } from "./getBackDropCss";
 
 export type BackDropProps = {
   children: ReactNode;
+  background?: "blank" | "filled";
 };
 
 export default function BackDrop(props: BackDropProps) {
-  const { children } = props;
+  const { children, background } = props;
   const theme = useTheme() as ThemeProps;
-  const scopeBackDropCSS = getBackDropCss(theme);
+  const scopeBackDropCSS = getBackDropCss(theme, {
+    background: background,
+  });
   return (
     <div css={scopeBackDropCSS} className={classNames.root}>
-      {children}
+      <div className={classNames.background(props.background)}>{children}</div>
     </div>
   );
 }

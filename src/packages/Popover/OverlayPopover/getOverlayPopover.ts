@@ -9,23 +9,20 @@ export const classNames: { [key: string]: string | any } = {
 };
 
 export const generateOverlayPopoverClassNames = (props: {
-  root: boolean,
-  mounting: boolean,
-  unmount: boolean
+  root: boolean;
+  mounting: boolean;
+  unmount: boolean;
 }) => {
   const _props: { [key: string]: boolean | string } = props;
-  return Object.keys(props)
-    .reduce((prevClasses: any, key: any) => {
-      if (_props[key]) {
-        if (
-          key === "animationFrame" || key === "transitionStack"
-        ) {
-          return [...prevClasses, classNames[key](_props[key])];
-        }
-        return [...prevClasses, classNames[key]];
+  return Object.keys(props).reduce((prevClasses: any, key: any) => {
+    if (_props[key]) {
+      if (key === "animationFrame" || key === "transitionStack") {
+        return [...prevClasses, classNames[key](_props[key])];
       }
-      return prevClasses;
-    }, [])
+      return [...prevClasses, classNames[key]];
+    }
+    return prevClasses;
+  }, []);
 };
 
 export const getOverlayPopoverCss = (
@@ -35,14 +32,14 @@ export const getOverlayPopoverCss = (
   &.${classNames.root} {
     position: absolute;
     inset: 0px;
-    background: inherit;
-    zIndex: 1;
+    background: white;
+    border-radius: ${theme.palette.shape.borderRadius}px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+    pointer-events: none;
     &.${classNames.mounting} {
-
-    }
-    &.${classNames.unmount} {
-
+      opacity: 0.5;
     }
   }
 `;
-
