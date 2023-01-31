@@ -1,6 +1,7 @@
 import { css, SerializedStyles } from "@emotion/react";
 import { ThemeProps } from "../../core/theme/themeProvider";
 import capitalizeFirstLetter from "../../core/utils/capitalizeFirstLetter";
+import { overflowContent } from "./constant";
 import {
   PopoverProps,
   PopoverPropsAnimationFrame,
@@ -10,13 +11,16 @@ import {
 const getPopoverCss = (
   theme: ThemeProps,
   props: Omit<
-    PopoverProps & { disable: boolean; mounted: boolean; mounting: boolean },
+    PopoverProps & {
+      disable: boolean;
+      mounted: boolean;
+      mounting: boolean;
+    },
     | "innerTheme"
     | "isVisible"
     | "children"
     | "onAnimationEnd"
     | "onCompleteChangeOptions"
-    | "onUpdateRectPopover"
     | "stackLoadOptions"
   >
 ): SerializedStyles => css`
@@ -31,50 +35,28 @@ const getPopoverCss = (
       padding: ${theme.spacing(1)} ${theme.spacing(1.5)};
       &.${classNames.transitionStack(props.transitionStack)} {
         ${theme.animationframe.popover.transitions[
-    props.transitionStack as NonNullable<
-      keyof typeof theme.animationframe.popover.transitions
-    >
-  ](theme, {
-    popoverRect: props.popoverRect,
-    maxHeight: props.maxHeight,
-    mounted: props.mounted,
-  })};
+          props.transitionStack as NonNullable<
+            keyof typeof theme.animationframe.popover.transitions
+          >
+        ](theme, {
+          popoverRect: props.popoverRect,
+          maxHeight: props.maxHeight,
+          mounted: props.mounted,
+        })};
       }
-      .${classNames.overflowContainer} {
-        position: relative;
-        overflow: auto;
-        height: 100%;
-        margin-right: -6px;
-        color: rgba(0, 0, 0, 0);
-        transition: color ${theme.transitions.duration.standard}ms ease-out;
-        .${classNames.overflowContent} {
-          padding-right: 6px;
-        }
-        &:hover {
-          color: rgba(0, 0, 0, 0.3);
-        }
-        -webkit-text-fill-color: black;
-        &::-webkit-scrollbar,
-        &::-webkit-scrollbar-thumb {
-          width: 6px;
-          border-radius: 13px;
-          background-clip: padding-box;
-          border: 1px solid transparent;
-        }
-        &::-webkit-scrollbar-thumb {
-          box-shadow: inset 0 0 0 5px;
-        }
-      }
+    }
+    .${classNames.paper} {
+      ${overflowContent(theme, props)}
     }
     &.${classNames.animationFrame(props.animationframe)} {
       ${theme.animationframe.popover.animationframe[
-    props.animationframe as NonNullable<
-      keyof typeof theme.animationframe.popover.animationframe
-    >
-  ](theme, {
-    mounting: props.mounting,
-    popoverRect: props.popoverRect,
-  })};
+        props.animationframe as NonNullable<
+          keyof typeof theme.animationframe.popover.animationframe
+        >
+      ](theme, {
+        mounting: props.mounting,
+        popoverRect: props.popoverRect,
+      })};
     }
     &.${classNames.shape} {
       border-radius: ${theme.palette.shape.borderRadius}px;

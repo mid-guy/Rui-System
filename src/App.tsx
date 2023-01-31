@@ -5,7 +5,6 @@ import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
 import Span from "./demo/Span";
 import Autocomplete from "./packages/Autocomplete";
-import ButtonBase from "./packages/ButtonBase";
 import ConditionalRender from "./packages/ConditionalRender";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);

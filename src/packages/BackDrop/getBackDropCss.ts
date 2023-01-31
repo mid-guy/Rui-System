@@ -18,26 +18,24 @@ export const getBackDropCss = (
     display: flex;
     align-items: center;
     justify-content: center;
-    user-select: none;
     pointer-events: none; 
-
     .${classNames.background(props.background)} {
-      ${props.background === "blank" &&
-  `
-      position: relative;
-      width: 100%;
-      height: 100%;
-      user-select: none;
-      `
-  }
-      ${props.background === "filled" &&
-  `
-      position: relative;
-      width: 100%;
-      height: 100%;
-      user-select: none;
-      pointer-events: none; 
-      `
-  }
+      ${
+        props.background === "blank" &&
+        `
+          position: relative;
+          width: 100%;
+          height: 100%;
+        `
+      }
+      ${
+        props.background === "filled" &&
+        `
+          position: relative;
+          width: 100%;
+          height: 100%;
+          pointer-events: none; 
+        `
+      }
     }
 `;

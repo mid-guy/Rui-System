@@ -16,6 +16,13 @@ import Popover from "../Popover/Popover";
 import Portal from "../Portal";
 import { classNames as classesAutocomplete } from "./getAutoCompleteRoot";
 
+const initialStateRectPopover = {
+  x: 0,
+  y: 0,
+  width: 0,
+  height: 0,
+};
+
 const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
   props,
   ref
@@ -35,21 +42,17 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
   } = props;
   const optionsContainerRef = useRef<HTMLDivElement>(null);
   const wrapperRefs = useRef<HTMLDivElement>(null);
+  const [popoverRect, setPopoverRect] = useState(initialStateRectPopover);
   const [isFocused, setFocused] = useState<boolean>(false);
   const [isVisible, setVisible] = useState<boolean>(false);
   const [isTyping, setTyping] = useState<boolean>(false);
   const target = useRef<HTMLDivElement>(null);
-  const [popoverRect, setPopoverRect] = useState({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  });
   const { isCompletedTyping, setCompletedTyping } = useDebounce(
     value,
-    1000,
+    500,
     isFocused
   );
+
   function getBoundingRefRect(ref: { current: HTMLDivElement }) {
     const client = ref.current.getBoundingClientRect();
     setPopoverRect((prev: any) => ({
@@ -57,9 +60,12 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
       height: client.height,
     }));
   }
+
   function onFocusInput({ e, onFocus }: { e: any; onFocus?: Function }) {
     setFocused(true);
     setVisible(true);
+    withTyping(stackLoadOptions)();
+    onUpdateRectPopover();
     onFocus && onFocus(e);
   }
 
@@ -72,6 +78,7 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
     setCompletedTyping(false);
     onChange && onChange(e);
   }
+
   function withTyping(callback: Function) {
     return () => {
       setTyping(true);
@@ -79,6 +86,7 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
       callback();
     };
   }
+
   async function stackLoadOptions() {
     await onLoadOptions(value);
     setTyping(false);
@@ -88,13 +96,13 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
     setVisible(false);
   }
 
-  useLayoutEffect(() => {
+  function onUpdateRectPopover() {
     const rect = getPositionTarget(target);
     setPopoverRect((prev: any) => ({
       ...prev,
       ...rect,
     }));
-  }, []);
+  }
 
   useLayoutEffect(() => {
     isCompletedTyping && stackLoadOptions();
@@ -114,14 +122,13 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
       />
       <Portal render={isVisible} background="blank">
         <Popover
+          ref={wrapperRefs}
           popoverRect={popoverRect}
           isVisible={isFocused}
           isLoadingOptions={isLoadingOptions}
           isUpdatingOptions={isUpdatingOptions}
           onAnimationEnd={onRemovePopover}
           onCompleteChangeOptions={onCompleteChangeOptions}
-          stackLoadOptions={withTyping(stackLoadOptions)}
-          ref={wrapperRefs}
         >
           <ClickOutsideEvent
             refs={[target, wrapperRefs]}
