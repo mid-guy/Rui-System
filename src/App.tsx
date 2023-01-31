@@ -5,6 +5,7 @@ import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
 import Span from "./demo/Span";
 import Autocomplete from "./packages/Autocomplete";
+import Collapse from "./packages/Collapse";
 import ConditionalRender from "./packages/ConditionalRender";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -49,7 +50,7 @@ function App() {
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <div style={{ display: "flex", gap: 10 }}>
-            <Autocomplete
+            {/* <Autocomplete
               onLoadOptions={withLoading(getBook)}
               onChange={(e) => setState(e.target.value)}
               isLoadingOptions={isLoading}
@@ -65,7 +66,19 @@ function App() {
                   <Span key={option.id}>{option.title}</Span>
                 ))}
               </ConditionalRender>
-            </Autocomplete>
+            </Autocomplete> */}
+            <Collapse>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  background: "green",
+                }}
+              >
+                <div style={{ color: "black" }}>123</div>
+                <div style={{ color: "black" }}>123</div>
+              </div>
+            </Collapse>
           </div>
         </ThemeProvider>
       </header>
