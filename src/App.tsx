@@ -1,16 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
-import Span from "./demo/Span";
-import Autocomplete from "./packages/Autocomplete";
 import Collapse from "./packages/Collapse";
-import {
-  useLocalStateCollapseContext,
-  useScopeContext,
-} from "./packages/Collapse/Collapse";
-import ConditionalRender from "./packages/ConditionalRender";
+import { useLocalStateCollapseContext } from "./packages/Collapse/Collapse";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [state, setState] = useState("");
@@ -45,7 +39,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <div style={{ display: "flex", gap: 10 }}>
+          <div style={{ display: "flex", gap: 10, width: "100%" }}>
             <Collapse root={true} labelComponent={<LabelComponent />}>
               <WrapLoader>
                 <div style={{ color: "black" }}>level 1</div>
@@ -68,6 +62,34 @@ function App() {
                           <WrapLoader>
                             <div style={{ color: "black" }}>level 4</div>
                             <div style={{ color: "black" }}>level 4</div>
+                            <Collapse labelComponent={<LabelComponent />}>
+                              <WrapLoader>
+                                <div style={{ color: "black" }}>level 4</div>
+                                <div style={{ color: "black" }}>level 4</div>
+                                <Collapse labelComponent={<LabelComponent />}>
+                                  <WrapLoader>
+                                    <div style={{ color: "black" }}>
+                                      level 4
+                                    </div>
+                                    <div style={{ color: "black" }}>
+                                      level 4
+                                    </div>
+                                    <Collapse
+                                      labelComponent={<LabelComponent />}
+                                    >
+                                      <WrapLoader>
+                                        <div style={{ color: "black" }}>
+                                          level 4
+                                        </div>
+                                        <div style={{ color: "black" }}>
+                                          level 4
+                                        </div>
+                                      </WrapLoader>
+                                    </Collapse>
+                                  </WrapLoader>
+                                </Collapse>
+                              </WrapLoader>
+                            </Collapse>
                           </WrapLoader>
                         </Collapse>
                       </WrapLoader>
@@ -85,9 +107,10 @@ function App() {
 
 const LabelComponent = () => {
   const { onToggle, isOpen } = useLocalStateCollapseContext();
-  console.log(onToggle);
   return (
-    <button onClick={() => onToggle()}>{isOpen ? "Close" : "Open"}</button>
+    <Fragment>
+      <button onClick={() => onToggle()}>{isOpen ? "Close" : "Open"}</button>
+    </Fragment>
   );
 };
 
@@ -97,7 +120,8 @@ const WrapLoader = ({ children }: any) => {
       style={{
         display: "flex",
         flexDirection: "column",
-        background: "green",
+        marginLeft: 25,
+        width: "100%",
       }}
     >
       {children}

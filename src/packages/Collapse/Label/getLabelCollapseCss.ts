@@ -6,12 +6,16 @@ export const getLabelCollapseCss = (
   props: any
 ): SerializedStyles => css`
   &.${classNames.root} {
+    border-radius: ${theme.palette.shape.borderRadius}px;
+    background-color: red;
+    padding: ${theme.spacing(1)} ${theme.spacing(1.5)};
+    display: flex;
+    align-items: center;
   }
 `;
 
 export const generateLabelCollapseClassNames = (props: {
   root: boolean;
-  mounted: boolean;
 }) => {
   const _props: { [key: string]: boolean | string } = props;
   return Object.keys(props).reduce((prevClasses: any, key: any) => {
@@ -26,5 +30,5 @@ export const generateLabelCollapseClassNames = (props: {
 };
 
 export const classNames: { [key: string]: string | any } = {
-  root: "RuiCollapseRoot",
+  root: "RuiLabelCollapseRoot",
 };

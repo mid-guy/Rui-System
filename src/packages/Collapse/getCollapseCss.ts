@@ -6,7 +6,7 @@ export const getCollapseCss = (
 ): SerializedStyles => css`
   &.${classNames.root} {
     overflow: hidden;
-    width: 150px;
+    width: 100%;
     height: ${props.isOpen ? props.rectQueue.height : 0}px;
     &.${classNames.mounted} {
       transition: height 500ms ease-in-out;

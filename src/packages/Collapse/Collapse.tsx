@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /** @jsxImportSource @emotion/react */
-import { useTheme } from "@emotion/react";
 import {
   createContext,
   forwardRef,
@@ -12,7 +11,7 @@ import {
   useState,
 } from "react";
 import Queue from "./Queue/Queue";
-import { ThemeProps } from "../../core/theme/themeProvider";
+import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import { generateCollapseClassNames, getCollapseCss } from "./getCollapseCss";
 import Label from "./Label/Label";
 //
@@ -22,7 +21,7 @@ const Collapse = forwardRef<
 >(function (props, ref) {
   const { children, root = false, labelComponent, ...rest } = props;
   const innerTheme = useTheme() as ThemeProps;
-  const { value } = useScopeContext({ root: root });
+  const value = useScopeContext({ root: root });
   const isMounted = useRef<boolean>(false);
   const queueRef = useRef<HTMLDivElement>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -65,10 +64,11 @@ const Collapse = forwardRef<
   }
 
   function onForceUpdateRect() {
-    return (
-      isHasSharedMethod &&
-      value.forceUpdateRect(isOpen ? -rectQueue.height : rectQueue.height, true)
-    );
+    isHasSharedMethod &&
+      value.forceUpdateRect(
+        isOpen ? -rectQueue.height : rectQueue.height,
+        true
+      );
   }
   function onToggle() {
     setOpen(!isOpen);
@@ -80,26 +80,26 @@ const Collapse = forwardRef<
   }, []);
 
   return (
-    <div ref={ref} {...rest}>
+    <div ref={ref} {...rest} style={{ width: "100%" }}>
       <ContextLocalStateCollapseAPI value={{ onToggle, isOpen }}>
-        <Label>{labelComponent}</Label>
-      </ContextLocalStateCollapseAPI>
-      <div className={scopeCollapseClasses.join(" ")} css={scopeCollapseCSS}>
-        <Queue
-          ref={queueRef}
-          isOpen={isOpen}
-          getBoundingRefRect={getBoundingRefRect}
-        >
-          <ContextScopeAPI
-            value={{
-              forceUpdateRect: (prev: any, recursion: boolean) =>
-                getBoundingRefRect(queueRef, prev, recursion),
-            }}
+        <Label theme={innerTheme}>{labelComponent}</Label>
+        <div className={scopeCollapseClasses.join(" ")} css={scopeCollapseCSS}>
+          <Queue
+            ref={queueRef}
+            isOpen={isOpen}
+            getBoundingRefRect={getBoundingRefRect}
           >
-            {children}
-          </ContextScopeAPI>
-        </Queue>
-      </div>
+            <ContextScopeAPI
+              value={{
+                forceUpdateRect: (prev: any, recursion: boolean) =>
+                  getBoundingRefRect(queueRef, prev, recursion),
+              }}
+            >
+              {children}
+            </ContextScopeAPI>
+          </Queue>
+        </div>
+      </ContextLocalStateCollapseAPI>
     </div>
   );
 });
