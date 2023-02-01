@@ -6,28 +6,28 @@ import ThemeProvider from "./core/theme/themeProvider";
 import Span from "./demo/Span";
 import Autocomplete from "./packages/Autocomplete";
 import Collapse from "./packages/Collapse";
+import {
+  useLocalStateCollapseContext,
+  useScopeContext,
+} from "./packages/Collapse/Collapse";
 import ConditionalRender from "./packages/ConditionalRender";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [state, setState] = useState("");
   const [options, setOptions] = useState<any[]>([]);
-  const [isUpdatingOptions, setUpdatingOptions] = useState<boolean>(false);
   const withLoading = (callback: any) => {
     return async (e: any) => {
       setLoading(true);
       await delay(1000);
       await callback(e);
-      setUpdatingOptions(true);
       setLoading(false);
     };
   };
+
   function delay(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  function onClick(e: any, number: number) {
-    console.log(e, number);
-  }
   function getBook(value: any) {
     return fetch("https://jsonplaceholder.typicode.com/todos")
       .then((response) => response.json())
@@ -36,13 +36,9 @@ function App() {
         setOptions(result);
       });
   }
+  //
   function mapValue(target: string, source: any[]) {
     return source.filter((item: any) => item.title.includes(target));
-  }
-
-  function onCompleteChangeOptions() {
-    console.log("COMPLETED-CHANGING-CONTENT");
-    setUpdatingOptions(false);
   }
 
   return (
@@ -50,61 +46,35 @@ function App() {
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <div style={{ display: "flex", gap: 10 }}>
-            {/* <Autocomplete
-              onLoadOptions={withLoading(getBook)}
-              onChange={(e) => setState(e.target.value)}
-              isLoadingOptions={isLoading}
-              isUpdatingOptions={isUpdatingOptions}
-              onCompleteChangeOptions={onCompleteChangeOptions}
-              value={state}
-            >
-              <ConditionalRender
-                conditional={options && options.length > 0}
-                fallback={<Span>No Value</Span>}
-              >
-                {options.map((option: any) => (
-                  <Span key={option.id}>{option.title}</Span>
-                ))}
-              </ConditionalRender>
-            </Autocomplete> */}
-            <Collapse root={true}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  background: "green",
-                }}
-              >
+            <Collapse root={true} labelComponent={<LabelComponent />}>
+              <WrapLoader>
                 <div style={{ color: "black" }}>level 1</div>
                 <div style={{ color: "black" }}>level 1</div>
                 <div style={{ color: "black" }}>level 1</div>
                 <div style={{ color: "black" }}>level 1</div>
                 <div style={{ color: "black" }}>level 1</div>
-                <Collapse>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      background: "green",
-                    }}
-                  >
+                <Collapse labelComponent={<LabelComponent />}>
+                  <WrapLoader>
                     <div style={{ color: "black" }}>level 2</div>
                     <div style={{ color: "black" }}>level 2</div>
                     <div style={{ color: "black" }}>level 2</div>
-                    <Collapse>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          background: "green",
-                        }}
-                      >
+                    <Collapse labelComponent={<LabelComponent />}>
+                      <WrapLoader>
                         <div style={{ color: "black" }}>level 3</div>
-                      </div>
+                        <div style={{ color: "black" }}>level 3</div>
+                        <div style={{ color: "black" }}>level 3</div>
+                        <div style={{ color: "black" }}>level 3</div>
+                        <Collapse labelComponent={<LabelComponent />}>
+                          <WrapLoader>
+                            <div style={{ color: "black" }}>level 4</div>
+                            <div style={{ color: "black" }}>level 4</div>
+                          </WrapLoader>
+                        </Collapse>
+                      </WrapLoader>
                     </Collapse>
-                  </div>
+                  </WrapLoader>
                 </Collapse>
-              </div>
+              </WrapLoader>
             </Collapse>
           </div>
         </ThemeProvider>
@@ -112,5 +82,27 @@ function App() {
     </div>
   );
 }
+
+const LabelComponent = () => {
+  const { onToggle, isOpen } = useLocalStateCollapseContext();
+  console.log(onToggle);
+  return (
+    <button onClick={() => onToggle()}>{isOpen ? "Close" : "Open"}</button>
+  );
+};
+
+const WrapLoader = ({ children }: any) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        background: "green",
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
 export default App;

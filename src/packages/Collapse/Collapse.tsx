@@ -11,19 +11,21 @@ import {
   useRef,
   useState,
 } from "react";
+import Queue from "./Queue/Queue";
 import { ThemeProps } from "../../core/theme/themeProvider";
 import { generateCollapseClassNames, getCollapseCss } from "./getCollapseCss";
-
+import Label from "./Label/Label";
+//
 const Collapse = forwardRef<
   HTMLDivElement,
-  { children: ReactNode; root?: boolean }
+  { children: ReactNode; labelComponent: ReactNode; root?: boolean }
 >(function (props, ref) {
-  const { children, root = false, ...rest } = props;
+  const { children, root = false, labelComponent, ...rest } = props;
   const innerTheme = useTheme() as ThemeProps;
-  const { method } = useScopeContext({ root: root });
+  const { value } = useScopeContext({ root: root });
+  const isMounted = useRef<boolean>(false);
   const queueRef = useRef<HTMLDivElement>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
-  const isMounted = useRef<boolean>(false);
   const [rectQueue, setRectQueue] = useState({
     height: 0,
   });
@@ -37,20 +39,40 @@ const Collapse = forwardRef<
     root: true,
     mounted: isMounted.current,
   });
+
+  const isHasSharedMethod = value && value.forceUpdateRect;
+
   function getBoundingRefRect(
     ref: RefObject<HTMLDivElement>,
-    nestedHeight: number = 0
+    nestedHeight: number = 0,
+    recursion: boolean = false
   ) {
     if (ref.current !== null) {
       const client = ref.current.getBoundingClientRect();
-      console.log("render");
       setRectQueue((prev: any) => ({
         ...prev,
         height: client.height + nestedHeight,
       }));
+      if (isHasSharedMethod && recursion) {
+        value.forceUpdateRect(
+          !isOpen ? -nestedHeight : nestedHeight,
+          recursion
+        );
+      }
       return;
     }
     return;
+  }
+
+  function onForceUpdateRect() {
+    return (
+      isHasSharedMethod &&
+      value.forceUpdateRect(isOpen ? -rectQueue.height : rectQueue.height, true)
+    );
+  }
+  function onToggle() {
+    setOpen(!isOpen);
+    onForceUpdateRect();
   }
 
   useLayoutEffect(() => {
@@ -58,81 +80,72 @@ const Collapse = forwardRef<
   }, []);
 
   return (
-    <div
-      ref={ref}
-      {...rest}
-      style={{
-        width: 150,
-      }}
-    >
-      <div
-        style={{
-          width: 150,
-          background: "red",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-        }}
-      >
-        <button
-          onClick={() => {
-            setOpen(!isOpen);
-            method &&
-              method.forceUpdateRect &&
-              method.forceUpdateRect(
-                isOpen ? -rectQueue.height : rectQueue.height
-              );
-          }}
-        >
-          {isOpen ? "Close" : "Open"}
-        </button>
-      </div>
+    <div ref={ref} {...rest}>
+      <ContextLocalStateCollapseAPI value={{ onToggle, isOpen }}>
+        <Label>{labelComponent}</Label>
+      </ContextLocalStateCollapseAPI>
       <div className={scopeCollapseClasses.join(" ")} css={scopeCollapseCSS}>
         <Queue
-          getBoundingRefRect={getBoundingRefRect}
           ref={queueRef}
           isOpen={isOpen}
+          getBoundingRefRect={getBoundingRefRect}
         >
-          <ContextAPI
-            method={{
-              forceUpdateRect: (prev: any) =>
-                getBoundingRefRect(queueRef, prev),
+          <ContextScopeAPI
+            value={{
+              forceUpdateRect: (prev: any, recursion: boolean) =>
+                getBoundingRefRect(queueRef, prev, recursion),
             }}
           >
             {children}
-          </ContextAPI>
+          </ContextScopeAPI>
         </Queue>
       </div>
     </div>
   );
 });
 
-const Queue = forwardRef<
-  HTMLDivElement,
-  {
-    children: ReactNode;
-    getBoundingRefRect: Function;
-    isOpen: boolean;
-  }
->(function (props, ref) {
-  useLayoutEffect(() => {
-    props.getBoundingRefRect(ref);
-  }, [props.isOpen]);
-  return <div ref={ref}>{props.children}</div>;
-});
-
 const AsyncLoadingContext = createContext<any>(null);
+const LocalStateCollapseContext = createContext<any>(null);
 
-export const useScopeContext = ({ root = false }: { root: boolean }) => {
+export const useLocalStateCollapseContext = () => {
+  const context = useContext(LocalStateCollapseContext);
+  if (context === null) {
+    throw Error("Local state collapse context has not been Provider");
+  }
+  return context;
+};
+
+export const useScopeContext = (props: { root: boolean }) => {
+  const { root = false } = props;
   const context = useContext(AsyncLoadingContext);
   if (root) {
     return {};
   }
   if (context === null) {
-    throw Error("Async loading context has not been Provider");
+    throw Error("Scope context has not been Provider");
   }
   return context;
 };
+
+const ContextLocalStateCollapseAPI = ({ children, value }: any) => {
+  return (
+    <LocalStateCollapseContext.Provider value={value}>
+      {children}
+    </LocalStateCollapseContext.Provider>
+  );
+};
+
+const ContextScopeAPI = ({ children, value }: any) => {
+  return (
+    <AsyncLoadingContext.Provider value={value}>
+      {children}
+    </AsyncLoadingContext.Provider>
+  );
+};
+
+Collapse.displayName = "Collapse";
+
+export default Collapse;
 
 // const WrapLoader = ({ children }: any) => {
 //   const { isAsyncLoading } = useAsyncLoadingContext();
@@ -143,19 +156,3 @@ export const useScopeContext = ({ root = false }: { root: boolean }) => {
 //   // not-loading!!!
 //   return children;
 // };
-
-const ContextAPI = ({ children, method }: any) => {
-  const value = {
-    method,
-  };
-
-  return (
-    <AsyncLoadingContext.Provider value={value}>
-      {children}
-    </AsyncLoadingContext.Provider>
-  );
-};
-Queue.displayName = "Queue";
-Collapse.displayName = "Collapse";
-
-export default Collapse;

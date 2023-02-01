@@ -1,20 +1,15 @@
 import { css, SerializedStyles } from "@emotion/react";
-import { ThemeProps } from "./../../core/theme/themeProvider";
-export const getCollapseCss = (
+import { ThemeProps } from "../../../core/theme/themeProvider";
+
+export const getLabelCollapseCss = (
   theme: ThemeProps,
   props: any
 ): SerializedStyles => css`
   &.${classNames.root} {
-    overflow: hidden;
-    width: 150px;
-    height: ${props.isOpen ? props.rectQueue.height : 0}px;
-    &.${classNames.mounted} {
-      transition: height 500ms ease-in-out;
-    }
   }
 `;
 
-export const generateCollapseClassNames = (props: {
+export const generateLabelCollapseClassNames = (props: {
   root: boolean;
   mounted: boolean;
 }) => {
@@ -32,5 +27,4 @@ export const generateCollapseClassNames = (props: {
 
 export const classNames: { [key: string]: string | any } = {
   root: "RuiCollapseRoot",
-  mounted: "RuiCollapseMounted",
 };
