@@ -13,11 +13,7 @@ import {
 } from "react";
 import Queue from "./Queue/Queue";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
-import {
-  classNames,
-  generateCollapseClassNames,
-  getCollapseCss,
-} from "./getCollapseCss";
+import { generateCollapseClassNames, getCollapseCss } from "./getCollapseCss";
 import Label from "./Label/Label";
 //
 const Collapse = memo(
@@ -34,19 +30,21 @@ const Collapse = memo(
     const [rectQueue, setRectQueue] = useState({
       height: 0,
     });
+    //
     const scopeCollapseCSS = getCollapseCss(innerTheme, {
       rectQueue: rectQueue,
       isOpen: isOpen,
       isMounted: isMounted.current,
       height: rectQueue.height,
     });
+    //
     const scopeCollapseClasses = generateCollapseClassNames({
       root: true,
       mounted: isMounted.current,
     });
-
+    //
     const isHasSharedMethod = value && value.forceUpdateRect;
-
+    //
     function getBoundingRefRect(
       ref: RefObject<HTMLDivElement>,
       nestedHeight: number = 0,
@@ -68,23 +66,26 @@ const Collapse = memo(
       }
       return;
     }
-
-    function onForceUpdateRect() {
+    //
+    function onForceUpdateRect(height: number) {
+      console.log(isOpen, height);
       isHasSharedMethod &&
-        value.forceUpdateRect(
-          isOpen ? -rectQueue.height : rectQueue.height,
-          true
-        );
+        value.forceUpdateRect(isOpen ? -rectQueue.height : height, true);
     }
     function onToggle() {
       setOpen(!isOpen);
-      onForceUpdateRect();
+      // onForceUpdateRect();
     }
 
     useLayoutEffect(() => {
       isMounted.current = true;
     }, []);
-
+    useLayoutEffect(() => {
+      if (queueRef.current !== null) {
+        // console.log(queueRef.current.getBoundingClientRect());
+        onForceUpdateRect(queueRef.current.getBoundingClientRect().height);
+      }
+    }, [isOpen]);
     return (
       <div ref={ref} style={{ width: "100%" }} {...rest}>
         <ContextLocalStateCollapseAPI value={{ onToggle, isOpen }}>
@@ -93,11 +94,7 @@ const Collapse = memo(
             className={scopeCollapseClasses.join(" ")}
             css={scopeCollapseCSS}
           >
-            <Queue
-              ref={queueRef}
-              isOpen={isOpen}
-              getBoundingRefRect={getBoundingRefRect}
-            >
+            <Queue ref={queueRef} getBoundingRefRect={getBoundingRefRect}>
               <ContextScopeAPI
                 value={{
                   forceUpdateRect: (prev: any, recursion: boolean) =>

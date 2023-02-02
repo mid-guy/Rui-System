@@ -5,6 +5,7 @@ import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
 import Collapse from "./packages/Collapse";
 import { useLocalStateCollapseContext } from "./packages/Collapse/Collapse";
+import ConditionalRender from "./packages/ConditionalRender";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [state, setState] = useState("");
@@ -59,106 +60,6 @@ function App() {
                     <div style={{ color: "black" }}>level 2</div>
                     <div style={{ color: "black" }}>level 2</div>
                     <div style={{ color: "black" }}>level 2</div>
-                    <Collapse labelComponent={<LabelComponent />}>
-                      <WrapLoader>
-                        <div style={{ color: "black" }}>level 3</div>
-                        <div style={{ color: "black" }}>level 3</div>
-                        <div style={{ color: "black" }}>level 3</div>
-                        <div style={{ color: "black" }}>level 3</div>
-                        {/* <Collapse labelComponent={<LabelComponent />}>
-                          <WrapLoader>
-                            <div style={{ color: "black" }}>level 4</div>
-                            <div style={{ color: "black" }}>level 4</div>
-                            <Collapse labelComponent={<LabelComponent />}>
-                              <WrapLoader>
-                                <div style={{ color: "black" }}>level 4</div>
-                                <div style={{ color: "black" }}>level 4</div>
-                                <Collapse labelComponent={<LabelComponent />}>
-                                  <WrapLoader>
-                                    <div style={{ color: "black" }}>
-                                      level 4
-                                    </div>
-                                    <div style={{ color: "black" }}>
-                                      level 4
-                                    </div>
-                                    <Collapse
-                                      labelComponent={<LabelComponent />}
-                                    >
-                                      <WrapLoader>
-                                        <div style={{ color: "black" }}>
-                                          level 4
-                                        </div>
-                                        <div style={{ color: "black" }}>
-                                          level 4
-                                        </div>
-                                      </WrapLoader>
-                                    </Collapse>
-                                  </WrapLoader>
-                                </Collapse>
-                              </WrapLoader>
-                            </Collapse>
-                          </WrapLoader>
-                        </Collapse> */}
-                      </WrapLoader>
-                    </Collapse>
-                  </WrapLoader>
-                </Collapse>
-              </WrapLoader>
-            </Collapse>
-            <Collapse root={true} labelComponent={<LabelComponent />}>
-              <WrapLoader>
-                <div style={{ color: "black" }}>level 1</div>
-                <div style={{ color: "black" }}>level 1</div>
-                <div style={{ color: "black" }}>level 1</div>
-                <div style={{ color: "black" }}>level 1</div>
-                <div style={{ color: "black" }}>level 1</div>
-                <Collapse labelComponent={<LabelComponent />}>
-                  <WrapLoader>
-                    <div style={{ color: "black" }}>level 2</div>
-                    <div style={{ color: "black" }}>level 2</div>
-                    <div style={{ color: "black" }}>level 2</div>
-                    <Collapse labelComponent={<LabelComponent />}>
-                      <WrapLoader>
-                        <div style={{ color: "black" }}>level 3</div>
-                        <div style={{ color: "black" }}>level 3</div>
-                        <div style={{ color: "black" }}>level 3</div>
-                        <div style={{ color: "black" }}>level 3</div>
-                        {/* <Collapse labelComponent={<LabelComponent />}>
-                          <WrapLoader>
-                            <div style={{ color: "black" }}>level 4</div>
-                            <div style={{ color: "black" }}>level 4</div>
-                            <Collapse labelComponent={<LabelComponent />}>
-                              <WrapLoader>
-                                <div style={{ color: "black" }}>level 4</div>
-                                <div style={{ color: "black" }}>level 4</div>
-                                <Collapse labelComponent={<LabelComponent />}>
-                                  <WrapLoader>
-                                    <div style={{ color: "black" }}>
-                                      level 4
-                                    </div>
-                                    <div style={{ color: "black" }}>
-                                      level 4
-                                    </div>
-                                    <Collapse
-                                      labelComponent={<LabelComponent />}
-                                    >
-                                      <WrapLoader>
-                                        <div style={{ color: "black" }}>
-                                          level 4
-                                        </div>
-                                        <div style={{ color: "black" }}>
-                                          level 4
-                                        </div>
-                                      </WrapLoader>
-                                    </Collapse>
-                                  </WrapLoader>
-                                </Collapse>
-                              </WrapLoader>
-                            </Collapse>
-                          </WrapLoader>
-                        </Collapse> */}
-                      </WrapLoader>
-                    </Collapse>
                   </WrapLoader>
                 </Collapse>
               </WrapLoader>
@@ -180,6 +81,7 @@ const LabelComponent = () => {
 };
 
 const WrapLoader = ({ children }: any) => {
+  const { isOpen } = useLocalStateCollapseContext();
   return (
     <div
       style={{
@@ -189,7 +91,9 @@ const WrapLoader = ({ children }: any) => {
         width: "100%",
       }}
     >
-      {children}
+      <ConditionalRender conditional={isOpen} fallback={<div>Pre-Render</div>}>
+        {children}
+      </ConditionalRender>
     </div>
   );
 };

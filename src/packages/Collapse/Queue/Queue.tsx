@@ -1,17 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { forwardRef, ReactNode, useLayoutEffect } from "react";
+import { useLocalStateCollapseContext } from "../Collapse";
 
 const Queue = forwardRef<
   HTMLDivElement,
   {
     children: ReactNode;
     getBoundingRefRect: Function;
-    isOpen: boolean;
   }
 >(function (props, ref) {
+  const { isOpen } = useLocalStateCollapseContext();
   useLayoutEffect(() => {
     props.getBoundingRefRect(ref);
-  }, [props.isOpen]);
+  }, [isOpen]);
   return <div ref={ref}>{props.children}</div>;
 });
 
