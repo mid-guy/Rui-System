@@ -39,7 +39,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <ThemeProvider theme={theme}>
-          <div style={{ display: "flex", gap: 10, width: "100%" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 10,
+              width: "100%",
+            }}
+          >
             <Collapse root={true} labelComponent={<LabelComponent />}>
               <WrapLoader>
                 <div style={{ color: "black" }}>level 1</div>
@@ -58,7 +65,7 @@ function App() {
                         <div style={{ color: "black" }}>level 3</div>
                         <div style={{ color: "black" }}>level 3</div>
                         <div style={{ color: "black" }}>level 3</div>
-                        <Collapse labelComponent={<LabelComponent />}>
+                        {/* <Collapse labelComponent={<LabelComponent />}>
                           <WrapLoader>
                             <div style={{ color: "black" }}>level 4</div>
                             <div style={{ color: "black" }}>level 4</div>
@@ -91,7 +98,65 @@ function App() {
                               </WrapLoader>
                             </Collapse>
                           </WrapLoader>
-                        </Collapse>
+                        </Collapse> */}
+                      </WrapLoader>
+                    </Collapse>
+                  </WrapLoader>
+                </Collapse>
+              </WrapLoader>
+            </Collapse>
+            <Collapse root={true} labelComponent={<LabelComponent />}>
+              <WrapLoader>
+                <div style={{ color: "black" }}>level 1</div>
+                <div style={{ color: "black" }}>level 1</div>
+                <div style={{ color: "black" }}>level 1</div>
+                <div style={{ color: "black" }}>level 1</div>
+                <div style={{ color: "black" }}>level 1</div>
+                <Collapse labelComponent={<LabelComponent />}>
+                  <WrapLoader>
+                    <div style={{ color: "black" }}>level 2</div>
+                    <div style={{ color: "black" }}>level 2</div>
+                    <div style={{ color: "black" }}>level 2</div>
+                    <Collapse labelComponent={<LabelComponent />}>
+                      <WrapLoader>
+                        <div style={{ color: "black" }}>level 3</div>
+                        <div style={{ color: "black" }}>level 3</div>
+                        <div style={{ color: "black" }}>level 3</div>
+                        <div style={{ color: "black" }}>level 3</div>
+                        {/* <Collapse labelComponent={<LabelComponent />}>
+                          <WrapLoader>
+                            <div style={{ color: "black" }}>level 4</div>
+                            <div style={{ color: "black" }}>level 4</div>
+                            <Collapse labelComponent={<LabelComponent />}>
+                              <WrapLoader>
+                                <div style={{ color: "black" }}>level 4</div>
+                                <div style={{ color: "black" }}>level 4</div>
+                                <Collapse labelComponent={<LabelComponent />}>
+                                  <WrapLoader>
+                                    <div style={{ color: "black" }}>
+                                      level 4
+                                    </div>
+                                    <div style={{ color: "black" }}>
+                                      level 4
+                                    </div>
+                                    <Collapse
+                                      labelComponent={<LabelComponent />}
+                                    >
+                                      <WrapLoader>
+                                        <div style={{ color: "black" }}>
+                                          level 4
+                                        </div>
+                                        <div style={{ color: "black" }}>
+                                          level 4
+                                        </div>
+                                      </WrapLoader>
+                                    </Collapse>
+                                  </WrapLoader>
+                                </Collapse>
+                              </WrapLoader>
+                            </Collapse>
+                          </WrapLoader>
+                        </Collapse> */}
                       </WrapLoader>
                     </Collapse>
                   </WrapLoader>
