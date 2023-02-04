@@ -19,17 +19,33 @@ import Label from "./Label/Label";
 const Collapse = memo(
   forwardRef<
     HTMLDivElement,
-    { children: ReactNode; labelComponent: ReactNode; root?: boolean }
+    {
+      children: ReactNode;
+      labelComponent: ReactNode;
+      onFetchData?: Function;
+      isLoading?: boolean;
+      root?: boolean;
+    }
   >(function (props, ref) {
-    const { children, root = false, labelComponent, ...rest } = props;
+    const {
+      children,
+      root = false,
+      labelComponent,
+      onFetchData,
+      isLoading,
+      ...rest
+    } = props;
     const innerTheme = useTheme() as ThemeProps;
     const value = useScopeContext({ root: root });
     const isMounted = useRef<boolean>(false);
     const queueRef = useRef<HTMLDivElement>(null);
     const [isOpen, setOpen] = useState<boolean>(false);
+    const [isCleanChildren, setCleanChildren] = useState<boolean>(true);
+    const isZeroHeight = useRef<boolean>(true);
     const [rectQueue, setRectQueue] = useState({
       height: 0,
     });
+    const mountedHeightRectRef = useRef<number>(0);
     //
     const scopeCollapseCSS = getCollapseCss(innerTheme, {
       rectQueue: rectQueue,
@@ -45,60 +61,84 @@ const Collapse = memo(
     //
     const isHasSharedMethod = value && value.forceUpdateRect;
     //
-    function getBoundingRefRect(
-      ref: RefObject<HTMLDivElement>,
+    function getBoundingRectRef(
+      height: number,
       nestedHeight: number = 0,
       recursion: boolean = false
     ) {
+      setRectQueue((prevRect: { height: number }) => ({
+        ...prevRect,
+        height: height + nestedHeight,
+      }));
+      isHasSharedMethod &&
+        recursion &&
+        value.forceUpdateRect(isOpen ? nestedHeight : -nestedHeight, recursion);
+    }
+    function getCurrentRectRef(ref: RefObject<HTMLDivElement>) {
       if (ref.current !== null) {
-        const client = ref.current.getBoundingClientRect();
-        setRectQueue((prev: any) => ({
-          ...prev,
-          height: client.height + nestedHeight,
-        }));
-        if (isHasSharedMethod && recursion) {
-          value.forceUpdateRect(
-            !isOpen ? -nestedHeight : nestedHeight,
-            recursion
-          );
-        }
-        return;
+        const clientRect = ref.current.getBoundingClientRect();
+        return clientRect;
       }
-      return;
+      return { height: 0 };
     }
     //
-    function onForceUpdateRect(height: number) {
-      console.log(isOpen, height);
-      isHasSharedMethod &&
-        value.forceUpdateRect(isOpen ? -rectQueue.height : height, true);
-    }
-    function onToggle() {
+    async function onToggle() {
       setOpen(!isOpen);
-      // onForceUpdateRect();
+      !isOpen && onFetchData && (await onFetchData());
+      if (!isOpen) {
+        setCleanChildren(false);
+      }
+    }
+
+    function onForceUpdateParentRect(height: number) {
+      isHasSharedMethod &&
+        value.forceUpdateRect(isOpen ? height : -height, true);
+    }
+
+    function onStartTransition() {
+      const { height } = getCurrentRectRef(queueRef);
+      getBoundingRectRef(isOpen ? height : mountedHeightRectRef.current);
+      onForceUpdateParentRect(isOpen ? height : mountedHeightRectRef.current);
+      if (isOpen) {
+        mountedHeightRectRef.current = height;
+        isZeroHeight.current = false;
+      } else {
+        mountedHeightRectRef.current = 0;
+        isZeroHeight.current = true;
+      }
+    }
+
+    function onEndTransition() {
+      !isOpen && setCleanChildren(true);
     }
 
     useLayoutEffect(() => {
       isMounted.current = true;
     }, []);
-    useLayoutEffect(() => {
-      if (queueRef.current !== null) {
-        // console.log(queueRef.current.getBoundingClientRect());
-        onForceUpdateRect(queueRef.current.getBoundingClientRect().height);
-      }
-    }, [isOpen]);
+
+    useLayoutEffect(() => onStartTransition(), [isOpen, isLoading]);
+
     return (
       <div ref={ref} style={{ width: "100%" }} {...rest}>
-        <ContextLocalStateCollapseAPI value={{ onToggle, isOpen }}>
+        <ContextLocalStateCollapseAPI
+          value={{
+            onToggle,
+            isOpen,
+            isVisible: isOpen || (!isOpen && !isCleanChildren),
+            isLoading: isLoading,
+          }}
+        >
           <Label theme={innerTheme}>{labelComponent}</Label>
           <div
             className={scopeCollapseClasses.join(" ")}
             css={scopeCollapseCSS}
+            onTransitionEnd={onEndTransition}
           >
-            <Queue ref={queueRef} getBoundingRefRect={getBoundingRefRect}>
+            <Queue ref={queueRef}>
               <ContextScopeAPI
                 value={{
-                  forceUpdateRect: (prev: any, recursion: boolean) =>
-                    getBoundingRefRect(queueRef, prev, recursion),
+                  forceUpdateRect: (prevHeight: number, recursion: boolean) =>
+                    getBoundingRectRef(rectQueue.height, prevHeight, recursion),
                 }}
               >
                 {children}
@@ -163,3 +203,11 @@ export default Collapse;
 //   // not-loading!!!
 //   return children;
 // };
+
+// function onForceUpdateParentRect(height: number) {
+//   isHasSharedMethod &&
+//     value.forceUpdateRect(
+//       isOpen ? -rectQueue.height : rectQueue.height,
+//       true
+//     );
+// }

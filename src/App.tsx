@@ -13,7 +13,7 @@ function App() {
   const withLoading = (callback: any) => {
     return async (e: any) => {
       setLoading(true);
-      await delay(1000);
+      await delay(5000);
       await callback(e);
       setLoading(false);
     };
@@ -48,9 +48,13 @@ function App() {
               width: "100%",
             }}
           >
-            <Collapse root={true} labelComponent={<LabelComponent />}>
+            <Collapse
+              root={true}
+              labelComponent={<LabelComponent />}
+              onFetchData={withLoading(() => "a")}
+              isLoading={isLoading}
+            >
               <WrapLoader>
-                <div style={{ color: "black" }}>level 1</div>
                 <div style={{ color: "black" }}>level 1</div>
                 <div style={{ color: "black" }}>level 1</div>
                 <div style={{ color: "black" }}>level 1</div>
@@ -59,7 +63,19 @@ function App() {
                   <WrapLoader>
                     <div style={{ color: "black" }}>level 2</div>
                     <div style={{ color: "black" }}>level 2</div>
-                    <div style={{ color: "black" }}>level 2</div>
+                    <Collapse labelComponent={<LabelComponent />}>
+                      <WrapLoader>
+                        <div style={{ color: "black" }}>level 3</div>
+                        <div style={{ color: "black" }}>level 3</div>
+                      </WrapLoader>
+                    </Collapse>
+                    <Collapse labelComponent={<LabelComponent />}>
+                      <WrapLoader>
+                        <div style={{ color: "black" }}>level 3</div>
+                        <div style={{ color: "black" }}>level 3</div>
+                        <div style={{ color: "black" }}>level 3</div>
+                      </WrapLoader>
+                    </Collapse>
                   </WrapLoader>
                 </Collapse>
               </WrapLoader>
@@ -81,18 +97,24 @@ const LabelComponent = () => {
 };
 
 const WrapLoader = ({ children }: any) => {
-  const { isOpen } = useLocalStateCollapseContext();
+  const { isVisible, isLoading } = useLocalStateCollapseContext();
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         marginLeft: 25,
+        fontSize: 20,
         width: "100%",
       }}
     >
-      <ConditionalRender conditional={isOpen} fallback={<div>Pre-Render</div>}>
-        {children}
+      <ConditionalRender conditional={isVisible}>
+        <ConditionalRender
+          conditional={!isLoading}
+          fallback={<div style={{ color: "black" }}>Loading 1</div>}
+        >
+          {children}
+        </ConditionalRender>
       </ConditionalRender>
     </div>
   );
