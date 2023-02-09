@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import getButtonCss, { generateButtonClassNames } from "./getButtonCss";
-import { forwardRef, ReactNode, useRef } from "react";
-import { types } from "./constants";
+import getButtonBaseCss, {
+  generateButtonBaseClassNames,
+} from "./getButtonBaseCss";
+import { ButtonHTMLAttributes, forwardRef, ReactNode, useRef } from "react";
 import { SerializedStyles } from "@emotion/react";
 import {
   OverridableMapType,
@@ -11,86 +12,87 @@ import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import ButtonRoot from "./ButtonRoot";
 import TouchRipple, { TouchRippleRefs } from "./TouchRipple";
 
-const ButtonBase = forwardRef(function (
-  props: OverallButtonBaseProps,
-  ref: React.Ref<HTMLButtonElement>
-) {
-  const theme = useTheme() as ThemeProps;
-  const touchRippleRef = useRef<TouchRippleRefs | null>(null);
-  const {
-    onClick,
-    isVisible,
-    animationframe,
-    variant,
-    size,
-    color,
-    background,
-    outlinedTheme,
-    fullWidth,
-    disabled,
-    outerCSS,
-    children,
-    startIcon,
-    endIcon,
-    ...rest
-  } = props;
+const ButtonBase = forwardRef<HTMLButtonElement, OverallButtonBaseProps>(
+  function (props, ref) {
+    const theme = useTheme() as ThemeProps;
+    const touchRippleRef = useRef<TouchRippleRefs | null>(null);
+    const {
+      onClick,
+      isVisible,
+      disableElevation,
+      animationframe,
+      variant,
+      size,
+      color,
+      background,
+      outlinedTheme,
+      fullWidth,
+      disabled,
+      outerCSS,
+      children,
+      startIcon,
+      endIcon,
+      ...rest
+    } = props;
 
-  const scopeButtonBaseClasses = generateButtonClassNames({
-    variant: variant,
-    size: size,
-    ...(variant === "text" && {
-      color: color,
-    }),
-    ...(variant === "outlined" && {
-      outlinedTheme: outlinedTheme,
-    }),
-    ...(variant === "container" && {
-      background: background,
-    }),
-    animationframe: animationframe,
-    fullWidth,
-    disabled,
-    visible: isVisible,
-  });
+    const scopeButtonBaseClasses = generateButtonBaseClassNames({
+      variant: variant,
+      size: size,
+      ...(variant === "text" && {
+        color: color,
+      }),
+      ...(variant === "outlined" && {
+        outlinedTheme: outlinedTheme,
+      }),
+      ...(variant === "container" && {
+        background: background,
+      }),
+      animationframe: animationframe,
+      disableElevation,
+      fullWidth,
+      disabled,
+      visible: isVisible,
+    });
 
-  const scopeButtonBaseCSS = getButtonCss(theme, props);
+    const scopeButtonBaseCSS = getButtonBaseCss(theme, props);
 
-  return (
-    <ButtonRoot
-      ref={ref as any}
-      theme={theme}
-      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-        touchRippleRef.current?.onCreateAnimation(e);
-        onClick && onClick(e);
-      }}
-      disabled={disabled}
-      scopeButtonBaseClasses={scopeButtonBaseClasses}
-      scopeButtonBaseCSS={scopeButtonBaseCSS}
-      outerCSS={outerCSS}
-      {...rest}
-    >
-      {/* {startIcon && <StartIcon content={startIcon} />} */}
-      {children}
-      {/* {endIcon && <EndIcon content={endIcon} />} */}
-      {animationframe === "ripple" && (
-        <TouchRipple theme={theme} ref={touchRippleRef} />
-      )}
-    </ButtonRoot>
-  );
-});
+    return (
+      <ButtonRoot
+        theme={theme}
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+          touchRippleRef.current?.onCreateAnimation(e);
+          onClick && onClick(e);
+        }}
+        disabled={disabled}
+        scopeButtonBaseClasses={scopeButtonBaseClasses}
+        scopeButtonBaseCSS={scopeButtonBaseCSS}
+        outerCSS={outerCSS}
+        ref={ref as any}
+        {...rest}
+      >
+        {startIcon && <StartIcon content={startIcon} />}
+        {children}
+        {endIcon && <EndIcon content={endIcon} />}
+        {animationframe === "ripple" && (
+          <TouchRipple theme={theme} ref={touchRippleRef} />
+        )}
+      </ButtonRoot>
+    );
+  }
+);
 export interface IconPropsType {
   content?: ReactNode;
 }
 
-// const StartIcon = (props: IconPropsType & { classesStartIcon?: string }) => {
-//   const { content } = props;
-//   return <div className={`cds-button-startIcon`}>{content}</div>;
-// };
+const StartIcon = (props: IconPropsType & { classesStartIcon?: string }) => {
+  const { content } = props;
+  return <div className={`cds-button-startIcon`}>{content}</div>;
+};
 
-// const EndIcon = (props: IconPropsType & { classesEndIcon?: string }) => {
-//   const { content } = props;
-//   return <div className={`cds-button-endIcon`}>{content}</div>;
-// };
+const EndIcon = (props: IconPropsType & { classesEndIcon?: string }) => {
+  const { content } = props;
+  return <div className={`cds-button-endIcon`}>{content}</div>;
+};
 
 ButtonBase.defaultProps = {
   variant: "container",
@@ -101,11 +103,12 @@ ButtonBase.defaultProps = {
   background: "primary",
   outlinedTheme: "primary",
   isVisible: true,
+  disableElevation: false,
   type: "button",
 };
 
 export type OverallButtonBaseProps = OverridableMapType<
-  React.HTMLProps<HTMLButtonElement>,
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size">,
   ButtonBaseProps
 >;
 
@@ -193,15 +196,16 @@ export type ButtonBaseProps = {
    */
   disabled?: boolean;
   /**
-   * The type to change type of button.
-   * @default button
-   */
-  type?: keyof typeof types;
-  /**
    * The visible to use that component should be visible
    * @default boolean
    */
   isVisible?: boolean;
+  /**
+   * The disableElevation to use that component should be
+   *  disable box-shadow
+   * @default boolean
+   */
+  disableElevation?: boolean;
   /**
    * The animation perform to use when user touch on button.
    * @default ripple

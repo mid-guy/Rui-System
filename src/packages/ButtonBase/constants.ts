@@ -1,23 +1,22 @@
 import { convertHEXtoRGB } from "../../core/utils/convertHEXtoRGB";
 import { palette } from "../../core/theme/createTheme";
 import { ThemeProps } from "../../core/theme/themeProvider";
-export const types = { button: "button", submit: "submit" };
 
 export const sizes = {
   sm: (theme: ThemeProps) => `
-    padding: 6px 12px;
+    padding: ${theme.spacing(0.75)} ${theme.spacing(1.5)};
     font-size: ${theme.typography.body2.fontSize}px;
     font-weight: ${theme.typography.body2.fontWeight};
     height: 30px;
   `,
   md: (theme: ThemeProps) => `
-    padding: 8px 16px;
+  padding: ${theme.spacing(1)} ${theme.spacing(2)};
     font-size: ${theme.typography.body1.fontSize}px;
     font-weight: ${theme.typography.body1.fontWeight};
     height: 36px;
   `,
   lg: (theme: ThemeProps) => `
-    padding: 8px 24px;
+  padding: ${theme.spacing(1)} ${theme.spacing(3)};
     font-size: ${theme.typography.global.fontSize}px;
     font-weight: ${theme.typography.global.fontWeight};
     height: 42px;

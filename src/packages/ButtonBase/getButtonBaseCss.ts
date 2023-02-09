@@ -11,7 +11,13 @@ import {
   ButtonPropsVariant,
 } from "./ButtonBase";
 
-export const generateButtonClassNames = (props: {
+const RUI_BUTTON_BASE = "RuiButtonBase";
+
+const mergeNameTargetComponent = (chain: string): string => {
+  return `${RUI_BUTTON_BASE}${chain}`;
+};
+
+export const generateButtonBaseClassNames = (props: {
   fullWidth?: boolean;
   disabled?: boolean;
   variant?: ButtonPropsVariant;
@@ -20,6 +26,7 @@ export const generateButtonClassNames = (props: {
   outlinedTheme?: ButtonPropsOutlinedTheme;
   color?: ButtonPropsTextColor;
   animationframe?: ButtonPropsAnimationFrame;
+  disableElevation?: boolean;
   visible?: boolean;
   invisible?: boolean;
 }) => {
@@ -45,29 +52,26 @@ export const generateButtonClassNames = (props: {
 };
 
 const classNames: { [key: string]: string | any } = {
-  root: "cds-button-root",
-  fullWidth: "cds-button-fullWidth",
-  disabled: "cds-button-disabled",
-  visible: "cds-button-visible",
-  invisible: "cds-button-invisible",
-  variant: (value: ButtonPropsVariant): string => {
-    return value && `cds-button-${capitalizeFirstLetter(value)}`;
-  },
-  color: (value: ButtonPropsTextColor): string => {
-    return value && `cds-button-text${capitalizeFirstLetter(value)}`;
-  },
-  background: (value: ButtonPropsBackground): string => {
-    return value && `cds-button-bg${capitalizeFirstLetter(value)}`;
-  },
-  outlinedTheme: (value: ButtonPropsOutlinedTheme): string => {
-    return value && `cds-button-outlined${capitalizeFirstLetter(value)}`;
-  },
-  size: (value: ButtonPropsSize): string => {
-    return value && `cds-button-size${capitalizeFirstLetter(value)}`;
-  },
-  animationframe: (value: ButtonPropsAnimationFrame): string => {
-    return value && `cds-button-animation${capitalizeFirstLetter(value)}`;
-  },
+  root: mergeNameTargetComponent("Root"),
+  fullWidth: mergeNameTargetComponent("FullWidth"),
+  disabled: mergeNameTargetComponent("Disabled"),
+  visible: mergeNameTargetComponent("Visible"),
+  invisible: mergeNameTargetComponent("Hidden"),
+  disableElevation: mergeNameTargetComponent("DisableElevation"),
+  variant: (value: ButtonPropsVariant): string =>
+    value && mergeNameTargetComponent(capitalizeFirstLetter(value)),
+  color: (value: ButtonPropsTextColor): string =>
+    value && mergeNameTargetComponent(`Text${capitalizeFirstLetter(value)}`),
+  background: (value: ButtonPropsBackground): string =>
+    value &&
+    mergeNameTargetComponent(`Background${capitalizeFirstLetter(value)}`),
+  outlinedTheme: (value: ButtonPropsOutlinedTheme): string =>
+    value &&
+    mergeNameTargetComponent(`Outlined${capitalizeFirstLetter(value)}`),
+  size: (value: ButtonPropsSize): string =>
+    value && mergeNameTargetComponent(`Size${value.toUpperCase()}`),
+  animationframe: (value: ButtonPropsAnimationFrame): string =>
+    mergeNameTargetComponent(`Animationframe${capitalizeFirstLetter(value)}`),
 };
 
 const getButtonCss = (
@@ -147,6 +151,12 @@ const getButtonCss = (
     box-shadow: none;
     background-color: ${theme.palette.action.disabledBackground};
   }
+  ${props.disableElevation &&
+  `
+  &.${classNames.disableElevation} {
+    box-shadow: none;
+  }
+  `}
   &.${classNames.visible} {
     display: inline-flex;
   }
