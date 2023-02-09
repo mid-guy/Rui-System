@@ -1,8 +1,12 @@
 import { css, SerializedStyles } from "@emotion/react";
 import { ThemeProps } from "../../core/theme/themeProvider";
 
+export const RUI_BUTTON_ROOT = "RuiButtonRoot";
+export const mergeNameTargetComponent = (chain: string): string => {
+  return `${RUI_BUTTON_ROOT}${chain}`;
+};
 const getButtonRootCss = (theme: ThemeProps): SerializedStyles => css`
-  &.cds-button-root {
+  &.${RUI_BUTTON_ROOT} {
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;

@@ -3,8 +3,8 @@ import { useState } from "react";
 import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
-import Span from "./demo/Span";
 import Autocomplete from "./packages/Autocomplete";
+import ButtonBase from "./packages/ButtonBase";
 import ConditionalRender from "./packages/ConditionalRender";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -49,23 +49,9 @@ function App() {
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <div style={{ display: "flex", gap: 10 }}>
-            <Autocomplete
-              onLoadOptions={withLoading(getBook)}
-              onChange={(e) => setState(e.target.value)}
-              isLoadingOptions={isLoading}
-              isUpdatingOptions={isUpdatingOptions}
-              onCompleteChangeOptions={onCompleteChangeOptions}
-              value={state}
-            >
-              <ConditionalRender
-                conditional={options && options.length > 0}
-                fallback={<Span>No Value</Span>}
-              >
-                {options.map((option: any) => (
-                  <Span key={option.id}>{option.title}</Span>
-                ))}
-              </ConditionalRender>
-            </Autocomplete>
+            <ButtonBase size="lg" disableElevation>
+              Button
+            </ButtonBase>
           </div>
         </ThemeProvider>
       </header>

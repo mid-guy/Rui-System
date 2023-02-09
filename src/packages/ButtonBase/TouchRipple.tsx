@@ -2,7 +2,11 @@
 import { forwardRef, Fragment, useImperativeHandle, useState } from "react";
 import { ThemeProps } from "../../core/theme/themeProvider";
 import { utils } from "../../core/utils/utils";
-import getButtonRippleCss from "./getButtonRippleCss";
+import getButtonRippleCss, {
+  testAnimationClasses,
+  animationClasses,
+  rootClasses,
+} from "./getButtonRippleCss";
 export interface TouchRippleProps {
   classesTouchRipple?: string;
   theme: ThemeProps;
@@ -22,10 +26,10 @@ const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(function (
   );
 
   useImperativeHandle(ref, () => {
-    return { onCreateAnimation: onCreateAnimation };
+    return { onCreateAnimation };
   });
 
-  const css = getButtonRippleCss(theme);
+  const scopeTouchRippleCSS = getButtonRippleCss(theme);
   const onCreateAnimation = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { x, y } = utils.getPositionPointer(e.nativeEvent);
     setAnimationCount((prev) => [
@@ -47,7 +51,7 @@ const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(function (
     ]);
   };
   return (
-    <span className="cds-ripple-root" css={css} {...more}>
+    <span className={rootClasses} css={scopeTouchRippleCSS} {...more}>
       {animationCount.map((animation) => (
         <Fragment key={animation.uuid}>
           <Animation
@@ -65,14 +69,14 @@ const TouchRipple = forwardRef<TouchRippleRefs, TouchRippleProps>(function (
 
 const Animation = ({ uuid, positionPointer, onRemoveAnimation }: any) => (
   <span
-    className="cds-animation-ripple"
-    data-testid="cds-animation-ripple"
+    className={animationClasses}
+    data-testid={testAnimationClasses}
     style={{
       left: positionPointer.x,
-      right: positionPointer.y,
+      top: positionPointer.y,
     }}
-    key={uuid}
     onAnimationEnd={onRemoveAnimation}
+    key={uuid}
   />
 );
 

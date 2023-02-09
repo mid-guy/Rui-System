@@ -1,5 +1,5 @@
 import defaultTheme from "../../../core-theme/theme";
-import getButtonCss from "../getButtonCss";
+import getButtonCss from "../getButtonBaseCss";
 
 const css = getButtonCss(defaultTheme, {
   variant: "container",

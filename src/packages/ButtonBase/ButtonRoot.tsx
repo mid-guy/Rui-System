@@ -3,10 +3,13 @@ import { SerializedStyles } from "@emotion/react";
 import { forwardRef } from "react";
 import { ThemeProps } from "../../core/theme/themeProvider";
 import { OverallButtonBaseProps } from "./ButtonBase";
-import getButtonRootCss from "./getButtonRootCss";
+import getButtonRootCss, {
+  mergeNameTargetComponent,
+  RUI_BUTTON_ROOT,
+} from "./getButtonRootCss";
 
 const ButtonRoot = forwardRef<
-  any,
+  HTMLButtonElement,
   OverallButtonBaseProps & {
     theme: ThemeProps;
     scopeButtonBaseClasses: string;
@@ -26,10 +29,8 @@ const ButtonRoot = forwardRef<
   return (
     <button
       ref={ref}
-      className={["cds-button-root", scopeButtonBaseClasses, className].join(
-        " "
-      )}
-      data-testid="cds-button-root"
+      className={[RUI_BUTTON_ROOT, scopeButtonBaseClasses, className].join(" ")}
+      data-testid={mergeNameTargetComponent("Test")}
       css={[scopeButtonRootCSS, scopeButtonBaseCSS, outerCSS]}
       {...more}
     >
