@@ -1,13 +1,13 @@
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable @typescript-eslint/no-empty-interface */
 /** @jsxImportSource @emotion/react */
-import { forwardRef, InputHTMLAttributes } from "react";
-import { ThemeProps } from "../../core/theme/themeProvider";
+import { ThemeProps } from '@core/theme/themeProvider/themeProvider'
+import { forwardRef, InputHTMLAttributes } from 'react'
 import {
   OverridableMapType,
   OverridableStringUnion,
-} from "../../core/types/type";
-import getInputBaseCss, {
-  generateInputBaseClassNames,
-} from "./getInputBaseCss";
+} from '../../core/types/type'
+import getInputBaseCss, { generateInputBaseClassNames } from './getInputBaseCss'
 
 const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
   props,
@@ -22,7 +22,7 @@ const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
     isFocused,
     innerTheme,
     ...rest
-  } = props;
+  } = props
   const scopeInputBaseClasses = generateInputBaseClassNames({
     inputBaseRoot: true,
     formControlRoot: true,
@@ -32,17 +32,17 @@ const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
     color: color,
     error: error,
     disabled: disabled,
-  });
+  })
   const scopeInputBaseCss = getInputBaseCss(innerTheme, {
     variant: variant,
     size: size,
     color: color,
     error: error,
     disabled: disabled,
-  });
-  const [inputBaseRootClasses, ...restScopeClasses] = scopeInputBaseClasses;
+  })
+  const [inputBaseRootClasses, ...restScopeClasses] = scopeInputBaseClasses
   return (
-    <div className={restScopeClasses.join(" ")} css={scopeInputBaseCss}>
+    <div className={restScopeClasses.join(' ')} css={scopeInputBaseCss}>
       <input
         className={inputBaseRootClasses}
         disabled={disabled}
@@ -50,21 +50,21 @@ const InputBase = forwardRef<HTMLInputElement, OverallInputBaseProps>(function (
         {...rest}
       />
     </div>
-  );
-});
+  )
+})
 
 InputBase.defaultProps = {
-  variant: "outlined",
-  size: "sm",
-  color: "primary",
+  variant: 'outlined',
+  size: 'sm',
+  color: 'primary',
   error: false,
   isFocused: false,
-};
+}
 
 export type OverallInputBaseProps = OverridableMapType<
-  Omit<InputHTMLAttributes<HTMLInputElement>, "sizes">,
+  Omit<InputHTMLAttributes<HTMLInputElement>, 'sizes'>,
   InputBaseProps
->;
+>
 
 export interface InputBasePropsVariantOverrides {}
 export interface InputBasePropsSizeOverrides {}
@@ -74,30 +74,30 @@ export interface InputBasePropsOutlinedThemeOverrides {}
 export interface InputBasePropsAnimationFrameOverrides {}
 
 export type InputBaseProps = {
-  variant?: InputBasePropsVariant;
-  size?: InputBasePropsSize;
-  color?: InputBasePropsTextColor;
-  error?: boolean;
-  disabled?: boolean;
-  isFocused?: boolean;
-  innerTheme: ThemeProps;
-};
+  variant?: InputBasePropsVariant
+  size?: InputBasePropsSize
+  color?: InputBasePropsTextColor
+  error?: boolean
+  disabled?: boolean
+  isFocused?: boolean
+  innerTheme: ThemeProps
+}
 
 export type InputBasePropsVariant = OverridableStringUnion<
-  "filled" | "text" | "outlined",
+  'filled' | 'text' | 'outlined',
   InputBasePropsVariantOverrides
->;
+>
 
 export type InputBasePropsSize = OverridableStringUnion<
-  "sm" | "md" | "lg",
+  'sm' | 'md' | 'lg',
   InputBasePropsSizeOverrides
->;
+>
 
 export type InputBasePropsTextColor = OverridableStringUnion<
-  "primary" | "secondary" | "ternary",
+  'primary' | 'secondary' | 'ternary',
   InputBasePropsTextColorOverrides
->;
+>
 
-InputBase.displayName = "InputBase";
+InputBase.displayName = 'InputBase'
 
-export default InputBase;
+export default InputBase

@@ -1,6 +1,6 @@
-import { convertHEXtoRGB } from "../../core/utils/convertHEXtoRGB";
-import { palette } from "../../core/theme/createTheme";
-import { ThemeProps } from "../../core/theme/themeProvider";
+import { convertHEXtoRGB } from '../../core/utils/convertHEXtoRGB'
+import { palette } from '../../core/theme/createTheme/createTheme'
+import { ThemeProps } from '../../core/theme/themeProvider'
 
 export const sizes = {
   sm: (theme: ThemeProps) => `
@@ -21,7 +21,7 @@ export const sizes = {
     font-weight: ${theme.typography.global.fontWeight};
     height: 42px;
   `,
-};
+}
 
 export const animationframes = {
   ripple: (theme: ThemeProps) => `
@@ -34,7 +34,7 @@ export const animationframes = {
       transform: scale(0.95);
     }
   `,
-};
+}
 
 export const variants = {
   container: (theme: ThemeProps) => `
@@ -51,7 +51,7 @@ export const variants = {
     text-decoration: none;
     border: none;
   `,
-};
+}
 
 export const colors = {
   primary: (theme: ThemeProps) => `
@@ -81,7 +81,7 @@ export const colors = {
       background: ${theme.palette.ternary.main};
     }
   `,
-};
+}
 
 export const backgrounds = {
   primary: (theme: ThemeProps) => `
@@ -93,7 +93,7 @@ export const backgrounds = {
   ternary: (theme: ThemeProps) => `
     background-color: ${theme.palette.ternary.main};
   `,
-};
+}
 
 export const outlinedTheme = {
   primary: (theme: ThemeProps) => `
@@ -129,4 +129,4 @@ export const outlinedTheme = {
       background: ${theme.palette.secondary.main};
     }
   `,
-};
+}

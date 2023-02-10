@@ -5,58 +5,55 @@ import {
   outlinedTheme,
   sizes,
   variants as buttonBaseVariants,
-} from "../../packages/ButtonBase/constants";
-import { blue, green, orange, pink, red } from "../colors/colors";
-import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
+} from '@packages/ButtonBase/constants'
+import { blue, green, orange, pink, red } from '@core/colors/colors'
 import {
-  variants as inputBaseVariants,
-  sizes as inputBaseSizes,
-  colors as inputBaseColors,
-} from "../../packages/InputBase/constants";
-import { animationFrames as popoverAnimationframes, transitions as popoverTransitions } from "../../packages/Popover/constant";
+  BreakpointsValuesProps,
+  ThemeProps,
+} from '../themeProvider/themeProvider'
 
 export const palette = {
   primary: {
     main: blue[700],
-    contrastText: "#FFF",
+    contrastText: '#FFF',
   },
   secondary: {
-    main: pink["A400"],
-    contrastText: "#FFF",
+    main: pink['A400'],
+    contrastText: '#FFF',
   },
   ternary: {
-    main: orange["A400"],
-    contrastText: "#FFF",
+    main: orange['A400'],
+    contrastText: '#FFF',
   },
   success: {
     main: green[800],
-    contrastText: "#FFF",
+    contrastText: '#FFF',
   },
   error: {
     main: red[700],
-    contrastText: "#FFF",
+    contrastText: '#FFF',
   },
   text: {
-    primary: "rgba(0, 0, 0, 0.87)",
-    secondary: "rgba(0, 0, 0, 0.6)",
-    disabled: "rgba(0, 0, 0, 0.38)",
+    primary: 'rgba(0, 0, 0, 0.87)',
+    secondary: 'rgba(0, 0, 0, 0.6)',
+    disabled: 'rgba(0, 0, 0, 0.38)',
   },
-  divider: "rgba(0, 0, 0, 0.12)",
+  divider: 'rgba(0, 0, 0, 0.12)',
   action: {
-    disabledBackground: "rgba(0,0,0,0.12)",
+    disabledBackground: 'rgba(0,0,0,0.12)',
   },
   shape: {
     borderRadius: 4,
     borderWidth: 1,
     borderColor: {
-      default: "rgba(0, 0, 0, 0.42)",
-      hover: "rgba(0, 0, 0, 0.87)",
+      default: 'rgba(0, 0, 0, 0.42)',
+      hover: 'rgba(0, 0, 0, 0.87)',
     },
     borderStyle: {
-      solid: "solid",
+      solid: 'solid',
     },
   },
-};
+}
 
 export const transitions = {
   duration: {
@@ -72,14 +69,14 @@ export const transitions = {
     // recommended when something is leaving screen
     leavingScreen: 195,
   },
-};
+}
 
 export const typography = {
   global: {
     fontSize: 16,
     fontWeight: 500,
   },
-  fontFamily: ["Roboto", "Helvetica", "Arial", "sans-serif"].join(","),
+  fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'].join(','),
   h1: {
     fontSize: 32,
     fontWeight: 700,
@@ -120,9 +117,9 @@ export const typography = {
     fontSize: 12,
     fontWeight: 500,
   },
-};
+}
 
-export const spacing = (space: number) => `${8 * space}px`;
+export const spacing = (space: number) => `${8 * space}px`
 
 export const defaultTheme = {
   components: {
@@ -133,21 +130,12 @@ export const defaultTheme = {
       colors: colors,
       outlinedTheme: outlinedTheme,
     },
-    input: {
-      variants: inputBaseVariants,
-      sizes: inputBaseSizes,
-      colors: inputBaseColors,
-    },
   },
   palette: palette,
   animationframe: {
     button: {
       animationframe: buttonAnimationframes,
     },
-    popover: {
-      animationframe: popoverAnimationframes,
-      transitions: popoverTransitions
-    }
   },
   breakpoints: {
     values: {
@@ -158,41 +146,41 @@ export const defaultTheme = {
       xl: 1536,
     },
     down: function (breakpoint: BreakpointsValuesProps) {
-      return `@media (min-width: ${this.values[breakpoint]}px)`;
+      return `@media (min-width: ${this.values[breakpoint]}px)`
     },
     up: function (breakpoint: BreakpointsValuesProps) {
-      return `@media (max-width: ${this.values[breakpoint]}px)`;
+      return `@media (max-width: ${this.values[breakpoint]}px)`
     },
     between: function (
       min: BreakpointsValuesProps,
       max: BreakpointsValuesProps
     ) {
-      return `@media only screen and (min-width: ${this.values[min]}px) amd (max-width: ${this.values[max]}px)`;
+      return `@media only screen and (min-width: ${this.values[min]}px) amd (max-width: ${this.values[max]}px)`
     },
   },
   transitions: transitions,
   typography: typography,
   spacing: spacing,
   zIndex: {},
-};
+}
 
 function createTheme(theme?: ThemeProps, options?: Object) {
-  if (!theme) return defaultTheme;
+  if (!theme) return defaultTheme
   const outerTheme = merge(
     options ? theme : defaultTheme,
     options ? options : theme
-  );
-  return outerTheme;
+  )
+  return outerTheme
 }
 
 const merge = (target: any, source: any) => {
   for (const key of Object.keys(source)) {
     if (source[key] instanceof Object) {
-      Object.assign(source[key], merge(target[key], source[key]));
+      Object.assign(source[key], merge(target[key], source[key]))
     }
   }
-  Object.assign(target || {}, source);
-  return target;
-};
+  Object.assign(target || {}, source)
+  return target
+}
 
-export default createTheme;
+export default createTheme
