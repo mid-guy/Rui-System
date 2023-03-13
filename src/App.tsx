@@ -46,35 +46,48 @@ function App() {
               display: "flex",
               flexDirection: "column",
               gap: 10,
-              width: "100%",
+              width: 300,
             }}
           >
             <Collapse
               root={true}
-              labelComponent={<LabelComponent />}
+              labelComponent={<LabelComponent>Header Level 1</LabelComponent>}
               onFetchData={withLoading(() => "a")}
               isLoading={isLoading}
             >
               <WrapLoader>
-                <div style={{ color: "black" }}>level 1.1</div>
-                <div style={{ color: "black" }}>level 1.2</div>
-                <div style={{ color: "black" }}>level 1.3</div>
-                <div style={{ color: "black" }}>level 1.4</div>
-                <Collapse labelComponent={<LabelComponent />}>
+                <Span>level 1.1</Span>
+                <Span>level 1.2</Span>
+                <Span>level 1.3</Span>
+                <Span>level 1.4</Span>
+                <Span>level 1.5</Span>
+                <Collapse
+                  labelComponent={
+                    <LabelComponent>Header Level 2</LabelComponent>
+                  }
+                >
                   <WrapLoader>
-                    <div style={{ color: "black" }}>level 2.1</div>
-                    <div style={{ color: "black" }}>level 2.2</div>
-                    <Collapse labelComponent={<LabelComponent />}>
+                    <Span>level 2.1</Span>
+                    <Span>level 2.2</Span>
+                    <Collapse
+                      labelComponent={
+                        <LabelComponent>Header Level 3</LabelComponent>
+                      }
+                    >
                       <WrapLoader>
-                        <div style={{ color: "black" }}>level 3.1</div>
-                        <div style={{ color: "black" }}>level 3.2</div>
+                        <Span>level 3.1</Span>
+                        <Span>level 3.2</Span>
                       </WrapLoader>
                     </Collapse>
-                    <Collapse labelComponent={<LabelComponent />}>
+                    <Collapse
+                      labelComponent={
+                        <LabelComponent>Header Level 3</LabelComponent>
+                      }
+                    >
                       <WrapLoader>
-                        <div style={{ color: "black" }}>level 3.1</div>
-                        <div style={{ color: "black" }}>level 3.2</div>
-                        <div style={{ color: "black" }}>level 3.3</div>
+                        <Span>level 3.1</Span>
+                        <Span>level 3.2</Span>
+                        <Span>level 3.3</Span>
                       </WrapLoader>
                     </Collapse>
                   </WrapLoader>
@@ -88,15 +101,39 @@ function App() {
   );
 }
 
-const LabelComponent = () => {
+const LabelComponent = ({ children }: any) => {
   const { onToggle, isOpen } = useLocalStateCollapseContext();
   return (
     <Fragment>
       <div
-        style={{ width: 14, height: 14, cursor: "pointer", padding: 5 }}
         onClick={() => onToggle()}
+        style={{
+          display: "flex",
+          gap: 10,
+          alignItems: "center",
+          padding: "8px 0",
+        }}
       >
-        {isOpen ? <PlusSquareO /> : <MinusSquareO />}
+        {isOpen ? (
+          <MinusSquareO
+            style={{
+              width: 14,
+              height: 14,
+              cursor: "pointer",
+              verticalAlign: "middle",
+            }}
+          />
+        ) : (
+          <PlusSquareO
+            style={{
+              width: 14,
+              height: 14,
+              cursor: "pointer",
+              verticalAlign: "middle",
+            }}
+          />
+        )}
+        <span style={{ color: "black", fontSize: 16 }}>{children}</span>
       </div>
     </Fragment>
   );
@@ -109,15 +146,18 @@ const WrapLoader = ({ children }: any) => {
       style={{
         display: "flex",
         flexDirection: "column",
+        alignItems: "flex-start",
+        gap: 2,
         marginLeft: 25,
-        fontSize: 20,
+        fontSize: 16,
         width: "100%",
+        color: "black",
       }}
     >
       <ConditionalRender conditional={isVisible}>
         <ConditionalRender
           conditional={!isLoading}
-          fallback={<div style={{ color: "black" }}>Loading 1</div>}
+          fallback={<Span>Loading</Span>}
         >
           {children}
         </ConditionalRender>
@@ -125,5 +165,9 @@ const WrapLoader = ({ children }: any) => {
     </div>
   );
 };
+
+function Span({ children }: any) {
+  return <span>{children}</span>;
+}
 
 export default App;

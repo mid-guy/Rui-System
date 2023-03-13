@@ -1,4 +1,4 @@
-const MinusSquareO: React.FC = (props) => (
+const MinusSquareO = (props: any) => (
   <svg {...props} viewBox="64 -65 897 897">
     <g>
       <path
@@ -9,7 +9,7 @@ const MinusSquareO: React.FC = (props) => (
   </svg>
 );
 
-const PlusSquareO: React.FC = (props) => (
+const PlusSquareO = (props: any) => (
   <svg {...props} viewBox="64 -65 897 897">
     <g>
       <path
@@ -20,7 +20,7 @@ const PlusSquareO: React.FC = (props) => (
   </svg>
 );
 
-const CloseSquareO: React.FC = (props) => (
+const CloseSquareO = (props: any) => (
   <svg {...props} viewBox="64 -65 897 897">
     <g>
       <path

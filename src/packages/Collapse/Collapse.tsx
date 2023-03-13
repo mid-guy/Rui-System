@@ -117,7 +117,7 @@ const Collapse = memo(
     }, []);
 
     useLayoutEffect(() => onStartTransition(), [isOpen, isLoading]);
-
+    console.log(children);
     return (
       <div ref={ref} style={{ width: "100%" }} {...rest}>
         <ContextLocalStateCollapseAPI
