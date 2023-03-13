@@ -193,21 +193,3 @@ const ContextScopeAPI = ({ children, value }: any) => {
 Collapse.displayName = "Collapse";
 
 export default Collapse;
-
-// const WrapLoader = ({ children }: any) => {
-//   const { isAsyncLoading } = useAsyncLoadingContext();
-//   // loading...
-//   if (isAsyncLoading) {
-//     return <div>Loading</div>;
-//   }
-//   // not-loading!!!
-//   return children;
-// };
-
-// function onForceUpdateParentRect(height: number) {
-//   isHasSharedMethod &&
-//     value.forceUpdateRect(
-//       isOpen ? -rectQueue.height : rectQueue.height,
-//       true
-//     );
-// }

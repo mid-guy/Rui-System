@@ -33,9 +33,6 @@ export const generateCollapseClassNames = (props: {
   const _props: { [key: string]: boolean | string } = props;
   return Object.keys(props).reduce((prevClasses: any, key: any) => {
     if (_props[key]) {
-      // if (key === "animationFrame" || key === "transitionStack") {
-      //   return [...prevClasses, classNames[key](_props[key])];
-      // }
       return [...prevClasses, classNames[key]];
     }
     return prevClasses;
