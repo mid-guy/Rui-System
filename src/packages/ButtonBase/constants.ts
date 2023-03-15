@@ -1,6 +1,6 @@
 import { convertHEXtoRGB } from "../../core/utils/convertHEXtoRGB";
-import { palette } from "../../core/theme/createTheme";
 import { ThemeProps } from "../../core/theme/themeProvider";
+import { rootClasses } from "./getButtonRippleCss";
 
 export const sizes = {
   sm: (theme: ThemeProps) => `
@@ -38,8 +38,11 @@ export const animationframes = {
 
 export const variants = {
   container: (theme: ThemeProps) => `
-    color: ${palette.primary.contrastText};
+    color: ${theme.palette.primary.contrastText};
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+    .${rootClasses} {
+      background: white;
+    }
   `,
   outlined: (theme: ThemeProps) => `
     background: inherit;
@@ -59,7 +62,7 @@ export const colors = {
     &:hover {
       background: ${convertHEXtoRGB(theme.palette.primary.main, 0.04)};
     }
-    .cds-ripple-root {
+    .${rootClasses} {
       background: ${theme.palette.primary.main};
     }
   `,
@@ -68,7 +71,7 @@ export const colors = {
     &:hover {
       background: ${convertHEXtoRGB(theme.palette.secondary.main, 0.04)};
     }
-    .cds-ripple-root {
+    .${rootClasses} {
       background: ${theme.palette.secondary.main};
     }
   `,
@@ -77,7 +80,7 @@ export const colors = {
     &:hover {
       background: ${convertHEXtoRGB(theme.palette.ternary.main, 0.04)};
     }
-    .cds-ripple-root {
+    .${rootClasses} {
       background: ${theme.palette.ternary.main};
     }
   `,
@@ -103,7 +106,7 @@ export const outlinedTheme = {
       border: 1px solid ${theme.palette.primary.main};
       background: ${convertHEXtoRGB(theme.palette.primary.main, 0.04)};
     }
-    .cds-ripple-root {
+    .${rootClasses} {
       background: ${theme.palette.primary.main};
     }
   `,
@@ -114,19 +117,19 @@ export const outlinedTheme = {
       border: 1px solid ${theme.palette.secondary.main};
       background: ${convertHEXtoRGB(theme.palette.secondary.main, 0.04)};
     }
-    .cds-ripple-root {
+    .${rootClasses} {
       background: ${theme.palette.secondary.main};
     }
   `,
   ternary: (theme: ThemeProps) => `
-    border: 1px solid ${convertHEXtoRGB(theme.palette.secondary.main, 0.5)};
+    border: 1px solid ${convertHEXtoRGB(theme.palette.ternary.main, 0.5)};
     color: ${theme.palette.ternary.main};
     &:hover {
-      border: 1px solid ${theme.palette.secondary.main};
-      background: ${convertHEXtoRGB(theme.palette.secondary.main, 0.04)};
+      border: 1px solid ${theme.palette.ternary.main};
+      background: ${convertHEXtoRGB(theme.palette.ternary.main, 0.04)};
     }
-    .cds-ripple-root {
-      background: ${theme.palette.secondary.main};
+    .${rootClasses} {
+      background: ${theme.palette.ternary.main};
     }
   `,
 };
