@@ -14,17 +14,12 @@ export const testAnimationClasses = mergeNameTargetComponent("Test");
 
 const getTouchRippleCss = (theme: ThemeProps): SerializedStyles => css`
   &.${rootClasses} {
-    z-index: 1;
-    position: absolute;
-    inset: 0px;
-    pointer-events: none;
     > .${animationClasses} {
       position: absolute;
       background: inherit;
       transform: translate(-50%, -50%);
       animation: onAnimationRipple 1300ms forwards;
       border-radius: 50%;
-      background: white;
       width: 50px;
       height: 50px;
       @keyframes onAnimationRipple {
