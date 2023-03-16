@@ -13,7 +13,6 @@ import {
   InputBasePropsTextColor,
   InputBasePropsVariant,
 } from "../../packages/InputBase/InputBase";
-import { PopoverPropsAnimationFrame } from "../../packages/Popover/Popover";
 import { WrapThemeInputBaseProp } from "../types/InputBase/types";
 import {
   WrapThemeProps,
@@ -93,8 +92,12 @@ export type ThemeProps = {
       primary: string;
       secondary: string;
       disabled: string;
+      default: string;
     };
     divider: string;
+    background: {
+      default: string;
+    };
     action: {
       disabledBackground: string;
     };
@@ -106,7 +109,7 @@ export type ThemeProps = {
         hover: string;
       };
       borderStyle: {
-        solid: "solid";
+        solid: string;
       };
     };
   };
@@ -144,7 +147,6 @@ export type ThemeProps = {
     | "h4"
     | "h5"
     | "h6"
-    | "h7"
     | "subtitle1"
     | "subtitle2"
     | "body1"

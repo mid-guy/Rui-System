@@ -1,3 +1,4 @@
+import { grey } from "./../colors/colors";
 import {
   animationframes as buttonAnimationframes,
   backgrounds,
@@ -13,7 +14,10 @@ import {
   sizes as inputBaseSizes,
   colors as inputBaseColors,
 } from "../../packages/InputBase/constants";
-import { animationFrames as popoverAnimationframes, transitions as popoverTransitions } from "../../packages/Popover/constant";
+import {
+  animationFrames as popoverAnimationframes,
+  transitions as popoverTransitions,
+} from "../../packages/Popover/constant";
 
 export const palette = {
   primary: {
@@ -40,6 +44,10 @@ export const palette = {
     primary: "rgba(0, 0, 0, 0.87)",
     secondary: "rgba(0, 0, 0, 0.6)",
     disabled: "rgba(0, 0, 0, 0.38)",
+    default: "rgba(255, 255, 255, 1)",
+  },
+  background: {
+    default: grey[600],
   },
   divider: "rgba(0, 0, 0, 0.12)",
   action: {
@@ -146,8 +154,8 @@ export const defaultTheme = {
     },
     popover: {
       animationframe: popoverAnimationframes,
-      transitions: popoverTransitions
-    }
+      transitions: popoverTransitions,
+    },
   },
   breakpoints: {
     values: {

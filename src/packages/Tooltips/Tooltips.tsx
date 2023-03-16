@@ -10,28 +10,23 @@ import useHoverDebounce from "../../core/hooks/useHoverDebounce";
 import { useTheme } from "../../core/theme/themeProvider";
 import Portal from "../Portal";
 import getTooltipsCss, { classNames } from "./getTooltipsCss";
-type TypeProps = {
-  children: ReactNode;
-  content: ReactNode;
-  waiting?: boolean;
-};
-const Tooltips = ({ children, content, waiting = false }: TypeProps) => {
-  const theme = useTheme();
-  const [isVisible, setVisible] = useState(false);
-  const [isHovered, setHovered] = useState(false);
-  const [clientRect, setClientRect] = useState({
+
+export default function Tooltips({
+  children,
+  content,
+  waiting = true,
+}: TooltipsProps) {
+  const [isVisible, setVisible] = useState<boolean>(false);
+  const [isHovered, setHovered] = useState<boolean>(false);
+  const [clientRect, setClientRect] = useState<{
+    left: number;
+    top: number;
+  }>({
     left: 0,
     top: 0,
   });
   const rootRefs = useRef<any>(null);
   const containerRef = useRef<any>(null);
-  const isMounting = useRef<boolean>(false);
-  const scopeTooltipsRootCSS = getTooltipsCss(theme, {
-    mounting: isMounting.current,
-    isVisible: isVisible,
-    left: clientRect.left,
-    top: clientRect.top,
-  });
 
   const onFadeOut = () => {
     setVisible(false);
@@ -44,7 +39,7 @@ const Tooltips = ({ children, content, waiting = false }: TypeProps) => {
   };
 
   const [setDebounceEvent, onClearTimeout] = useHoverDebounce(
-    500,
+    400,
     onFadeIn,
     waiting
   );
@@ -52,10 +47,6 @@ const Tooltips = ({ children, content, waiting = false }: TypeProps) => {
   const onRemove = () => {
     if (!isVisible) setHovered(false);
   };
-
-  useLayoutEffect(() => {
-    isMounting.current = true;
-  }, []);
 
   useLayoutEffect(() => {
     if (containerRef.current !== null) {
@@ -73,31 +64,47 @@ const Tooltips = ({ children, content, waiting = false }: TypeProps) => {
     <div
       ref={rootRefs}
       onMouseEnter={setDebounceEvent}
-      // onMouseLeave={onFadeOut}
+      onMouseLeave={onFadeOut}
     >
       {children}
       <Portal render={isHovered} background="blank">
         <TooltipsComponent
           ref={containerRef}
           isVisible={isVisible}
-          scopeTooltipsRootCSS={scopeTooltipsRootCSS}
+          clientRect={clientRect}
           content={content}
           onRemove={onRemove}
         />
       </Portal>
     </div>
   );
-};
+}
 const TooltipsComponent = forwardRef<
   HTMLDivElement,
   {
-    isVisible: Boolean;
+    clientRect: {
+      left: number;
+      top: number;
+    };
+    isVisible: boolean;
     content: ReactNode;
-    onRemove: any;
-    scopeTooltipsRootCSS: any;
+    onRemove: React.TransitionEventHandler<HTMLDivElement>;
   }
 >(function (props, ref) {
-  const { scopeTooltipsRootCSS, isVisible, content, onRemove } = props;
+  const { clientRect, isVisible, content, onRemove } = props;
+  const theme = useTheme();
+  const isMounting = useRef<boolean>(false);
+  const scopeTooltipsRootCSS = getTooltipsCss(theme, {
+    mounting: isMounting.current,
+    isVisible: isVisible,
+    left: clientRect.left,
+    top: clientRect.top,
+  });
+
+  useLayoutEffect(() => {
+    isMounting.current = true;
+  }, []);
+
   return (
     <div className={[classNames.root].join(" ")} css={scopeTooltipsRootCSS}>
       <div
@@ -118,4 +125,10 @@ const TooltipsComponent = forwardRef<
   );
 });
 
-export default Tooltips;
+export type TooltipsProps = {
+  children: ReactNode;
+  content: ReactNode;
+  waiting?: boolean;
+};
+
+TooltipsComponent.displayName = "TooltipsComponent";

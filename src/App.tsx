@@ -6,6 +6,7 @@ import ThemeProvider from "./core/theme/themeProvider";
 import Autocomplete from "./packages/Autocomplete";
 import ButtonBase from "./packages/ButtonBase";
 import ConditionalRender from "./packages/ConditionalRender";
+import Tooltips from "./packages/Tooltips";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [state, setState] = useState("");
@@ -49,9 +50,11 @@ function App() {
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <div style={{ display: "flex", gap: 10 }}>
-            <ButtonBase size="lg" disableElevation>
-              Button
-            </ButtonBase>
+            <Tooltips content={<span>This is tooltips</span>}>
+              <ButtonBase size="lg" disableElevation>
+                Button
+              </ButtonBase>
+            </Tooltips>
           </div>
         </ThemeProvider>
       </header>
