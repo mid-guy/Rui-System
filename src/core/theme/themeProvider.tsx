@@ -13,7 +13,6 @@ import {
   InputBasePropsTextColor,
   InputBasePropsVariant,
 } from "../../packages/InputBase/InputBase";
-import { PopoverPropsAnimationFrame } from "../../packages/Popover/Popover";
 import { WrapThemeInputBaseProp } from "../types/InputBase/types";
 import {
   WrapThemeProps,

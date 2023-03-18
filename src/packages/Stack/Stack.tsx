@@ -6,9 +6,17 @@ import getStackCSS from "./getStackCSS";
 const Stack = forwardRef<HTMLDivElement, StackProps>(function (props, ref) {
   const { children, direction, spacing, sx, ...rest } = props;
   const theme = useTheme();
-  const scopeStackCSS = getStackCSS(theme);
+  const scopeStackCSS = getStackCSS(theme, {
+    direction,
+    spacing,
+  });
   return (
-    <div ref={ref} {...rest} css={scopeStackCSS}>
+    <div
+      ref={ref}
+      {...rest}
+      className="RuiStack RuiStackSpacing"
+      css={scopeStackCSS}
+    >
       {children}
     </div>
   );
