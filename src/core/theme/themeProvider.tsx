@@ -13,12 +13,13 @@ import {
   InputBasePropsTextColor,
   InputBasePropsVariant,
 } from "../../packages/InputBase/InputBase";
-import { PopoverPropsAnimationFrame } from "../../packages/Popover/Popover";
 import { WrapThemeInputBaseProp } from "../types/InputBase/types";
 import {
   WrapThemeProps,
   GenerateObjectByStringUnion,
   OverridableStringUnion,
+  BreakpointsValuesProps,
+  BreakPoints,
 } from "../types/type";
 import { defaultTheme } from "./createTheme";
 
@@ -122,15 +123,7 @@ export type ThemeProps = {
     };
     // ...
   };
-  breakpoints: {
-    values: GenerateObjectByStringUnion<BreakpointsValuesProps, number>;
-    down: (breakpoint: BreakpointsValuesProps) => string;
-    up: (breakpoint: BreakpointsValuesProps) => string;
-    between: (
-      min: BreakpointsValuesProps,
-      max: BreakpointsValuesProps
-    ) => string;
-  };
+  breakpoints: BreakPoints;
   typography: {
     global: {
       fontSize: number;
@@ -163,19 +156,8 @@ export type ThemeProps = {
       number
     >;
   };
-  spacing: any;
+  spacing: (space: number) => string;
   zIndex: any;
 };
-
-export type TypographyFontSize<T extends string> = Record<
-  T,
-  { fontSize: number }
->;
-
-export type BreakpointsValuesProps = OverridableStringUnion<
-  "xs" | "sm" | "md" | "lg" | "xl",
-  BreakpointsValuesOverrides
->;
-type BreakpointsValuesOverrides = {};
 
 export default ThemeProvider;

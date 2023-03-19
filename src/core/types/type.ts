@@ -33,3 +33,22 @@ export type OverridableMapType<A, B> = MergeType<Omit<A, keyof B>, B>;
 export type MergeType<A, B> = A & B;
 
 export type StylesOrCreatorType = (theme: ThemeProps) => SerializedStyles;
+
+export type TypographyFontSize<T extends string> = Record<
+  T,
+  { fontSize: number }
+>;
+
+export type BreakpointsValuesProps = OverridableStringUnion<
+  "xs" | "sm" | "md" | "lg" | "xl",
+  BreakpointsValuesOverrides
+>;
+
+type BreakpointsValuesOverrides = {};
+
+export type BreakPoints = {
+  values: GenerateObjectByStringUnion<BreakpointsValuesProps, number>;
+  down: (breakpoint: BreakpointsValuesProps) => string;
+  up: (breakpoint: BreakpointsValuesProps) => string;
+  between: (min: BreakpointsValuesProps, max: BreakpointsValuesProps) => string;
+};
