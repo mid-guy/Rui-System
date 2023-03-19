@@ -9,8 +9,10 @@ function App() {
       <header className="App-header">
         <ThemeProvider theme={theme}>
           <Stack
-            direction="row"
-            spacing={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
+            direction={{
+              sm: "column",
+              md: "row",
+            }}
           >
             <div style={{ color: "Red" }}>123</div>
             <div style={{ color: "Red" }}>123</div>

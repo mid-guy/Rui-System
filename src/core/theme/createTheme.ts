@@ -7,13 +7,17 @@ import {
   variants as buttonBaseVariants,
 } from "../../packages/ButtonBase/constants";
 import { blue, green, orange, pink, red } from "../colors/colors";
-import { BreakpointsValuesProps, ThemeProps } from "./themeProvider";
+import { ThemeProps } from "./themeProvider";
 import {
   variants as inputBaseVariants,
   sizes as inputBaseSizes,
   colors as inputBaseColors,
 } from "../../packages/InputBase/constants";
-import { animationFrames as popoverAnimationframes, transitions as popoverTransitions } from "../../packages/Popover/constant";
+import {
+  animationFrames as popoverAnimationframes,
+  transitions as popoverTransitions,
+} from "../../packages/Popover/constant";
+import { BreakpointsValuesProps } from "../types/type";
 
 export const palette = {
   primary: {
@@ -146,8 +150,8 @@ export const defaultTheme = {
     },
     popover: {
       animationframe: popoverAnimationframes,
-      transitions: popoverTransitions
-    }
+      transitions: popoverTransitions,
+    },
   },
   breakpoints: {
     values: {

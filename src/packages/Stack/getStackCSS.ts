@@ -1,18 +1,34 @@
 import { css, SerializedStyles } from "@emotion/react";
-import { BreakpointsValuesProps } from "../../core/theme/themeProvider";
-import { GenerateObjectByStringUnion } from "../../core/types/type";
+import { ThemeProps } from "../../core/theme/themeProvider";
+import {
+  BreakPoints,
+  BreakpointsValuesProps,
+  GenerateObjectByStringUnion,
+} from "../../core/types/type";
+import { StackDirection, StackProps, StackSpacing } from "./Stack";
 
-export default function getStackCSS(theme: any, props: any): SerializedStyles {
+export default function getStackCSS(
+  theme: ThemeProps,
+  props: Omit<StackProps, "children">
+): SerializedStyles {
   return css`
     &.RuiStack {
       display: flex;
-      flex-direction: ${props.direction};
+      ${props.alignItems && `align-items: ${props.alignItems};`}
+      ${props.justifyContent && `justify-content: ${props.justifyContent};`}
     }
-    ${getSpacing({
+    ${props.spacing &&
+    getSpacing({
       breakpoints: theme.breakpoints,
       spacing: theme.spacing,
       spacingProps: props.spacing,
     })}
+    ${props.direction &&
+    getDirection({
+      breakpoints: theme.breakpoints,
+      directionProps: props.direction,
+    })}
+    ${props.sx && props.sx}
   `;
 }
 
@@ -24,8 +40,8 @@ function getSpacing({
   breakpoints: {
     values: GenerateObjectByStringUnion<BreakpointsValuesProps, number>;
   };
-  spacing: any;
-  spacingProps: any;
+  spacing: (space: number) => string;
+  spacingProps: StackSpacing;
 }) {
   if (typeof spacingProps === "object") {
     return `
@@ -41,7 +57,50 @@ function getSpacing({
   `;
 }
 
-function getResponsiveSpacing({ spacingProps, breakpoints, spacing }: any) {
+function getDirection({
+  breakpoints,
+  directionProps,
+}: {
+  breakpoints: BreakPoints;
+  directionProps: StackDirection;
+}) {
+  if (typeof directionProps === "object") {
+    return `
+      &.RuiStackDirection {
+        ${getResponsiveDirection({ directionProps, breakpoints })}
+      }
+    `;
+  }
+  return `
+    &.RuiStackDirection {
+      flex-direction: ${directionProps};
+    }
+  `;
+}
+
+function getResponsiveDirection({
+  directionProps,
+  breakpoints,
+}: {
+  directionProps: StackDirection;
+  breakpoints: BreakPoints;
+}): string {
+  let result = ``;
+  for (let [breakpoint, value] of Object.entries(directionProps)) {
+    result += `
+    ${breakpoints.down(breakpoint as BreakpointsValuesProps)} {
+      flex-direction: ${value};
+    }
+    `;
+  }
+  return result;
+}
+
+function getResponsiveSpacing({
+  spacingProps,
+  breakpoints,
+  spacing,
+}: any): string {
   let result = ``;
   for (let [breakpoint, value] of Object.entries(spacingProps)) {
     result += `
@@ -50,6 +109,5 @@ function getResponsiveSpacing({ spacingProps, breakpoints, spacing }: any) {
     }
     `;
   }
-  console.log(result);
   return result;
 }

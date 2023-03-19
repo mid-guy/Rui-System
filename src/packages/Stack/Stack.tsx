@@ -1,61 +1,89 @@
 /** @jsxImportSource @emotion/react */
-import { forwardRef, ReactNode } from "react";
-import { useTheme } from "../../core/theme/themeProvider";
+import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import getStackCSS from "./getStackCSS";
-
-const Stack = forwardRef<HTMLDivElement, StackProps>(function (props, ref) {
-  const { children, direction, spacing, sx, ...rest } = props;
-  const theme = useTheme();
+import {
+  BreakpointsValuesProps,
+  GenerateObjectByStringUnion,
+  OverridableMapType,
+} from "../../core/types/type";
+const Stack = forwardRef<HTMLDivElement, OverallStackProps>(function (
+  props,
+  ref
+) {
+  const {
+    children,
+    direction,
+    alignItems,
+    justifyContent,
+    spacing = 2,
+    sx,
+    ...rest
+  } = props;
+  const theme = useTheme() as ThemeProps;
   const scopeStackCSS = getStackCSS(theme, {
     direction,
+    alignItems,
+    justifyContent,
     spacing,
+    sx,
   });
   return (
     <div
       ref={ref}
-      {...rest}
-      className="RuiStack RuiStackSpacing"
+      className="RuiStack RuiStackSpacing RuiStackDirection"
       css={scopeStackCSS}
+      {...rest}
     >
       {children}
     </div>
   );
 });
 
-type StackProps = {
+export type OverallStackProps = OverridableMapType<
+  HTMLAttributes<HTMLDivElement>,
+  StackProps
+>;
+
+export type StackProps = {
   children: ReactNode;
-  direction?:
-    | {
-        xs: StackDirection;
-        sm: StackDirection;
-        md: StackDirection;
-        lg: StackDirection;
-        xl: StackDirection;
-      }
-    | StackDirection;
-  spacing?:
-    | {
-        xs: StackSpacing;
-        sm: StackSpacing;
-        md: StackSpacing;
-        lg: StackSpacing;
-        xl: StackSpacing;
-      }
-    | number;
-  justifyContent?:
-    | "flex-start"
-    | "center"
-    | "flex-end"
-    | "space-between"
-    | "space-around"
-    | "space-evenly";
-  alignItems?: "flex-start" | "center" | "flex-end" | "stretch" | "baseline";
+  direction?: StackDirection;
+  spacing?: StackSpacing;
+  justifyContent?: UnionStackJustifyContent;
+  alignItems?: UnionStackAlignItems;
   sx?: string;
 };
 
-type StackDirection = "column" | "row" | "column-reverse" | "row-reverse";
+export type StackDirection =
+  | UnionStackDirection
+  | Partial<
+      GenerateObjectByStringUnion<BreakpointsValuesProps, UnionStackDirection>
+    >;
 
-type StackSpacing = number;
+export type UnionStackAlignItems =
+  | "flex-start"
+  | "center"
+  | "flex-end"
+  | "stretch"
+  | "baseline";
+
+export type UnionStackJustifyContent =
+  | "flex-start"
+  | "center"
+  | "flex-end"
+  | "space-between"
+  | "space-around"
+  | "space-evenly";
+
+export type UnionStackDirection =
+  | "column"
+  | "row"
+  | "column-reverse"
+  | "row-reverse";
+
+export type StackSpacing =
+  | number
+  | Partial<GenerateObjectByStringUnion<BreakpointsValuesProps, number>>;
 
 Stack.displayName = "Stack";
 
