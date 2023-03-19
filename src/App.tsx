@@ -2,6 +2,7 @@
 import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
+import Checkbox from "./packages/Checkbox";
 import Stack from "./packages/Stack/Stack";
 function App() {
   return (
@@ -11,13 +12,11 @@ function App() {
           <Stack
             direction={{
               sm: "column",
-              md: "row",
+              md: "column",
             }}
+            alignItems="flex-start"
           >
-            <div style={{ color: "Red" }}>123</div>
-            <div style={{ color: "Red" }}>123</div>
-            <div style={{ color: "Red" }}>123</div>
-            <div style={{ color: "Red" }}>123</div>
+            <Checkbox value={1} name="check-box-1" label={"this is one"} />
           </Stack>
         </ThemeProvider>
       </header>
