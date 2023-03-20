@@ -18,11 +18,8 @@ const Checkbox = forwardRef<HTMLInputElement, any>(function (props, ref) {
         checked={checked}
       />
       <label className="RuiCheckboxLabel" htmlFor={name}>
-        <span></span>
-        {label}
-        {/* <ins></ins>
-          <i>{label}</i>
-        </ins> */}
+        <div className="RuiCheckboxTouchable" />
+        <span className="RuiCheckboxContent">{label}</span>
       </label>
     </div>
   );

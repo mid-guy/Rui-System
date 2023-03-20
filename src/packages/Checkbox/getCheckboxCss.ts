@@ -5,36 +5,24 @@ export const getCheckboxCss = (
   props: any
 ): SerializedStyles => css`
   &.RuiCheckboxRoot {
-    height: fit-content;
-    input[type="checkbox"] {
-      height: 0;
-      width: 0;
+    .RuiCheckboxInput {
+      display: none;
     }
-    input[type="checkbox"] + label {
+    .RuiCheckboxTouchable {
+      display: block;
+      box-sizing: border-box;
+    }
+    .RuiCheckboxInput + label {
       position: relative;
       display: flex;
       align-items: center;
-      color: #9e9e9e;
-      transition: color 250ms cubic-bezier(0.4, 0, 0.23, 1);
+      transition: color ${theme.transitions.duration.standard}ms
+        cubic-bezier(0.4, 0, 0.23, 1);
     }
-    input[type="checkbox"] + label > ins {
-      position: absolute;
-      display: block;
-      bottom: 0;
-      left: 2em;
-      height: 0;
-      width: 100%;
-      overflow: hidden;
-      text-decoration: none;
-      transition: height 300ms cubic-bezier(0.4, 0, 0.23, 1);
+    .RuiCheckboxContent {
+      color: black;
     }
-    input[type="checkbox"] + label > ins > i {
-      position: absolute;
-      bottom: 0;
-      font-style: normal;
-      color: #4fc3f7;
-    }
-    input[type="checkbox"] + label > span {
+    .RuiCheckboxInput + label > .RuiCheckboxTouchable {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -42,38 +30,33 @@ export const getCheckboxCss = (
       width: 24px;
       height: 24px;
       background: transparent;
-      border: 1px solid #9e9e9e;
-      border-radius: 1px;
+      border: 1px solid ${theme.palette.shape.borderColor.default};
       cursor: pointer;
-      transition: all 250ms cubic-bezier(0.4, 0, 0.23, 1);
+      transition: all ${theme.transitions.duration.standard}ms
+        cubic-bezier(0.4, 0, 0.23, 1);
+      &:hover {
+        border-color: ${theme.palette.shape.borderColor.hover};
+      }
     }
-
-    input[type="checkbox"] + label:hover,
-    input[type="checkbox"]:focus + label {
+    .RuiCheckboxInput + label:hover,
+    .RuiCheckboxInput:focus + label {
       color: #fff;
     }
-    input[type="checkbox"] + label:hover > span,
-    input[type="checkbox"]:focus + label > span {
-      background: rgba(255, 255, 255, 0.1);
+    .RuiCheckboxInput:checked + label > .RuiCheckboxTouchable {
+      border: 12px solid ${theme.palette.primary.main};
+      animation: shrink-bounce ${theme.transitions.duration.short}ms
+        cubic-bezier(0.4, 0, 0.23, 1);
     }
-    input[type="checkbox"]:checked + label > ins {
-      height: 100%;
-    }
-
-    input[type="checkbox"]:checked + label > span {
-      border: 4px solid #ffeb3b;
-      animation: shrink-bounce 200ms cubic-bezier(0.4, 0, 0.23, 1);
-    }
-    input[type="checkbox"]:checked + label > span:before {
+    .RuiCheckboxInput:checked + label > .RuiCheckboxTouchable:before {
       content: "";
       position: absolute;
-      top: 45%;
-      left: 10px;
-      border-right: 3px solid transparent;
-      border-bottom: 3px solid transparent;
+      left: 6px;
+      border-right: 2px solid transparent;
+      border-bottom: 2px solid transparent;
       transform: rotate(45deg);
       transform-origin: 0% 100%;
-      animation: checkbox-check 125ms 250ms cubic-bezier(0.4, 0, 0.23, 1)
+      animation: checkbox-check ${theme.transitions.duration.shorter}ms
+        ${theme.transitions.duration.short}ms cubic-bezier(0.4, 0, 0.23, 1)
         forwards;
     }
     @keyframes shrink-bounce {
@@ -91,7 +74,7 @@ export const getCheckboxCss = (
       0% {
         width: 0;
         height: 0;
-        border-color: #212121;
+        border-color: #fff;
         transform: translate3d(0, 0, 0) rotate(45deg);
       }
       33% {
@@ -102,8 +85,8 @@ export const getCheckboxCss = (
       100% {
         width: 4px;
         height: 10px;
-        border-color: #212121;
-        transform: translate3d(0, -0.5em, 0) rotate(45deg);
+        border-color: #fff;
+        transform: translate3d(0, -5px, 0) rotate(45deg);
       }
     }
   }
