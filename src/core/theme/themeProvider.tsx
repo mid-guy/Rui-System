@@ -155,6 +155,9 @@ export type ThemeProps = {
       | "leavingScreen",
       number
     >;
+    timingFunction: {
+      smooth: string;
+    };
   };
   spacing: (space: number) => string;
   zIndex: any;

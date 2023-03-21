@@ -76,6 +76,9 @@ export const transitions = {
     // recommended when something is leaving screen
     leavingScreen: 195,
   },
+  timingFunction: {
+    smooth: `cubic-bezier(0.4, 0, 0.23, 1)`,
+  },
 };
 
 export const typography = {

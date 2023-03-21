@@ -1,8 +1,9 @@
 import { css, SerializedStyles } from "@emotion/react";
 import { ThemeProps } from "../../core/theme/themeProvider";
+import { CheckboxProps, CheckboxPropsSize } from "./Checkbox";
 export const getCheckboxCss = (
   theme: ThemeProps,
-  props: any
+  props: Omit<CheckboxProps, "name" | "label" | "value">
 ): SerializedStyles => css`
   &.RuiCheckboxRoot {
     .RuiCheckboxInput {
@@ -17,7 +18,7 @@ export const getCheckboxCss = (
       display: flex;
       align-items: center;
       transition: color ${theme.transitions.duration.standard}ms
-        cubic-bezier(0.4, 0, 0.23, 1);
+        ${theme.transitions.timingFunction.smooth};
     }
     .RuiCheckboxContent {
       color: black;
@@ -26,14 +27,13 @@ export const getCheckboxCss = (
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-right: 14px;
-      width: 24px;
-      height: 24px;
+      ${sizes[props.size as CheckboxPropsSize](theme)}
       background: transparent;
       border: 1px solid ${theme.palette.shape.borderColor.default};
+      border-radius: ${theme.palette.shape.borderRadius}px;
       cursor: pointer;
       transition: all ${theme.transitions.duration.standard}ms
-        cubic-bezier(0.4, 0, 0.23, 1);
+        ${theme.transitions.timingFunction.smooth};
       &:hover {
         border-color: ${theme.palette.shape.borderColor.hover};
       }
@@ -45,7 +45,7 @@ export const getCheckboxCss = (
     .RuiCheckboxInput:checked + label > .RuiCheckboxTouchable {
       border: 12px solid ${theme.palette.primary.main};
       animation: shrink-bounce ${theme.transitions.duration.short}ms
-        cubic-bezier(0.4, 0, 0.23, 1);
+        ${theme.transitions.timingFunction.smooth};
     }
     .RuiCheckboxInput:checked + label > .RuiCheckboxTouchable:before {
       content: "";
@@ -55,10 +55,34 @@ export const getCheckboxCss = (
       border-bottom: 2px solid transparent;
       transform: rotate(45deg);
       transform-origin: 0% 100%;
-      animation: checkbox-check ${theme.transitions.duration.shorter}ms
-        ${theme.transitions.duration.short}ms cubic-bezier(0.4, 0, 0.23, 1)
-        forwards;
+      animation: checkbox-check ${theme.transitions.duration.shortest}ms
+        ${theme.transitions.duration.standard}ms
+        ${theme.transitions.timingFunction.smooth} forwards;
     }
+    ${animationFrames["fill"](theme)}
+  }
+`;
+
+export const sizes = {
+  sm: (theme: ThemeProps) => `
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  `,
+  md: (theme: ThemeProps) => `
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+  `,
+  lg: (theme: ThemeProps) => `
+    width: 28px;
+    height: 28px;
+    margin-right: 14px;
+  `,
+};
+
+export const animationFrames = {
+  fill: (theme: ThemeProps) => `
     @keyframes shrink-bounce {
       0% {
         transform: scale(1);
@@ -89,5 +113,5 @@ export const getCheckboxCss = (
         transform: translate3d(0, -5px, 0) rotate(45deg);
       }
     }
-  }
-`;
+  `,
+};
