@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
-import Checkbox from "./packages/Checkbox";
+import Radio from "./packages/Radio/Radio";
 import Stack from "./packages/Stack/Stack";
 function App() {
   return (
@@ -16,7 +15,7 @@ function App() {
             }}
             alignItems="flex-start"
           >
-            <Checkbox value={1} name="check-box-1" label={"this is one"} />
+            <Radio />
           </Stack>
         </ThemeProvider>
       </header>
