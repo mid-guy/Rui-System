@@ -44,6 +44,7 @@ export const palette = {
     primary: "rgba(0, 0, 0, 0.87)",
     secondary: "rgba(0, 0, 0, 0.6)",
     disabled: "rgba(0, 0, 0, 0.38)",
+    contrast: "rgba(255, 255, 255)",
   },
   divider: "rgba(0, 0, 0, 0.12)",
   action: {

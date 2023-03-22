@@ -21,13 +21,15 @@ export const getCheckboxCss = (
         ${theme.transitions.timingFunction.smooth};
     }
     .RuiCheckboxContent {
-      color: black;
+      color: ${theme.palette.text.primary};
     }
-    .RuiCheckboxInput + label > .RuiCheckboxTouchable {
+    .RuiCheckboxTouchable {
       display: flex;
       justify-content: center;
       align-items: center;
-      ${sizes[props.size as CheckboxPropsSize](theme)}
+      ${sizesCheckboxTouchable[props.size as NonNullable<CheckboxPropsSize>](
+        theme
+      )}
       background: transparent;
       border: 1px solid ${theme.palette.shape.borderColor.default};
       border-radius: ${theme.palette.shape.borderRadius}px;
@@ -37,13 +39,23 @@ export const getCheckboxCss = (
       &:hover {
         border-color: ${theme.palette.shape.borderColor.hover};
       }
+      &.RuiCheckboxTouchableDisabled {
+        cursor: default;
+        pointer-events: none;
+        border-color: ${theme.palette.action.disabledBackground};
+      }
     }
     .RuiCheckboxInput + label:hover,
     .RuiCheckboxInput:focus + label {
-      color: #fff;
+      color: ${theme.palette.text.contrast};
     }
     .RuiCheckboxInput:checked + label > .RuiCheckboxTouchable {
-      border: 12px solid ${theme.palette.primary.main};
+      ${sizesCheckboxTouchableChecked[
+        props.size as NonNullable<CheckboxPropsSize>
+      ](theme)}
+      &.RuiCheckboxTouchableDisabled {
+        border-color: ${theme.palette.action.disabledBackground};
+      }
       animation: shrink-bounce ${theme.transitions.duration.short}ms
         ${theme.transitions.timingFunction.smooth};
     }
@@ -59,11 +71,14 @@ export const getCheckboxCss = (
         ${theme.transitions.duration.standard}ms
         ${theme.transitions.timingFunction.smooth} forwards;
     }
-    ${animationFrames["fill"](theme)}
+    ${animationFrames["fill"](
+      theme,
+      props.size as NonNullable<CheckboxPropsSize>
+    )}
   }
 `;
 
-export const sizes = {
+export const sizesCheckboxTouchable = {
   sm: (theme: ThemeProps) => `
     width: 20px;
     height: 20px;
@@ -81,37 +96,119 @@ export const sizes = {
   `,
 };
 
+export const sizesCheckboxTouchableChecked = {
+  sm: (theme: ThemeProps) => `
+    border: 10px solid ${theme.palette.primary.main};
+  `,
+  md: (theme: ThemeProps) => `
+    border: 12px solid ${theme.palette.primary.main};
+  `,
+  lg: (theme: ThemeProps) => `
+    border: 14px solid ${theme.palette.primary.main};
+  `,
+};
+
 export const animationFrames = {
-  fill: (theme: ThemeProps) => `
-    @keyframes shrink-bounce {
-      0% {
-        transform: scale(1);
-      }
-      33% {
-        transform: scale(0.85);
-      }
-      100% {
-        transform: scale(1);
-      }
+  fill: (theme: ThemeProps, size: CheckboxPropsSize) => `
+    
+  `,
+};
+
+export const sizeCheckedIcon = {
+  sm: (theme: ThemeProps) => `
+  @keyframes shrink-bounce {
+    0% {
+      transform: scale(1);
     }
-    @keyframes checkbox-check {
-      0% {
-        width: 0;
-        height: 0;
-        border-color: #fff;
-        transform: translate3d(0, 0, 0) rotate(45deg);
-      }
-      33% {
-        width: 4px;
-        height: 0;
-        transform: translate3d(0, 0, 0) rotate(45deg);
-      }
-      100% {
-        width: 4px;
-        height: 10px;
-        border-color: #fff;
-        transform: translate3d(0, -5px, 0) rotate(45deg);
-      }
+    33% {
+      transform: scale(0.85);
     }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes checkbox-check {
+    0% {
+      width: 0;
+      height: 0;
+      border-color: ${theme.palette.text.contrast};
+      transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+    33% {
+      width: 4px;
+      height: 0;
+      transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+    100% {
+      width: 4px;
+      height: 10px;
+      border-color: ${theme.palette.text.contrast};
+      transform: translate3d(0, -5px, 0) rotate(45deg);
+    }
+  }
+  `,
+  md: (theme: ThemeProps) => `
+  @keyframes shrink-bounce {
+    0% {
+      transform: scale(1);
+    }
+    33% {
+      transform: scale(0.85);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes checkbox-check {
+    0% {
+      width: 0;
+      height: 0;
+      border-color: ${theme.palette.text.contrast};
+      transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+    33% {
+      width: 4px;
+      height: 0;
+      transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+    100% {
+      width: 4px;
+      height: 10px;
+      border-color: ${theme.palette.text.contrast};
+      transform: translate3d(0, -5px, 0) rotate(45deg);
+    }
+  }
+  `,
+  lg: (theme: ThemeProps) => `
+  @keyframes shrink-bounce {
+    0% {
+      transform: scale(1);
+    }
+    33% {
+      transform: scale(0.85);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes checkbox-check {
+    0% {
+      width: 0;
+      height: 0;
+      border-color: ${theme.palette.text.contrast};
+      transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+    33% {
+      width: 4px;
+      height: 0;
+      transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+    100% {
+      width: 4px;
+      height: 10px;
+      border-color: ${theme.palette.text.contrast};
+      transform: translate3d(0, -5px, 0) rotate(45deg);
+    }
+  }
   `,
 };
