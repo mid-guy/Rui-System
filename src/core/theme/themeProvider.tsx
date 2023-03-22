@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createContext, ReactNode, useContext, useMemo } from "react";
 import {
   ButtonPropsVariant,
@@ -17,8 +16,6 @@ import { WrapThemeInputBaseProp } from "../types/InputBase/types";
 import {
   WrapThemeProps,
   GenerateObjectByStringUnion,
-  OverridableStringUnion,
-  BreakpointsValuesProps,
   BreakPoints,
 } from "../types/type";
 import { defaultTheme } from "./createTheme";
@@ -94,6 +91,7 @@ export type ThemeProps = {
       primary: string;
       secondary: string;
       disabled: string;
+      contrast: string;
     };
     divider: string;
     action: {
@@ -155,6 +153,9 @@ export type ThemeProps = {
       | "leavingScreen",
       number
     >;
+    timingFunction: {
+      smooth: string;
+    };
   };
   spacing: (space: number) => string;
   zIndex: any;

@@ -1,5 +1,8 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "cSpell.words": ["testid"]
+  "cSpell.words": ["testid"],
+  "editor.cursorSurroundingLines": 15,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorBlinking": "phase"
 }
