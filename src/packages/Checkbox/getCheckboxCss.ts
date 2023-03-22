@@ -22,6 +22,9 @@ export const getCheckboxCss = (
     }
     .RuiCheckboxContent {
       color: ${theme.palette.text.primary};
+      ${sizesCheckboxContent[props.size as NonNullable<CheckboxPropsSize>](
+        theme
+      )}
     }
     .RuiCheckboxTouchable {
       display: flex;
@@ -62,7 +65,9 @@ export const getCheckboxCss = (
     .RuiCheckboxInput:checked + label > .RuiCheckboxTouchable:before {
       content: "";
       position: absolute;
-      left: 6px;
+      ${positionRuiCheckboxTouchableBefore[
+        props.size as NonNullable<CheckboxPropsSize>
+      ](theme)}
       border-right: 2px solid transparent;
       border-bottom: 2px solid transparent;
       transform: rotate(45deg);
@@ -71,28 +76,48 @@ export const getCheckboxCss = (
         ${theme.transitions.duration.standard}ms
         ${theme.transitions.timingFunction.smooth} forwards;
     }
-    ${animationFrames["fill"](
-      theme,
-      props.size as NonNullable<CheckboxPropsSize>
-    )}
   }
+  ${animationFrames["fill"](props.size as NonNullable<CheckboxPropsSize>)(
+    theme
+  )}
 `;
+
+export const positionRuiCheckboxTouchableBefore = {
+  sm: (theme: ThemeProps) => `
+    left: 5px;
+  `,
+  md: (theme: ThemeProps) => `
+    left: 6px;
+  `,
+  lg: (theme: ThemeProps) => `
+    left: 7px;
+  `,
+};
 
 export const sizesCheckboxTouchable = {
   sm: (theme: ThemeProps) => `
     width: 20px;
     height: 20px;
-    margin-right: 10px;
   `,
   md: (theme: ThemeProps) => `
     width: 24px;
     height: 24px;
-    margin-right: 12px;
   `,
   lg: (theme: ThemeProps) => `
     width: 28px;
     height: 28px;
-    margin-right: 14px;
+  `,
+};
+
+export const sizesCheckboxContent = {
+  sm: (theme: ThemeProps) => `
+    margin-left: 8px
+  `,
+  md: (theme: ThemeProps) => `
+    margin-left: 10px
+  `,
+  lg: (theme: ThemeProps) => `
+    margin-left: 12px
   `,
 };
 
@@ -109,13 +134,79 @@ export const sizesCheckboxTouchableChecked = {
 };
 
 export const animationFrames = {
-  fill: (theme: ThemeProps, size: CheckboxPropsSize) => `
-    
+  fill: (size: CheckboxPropsSize) => sizeCheckedIconFillAnimation[size],
+};
+
+export const sizeCheckedIconFillAnimation = {
+  sm: (theme: ThemeProps) => `
+    ${ShrinkBounceAnimation}
+    @keyframes checkbox-check {
+      0% {
+        width: 0;
+        height: 0;
+        border-color: ${theme.palette.text.contrast};
+        transform: translate3d(0, 0, 0) rotate(45deg);
+      }
+      33% {
+        width: 3px;
+        height: 0;
+        transform: translate3d(0, 0, 0) rotate(45deg);
+      }
+      100% {
+        width: 3px;
+        height: 8px;
+        border-color: ${theme.palette.text.contrast};
+        transform: translate3d(0, -4px, 0) rotate(45deg);
+      }
+    }
+  `,
+  md: (theme: ThemeProps) => `
+    ${ShrinkBounceAnimation}
+    @keyframes checkbox-check {
+      0% {
+        width: 0;
+        height: 0;
+        border-color: ${theme.palette.text.contrast};
+        transform: translate3d(0, 0, 0) rotate(45deg);
+      }
+      33% {
+        width: 4px;
+        height: 0;
+        transform: translate3d(0, 0, 0) rotate(45deg);
+      }
+      100% {
+        width: 4px;
+        height: 10px;
+        border-color: ${theme.palette.text.contrast};
+        transform: translate3d(0, -5px, 0) rotate(45deg);
+      }
+    }
+  `,
+  lg: (theme: ThemeProps) => `
+    ${ShrinkBounceAnimation}
+    @keyframes checkbox-check {
+      0% {
+        width: 0;
+        height: 0;
+        border-color: ${theme.palette.text.contrast};
+        transform: translate3d(0, 0, 0) rotate(45deg);
+      }
+      33% {
+        width: 6px;
+        height: 0;
+        transform: translate3d(0, 0, 0) rotate(45deg);
+      }
+      100% {
+        width: 6px;
+        height: 12px;
+        border-color: ${theme.palette.text.contrast};
+        transform: translate3d(0, -6px, 0) rotate(45deg);
+      }
+    }
   `,
 };
 
-export const sizeCheckedIcon = {
-  sm: (theme: ThemeProps) => `
+const ShrinkBounceAnimation = `
   @keyframes shrink-bounce {
     0% {
       transform: scale(1);
@@ -127,88 +218,4 @@ export const sizeCheckedIcon = {
       transform: scale(1);
     }
   }
-  @keyframes checkbox-check {
-    0% {
-      width: 0;
-      height: 0;
-      border-color: ${theme.palette.text.contrast};
-      transform: translate3d(0, 0, 0) rotate(45deg);
-    }
-    33% {
-      width: 4px;
-      height: 0;
-      transform: translate3d(0, 0, 0) rotate(45deg);
-    }
-    100% {
-      width: 4px;
-      height: 10px;
-      border-color: ${theme.palette.text.contrast};
-      transform: translate3d(0, -5px, 0) rotate(45deg);
-    }
-  }
-  `,
-  md: (theme: ThemeProps) => `
-  @keyframes shrink-bounce {
-    0% {
-      transform: scale(1);
-    }
-    33% {
-      transform: scale(0.85);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  @keyframes checkbox-check {
-    0% {
-      width: 0;
-      height: 0;
-      border-color: ${theme.palette.text.contrast};
-      transform: translate3d(0, 0, 0) rotate(45deg);
-    }
-    33% {
-      width: 4px;
-      height: 0;
-      transform: translate3d(0, 0, 0) rotate(45deg);
-    }
-    100% {
-      width: 4px;
-      height: 10px;
-      border-color: ${theme.palette.text.contrast};
-      transform: translate3d(0, -5px, 0) rotate(45deg);
-    }
-  }
-  `,
-  lg: (theme: ThemeProps) => `
-  @keyframes shrink-bounce {
-    0% {
-      transform: scale(1);
-    }
-    33% {
-      transform: scale(0.85);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  @keyframes checkbox-check {
-    0% {
-      width: 0;
-      height: 0;
-      border-color: ${theme.palette.text.contrast};
-      transform: translate3d(0, 0, 0) rotate(45deg);
-    }
-    33% {
-      width: 4px;
-      height: 0;
-      transform: translate3d(0, 0, 0) rotate(45deg);
-    }
-    100% {
-      width: 4px;
-      height: 10px;
-      border-color: ${theme.palette.text.contrast};
-      transform: translate3d(0, -5px, 0) rotate(45deg);
-    }
-  }
-  `,
-};
+`;

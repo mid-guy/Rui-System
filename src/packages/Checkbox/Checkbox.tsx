@@ -15,7 +15,7 @@ const Checkbox = forwardRef<HTMLInputElement, OverallCheckboxProps>(function (
     label,
     value,
     name,
-    checked = false,
+    checked,
     disabled = false,
     size = "md",
     ...rest
@@ -34,13 +34,13 @@ const Checkbox = forwardRef<HTMLInputElement, OverallCheckboxProps>(function (
         name={name}
         value={value}
         disabled={disabled}
-        checked={checked}
       />
       <label className="RuiCheckboxLabel" htmlFor={name}>
         <div
-          className={`RuiCheckboxTouchable ${
-            disabled && "RuiCheckboxTouchableDisabled"
-          }`}
+          className={[
+            "RuiCheckboxTouchable",
+            disabled && "RuiCheckboxTouchableDisabled",
+          ].join(" ")}
         />
         <span className="RuiCheckboxContent">{label}</span>
       </label>
@@ -68,5 +68,7 @@ export type CheckboxPropsSize = OverridableStringUnion<
   "sm" | "md" | "lg",
   CheckboxPropsSizeOverrides
 >;
+
+Checkbox.displayName = "RuiCheckbox";
 
 export default Checkbox;
