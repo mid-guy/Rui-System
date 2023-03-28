@@ -11,6 +11,7 @@ const Radio = forwardRef<HTMLDivElement, any>(function (props, ref) {
     <div className="RuiRadioRoot" {...rest} ref={ref} css={scopeRadioCSS}>
       <label className="RuiRadioLabel">
         <input className="RuiRadioInput" type="radio" name="radio" />
+        <div className="RuiRadioTouchable" />
         <span className="RuiRadioContent">{label}</span>
       </label>
     </div>
