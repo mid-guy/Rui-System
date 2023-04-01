@@ -2,6 +2,7 @@ import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
 import Radio from "./packages/Radio/Radio";
+import RadioGroup from "./packages/RadioGroup";
 import Stack from "./packages/Stack/Stack";
 function App() {
   return (
@@ -15,7 +16,12 @@ function App() {
             }}
             alignItems="flex-start"
           >
-            <Radio />
+            <RadioGroup name="radio">
+              <Radio label="Number 1" />
+              <Radio label="Number 2" />
+              <Radio label="Number 3" />
+              <Radio label="Number 4" disabled />
+            </RadioGroup>
           </Stack>
         </ThemeProvider>
       </header>
