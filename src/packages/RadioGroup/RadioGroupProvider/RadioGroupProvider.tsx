@@ -1,7 +1,15 @@
 import { createContext, useContext } from "react";
+import { RadioPropsSize, RaidoPropsColor } from "../../Radio/Radio";
 
 const RadioGroupContext = createContext<{
-  value: { name?: string; value?: string | number; disabled?: boolean };
+  value: {
+    name?: string;
+    value?: string | number;
+    disabled?: boolean;
+    size?: RadioPropsSize;
+    color?: RaidoPropsColor;
+    sx?: string;
+  };
 }>({ value: {} });
 
 export const useRadioGroupContext = () => {

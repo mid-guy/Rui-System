@@ -1,7 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { forwardRef } from "react";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
-import { OverridableStringUnion } from "../../core/types/type";
+import {
+  BreakpointsValuesProps,
+  GenerateObjectByStringUnion,
+  OverridableStringUnion,
+} from "../../core/types/type";
 import { useRadioGroupContext } from "../RadioGroup/RadioGroupProvider/RadioGroupProvider";
 import getRadioCss from "./getRadioCss";
 
@@ -12,14 +16,18 @@ const Radio = forwardRef<HTMLDivElement, any>(function (props, ref) {
     label,
     disabled,
     size = "sm",
-    name: outerName,
-    value: outerValue,
+    color = "primary",
+    name,
+    value,
     ...rest
   } = props;
   const theme = useTheme() as ThemeProps;
   const context = useRadioGroupContext();
   const scopeRadioCSS = getRadioCss(theme, {
-    size: size,
+    size: context.value.size ? context.value.size : size,
+    disabled: context.value.disabled ? context.value.disabled : disabled,
+    color: context.value.color ? context.value.color : color,
+    sx: context.value.sx ? context.value.sx : sx,
   });
   return (
     <div className="RuiRadioRoot" {...rest} ref={ref} css={scopeRadioCSS}>
@@ -29,8 +37,8 @@ const Radio = forwardRef<HTMLDivElement, any>(function (props, ref) {
         <input
           className="RuiRadioInput"
           type="radio"
-          name={context.value.name ? context.value.name : outerName}
-          value={context.value.value ? context.value.value : outerValue}
+          name={context.value.name ? context.value.name : name}
+          value={context.value.value ? context.value.value : value}
           disabled={context.value.disabled ? context.value.disabled : disabled}
         />
         <div className={`RuiRadioTouchable`} />
@@ -39,11 +47,24 @@ const Radio = forwardRef<HTMLDivElement, any>(function (props, ref) {
     </div>
   );
 });
+
+export type RadioResponsiveSize =
+  | RadioPropsSize
+  | Partial<
+      GenerateObjectByStringUnion<BreakpointsValuesProps, RadioPropsSize>
+    >;
+
 export type RadioPropsSizeOverrides = {};
+export type RadioPropsColorOverrides = {};
 
 export type RadioPropsSize = OverridableStringUnion<
   "sm" | "md" | "lg",
   RadioPropsSizeOverrides
+>;
+
+export type RaidoPropsColor = OverridableStringUnion<
+  "primary" | "secondary" | "ternary",
+  RadioPropsColorOverrides
 >;
 
 export default Radio;

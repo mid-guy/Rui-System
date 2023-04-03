@@ -1,6 +1,7 @@
 import { css, SerializedStyles } from "@emotion/react";
 import { ThemeProps } from "../../core/theme/themeProvider";
-import { RadioPropsSize } from "./Radio";
+import { RadioPropsSize, RadioResponsiveSize } from "./Radio";
+import { BreakPoints, BreakpointsValuesProps } from "../../core/types/type";
 
 const getRadioCss = (theme: ThemeProps, props: any): SerializedStyles => css`
   &.RuiRadioRoot {
@@ -13,9 +14,6 @@ const getRadioCss = (theme: ThemeProps, props: any): SerializedStyles => css`
       .RuiRadioInput:checked + .RuiRadioTouchable {
         border-color: ${theme.palette.primary.main};
         &::before {
-          ${sizesRadioTouchableChecked[
-            props.size as NonNullable<RadioPropsSize>
-          ](theme)}
           border-color: ${theme.palette.primary.main};
         }
       }
@@ -23,19 +21,21 @@ const getRadioCss = (theme: ThemeProps, props: any): SerializedStyles => css`
         .RuiRadioTouchable {
           border-color: ${theme.palette.shape.borderColor.transparent};
           background: ${theme.palette.action.disabledBackground};
+          cursor: auto;
         }
         .RuiRadioContent {
           color: ${theme.palette.text.disabled};
+          cursor: auto;
         }
       }
       .RuiRadioTouchable {
         border: 2px solid ${theme.palette.shape.borderColor.default};
+        cursor: pointer;
         border-radius: 50%;
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
-        ${sizesRadioTouchable[props.size as NonNullable<RadioPropsSize>](theme)}
         transition: all ${theme.transitions.duration.standard}ms
           ${theme.transitions.timingFunction.smooth};
         &::before {
@@ -43,9 +43,6 @@ const getRadioCss = (theme: ThemeProps, props: any): SerializedStyles => css`
           position: absolute;
           border-radius: 50%;
           border-width: 0px;
-          ${sizesRadioTouchableBefore[
-            props.size as NonNullable<RadioPropsSize>
-          ](theme)}
           border-color: red;
           border: 2px solid ${theme.palette.shape.borderColor.transparent};
           transform-origin: center;
@@ -56,11 +53,71 @@ const getRadioCss = (theme: ThemeProps, props: any): SerializedStyles => css`
       }
       .RuiRadioContent {
         color: ${theme.palette.text.primary};
-        ${sizesRadioContent[props.size as NonNullable<RadioPropsSize>](theme)}
+        cursor: pointer;
       }
+      ${getRadioSize({
+        breakpoints: theme.breakpoints,
+        theme: theme,
+        size: props.size,
+      })}
     }
   }
 `;
+
+function getRadioSize({
+  breakpoints,
+  size,
+  theme,
+}: {
+  breakpoints: BreakPoints;
+  size: RadioResponsiveSize;
+  theme: ThemeProps;
+}) {
+  if (typeof size === "object") {
+    let result = ``;
+    for (let [breakpoint, value] of Object.entries(size)) {
+      result += `
+      ${breakpoints.down(breakpoint as BreakpointsValuesProps)} {
+        .RuiRadioTouchable {
+          ${sizesRadioTouchable[value as NonNullable<RadioPropsSize>](theme)}
+          &:before {
+            ${sizesRadioTouchableBefore[value as NonNullable<RadioPropsSize>](
+              theme
+            )}
+          }
+        }
+        .RuiRadioContent {
+          ${sizesRadioContent[value as NonNullable<RadioPropsSize>](theme)}
+        }
+        .RuiRadioInput:checked + .RuiRadioTouchable {
+          &::before {
+            ${sizesRadioTouchableChecked[value as NonNullable<RadioPropsSize>](
+              theme
+            )}
+          }
+        }
+      }
+      `;
+    }
+    return result;
+  }
+  return `
+  .RuiRadioTouchable {
+    ${sizesRadioTouchable[size as NonNullable<RadioPropsSize>](theme)}
+    &:before {
+      ${sizesRadioTouchableBefore[size as NonNullable<RadioPropsSize>](theme)}
+    }
+  }
+  .RuiRadioContent {
+    ${sizesRadioContent[size as NonNullable<RadioPropsSize>](theme)}
+  }
+  .RuiRadioInput:checked + .RuiRadioTouchable {
+    &::before {
+      ${sizesRadioTouchableChecked[size as NonNullable<RadioPropsSize>](theme)}
+    }
+  }
+`;
+}
 
 export const sizesRadioTouchable = {
   sm: (theme: ThemeProps) => `
@@ -76,6 +133,7 @@ export const sizesRadioTouchable = {
     height: 28px;
   `,
 };
+
 export const sizesRadioTouchableBefore = {
   sm: (theme: ThemeProps) => `
     width: 16px;
@@ -113,4 +171,5 @@ export const sizesRadioTouchableChecked = {
     border: 12px solid ${theme.palette.primary.main};
   `,
 };
+
 export default getRadioCss;

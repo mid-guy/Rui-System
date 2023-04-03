@@ -11,6 +11,7 @@ function App() {
         <ThemeProvider theme={theme}>
           <Stack
             direction={{
+              xs: "column",
               sm: "column",
               md: "column",
             }}
