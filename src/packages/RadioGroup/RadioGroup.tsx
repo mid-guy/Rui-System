@@ -1,6 +1,8 @@
-import RadioGroupProvider from "./RadioGroupProvider/RadioGroupProvider";
+import RadioGroupProvider, {
+  RadioGroupProps,
+} from "./RadioGroupProvider/RadioGroupProvider";
 
-export default function RadioGroup(props: any) {
+export default function RadioGroup(props: RadioGroupProps) {
   const { children, ...rest } = props;
-  return <RadioGroupProvider value={rest}>{children}</RadioGroupProvider>;
+  return <RadioGroupProvider {...rest}>{children}</RadioGroupProvider>;
 }

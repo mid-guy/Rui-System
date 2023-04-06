@@ -1,17 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { forwardRef } from "react";
+import { HTMLAttributes, forwardRef } from "react";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import {
   BreakpointsValuesProps,
   GenerateObjectByStringUnion,
+  OverridableMapType,
   OverridableStringUnion,
 } from "../../core/types/type";
 import { useRadioGroupContext } from "../RadioGroup/RadioGroupProvider/RadioGroupProvider";
 import getRadioCss from "./getRadioCss";
 
-const Radio = forwardRef<HTMLDivElement, any>(function (props, ref) {
+const Radio = forwardRef<HTMLDivElement, OverallRadioProps>(function (
+  props,
+  ref
+) {
   const {
-    children,
     sx,
     label,
     disabled,
@@ -41,17 +44,38 @@ const Radio = forwardRef<HTMLDivElement, any>(function (props, ref) {
           value={context.value.value ? context.value.value : value}
           disabled={context.value.disabled ? context.value.disabled : disabled}
         />
-        <div className={`RuiRadioTouchable`} />
+        <div className="RuiRadioTouchable" />
         <span className="RuiRadioContent">{label}</span>
       </label>
     </div>
   );
 });
 
+export type OverallRadioProps = OverridableMapType<
+  Omit<HTMLAttributes<HTMLDivElement>, "size">,
+  RadioProp
+>;
+
+export type RadioProp = {
+  name?: string;
+  value?: string | number;
+  sx?: string;
+  label?: string;
+  disabled?: boolean;
+  size?: RadioResponsiveSize;
+  color?: RadioResponsiveColor;
+};
+
 export type RadioResponsiveSize =
   | RadioPropsSize
   | Partial<
       GenerateObjectByStringUnion<BreakpointsValuesProps, RadioPropsSize>
+    >;
+
+export type RadioResponsiveColor =
+  | RaidoPropsColor
+  | Partial<
+      GenerateObjectByStringUnion<BreakpointsValuesProps, RaidoPropsColor>
     >;
 
 export type RadioPropsSizeOverrides = {};

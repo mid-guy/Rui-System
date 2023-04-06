@@ -17,7 +17,7 @@ function App() {
             }}
             alignItems="flex-start"
           >
-            <RadioGroup name="radio">
+            <RadioGroup name="radio" color="primary">
               <Radio label="Number 1" />
               <Radio label="Number 2" />
               <Radio label="Number 3" />

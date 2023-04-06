@@ -1,15 +1,8 @@
-import { createContext, useContext } from "react";
-import { RadioPropsSize, RaidoPropsColor } from "../../Radio/Radio";
+import { ReactNode, createContext, useContext } from "react";
+import { RadioResponsiveColor, RadioResponsiveSize } from "../../Radio/Radio";
 
 const RadioGroupContext = createContext<{
-  value: {
-    name?: string;
-    value?: string | number;
-    disabled?: boolean;
-    size?: RadioPropsSize;
-    color?: RaidoPropsColor;
-    sx?: string;
-  };
+  value: RadioGroupContextProps;
 }>({ value: {} });
 
 export const useRadioGroupContext = () => {
@@ -19,13 +12,24 @@ export const useRadioGroupContext = () => {
   return context;
 };
 
-function RadioGroupProvider(props: any) {
+function RadioGroupProvider(props: RadioGroupProps) {
   const { children, ...rest } = props;
   return (
-    <RadioGroupContext.Provider value={rest}>
+    <RadioGroupContext.Provider value={rest as any}>
       {children}
     </RadioGroupContext.Provider>
   );
 }
+
+export type RadioGroupProps = RadioGroupContextProps & { children: ReactNode };
+
+export type RadioGroupContextProps = {
+  name?: string;
+  value?: string | number;
+  disabled?: boolean;
+  size?: RadioResponsiveSize;
+  color?: RadioResponsiveColor;
+  sx?: string;
+};
 
 export default RadioGroupProvider;

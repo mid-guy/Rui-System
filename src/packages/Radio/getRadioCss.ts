@@ -1,9 +1,18 @@
 import { css, SerializedStyles } from "@emotion/react";
 import { ThemeProps } from "../../core/theme/themeProvider";
-import { RadioPropsSize, RadioResponsiveSize } from "./Radio";
+import {
+  OverallRadioProps,
+  RadioPropsSize,
+  RadioResponsiveColor,
+  RadioResponsiveSize,
+  RaidoPropsColor,
+} from "./Radio";
 import { BreakPoints, BreakpointsValuesProps } from "../../core/types/type";
 
-const getRadioCss = (theme: ThemeProps, props: any): SerializedStyles => css`
+const getRadioCss = (
+  theme: ThemeProps,
+  props: OverallRadioProps
+): SerializedStyles => css`
   &.RuiRadioRoot {
     .RuiRadioLabel {
       display: flex;
@@ -11,12 +20,12 @@ const getRadioCss = (theme: ThemeProps, props: any): SerializedStyles => css`
       .RuiRadioInput {
         display: none;
       }
-      .RuiRadioInput:checked + .RuiRadioTouchable {
-        border-color: ${theme.palette.primary.main};
-        &::before {
-          border-color: ${theme.palette.primary.main};
-        }
-      }
+      ${props.color &&
+      getRadioColor({
+        breakpoints: theme.breakpoints,
+        theme: theme,
+        color: props.color,
+      })}
       &.RuiRadioDisabled {
         .RuiRadioTouchable {
           border-color: ${theme.palette.shape.borderColor.transparent};
@@ -55,7 +64,8 @@ const getRadioCss = (theme: ThemeProps, props: any): SerializedStyles => css`
         color: ${theme.palette.text.primary};
         cursor: pointer;
       }
-      ${getRadioSize({
+      ${props.size &&
+      getRadioSize({
         breakpoints: theme.breakpoints,
         theme: theme,
         size: props.size,
@@ -63,6 +73,39 @@ const getRadioCss = (theme: ThemeProps, props: any): SerializedStyles => css`
     }
   }
 `;
+
+function getRadioColor({
+  breakpoints,
+  color,
+  theme,
+}: {
+  breakpoints: BreakPoints;
+  color: RadioResponsiveColor;
+  theme: ThemeProps;
+}) {
+  if (typeof color === "object") {
+    let result = ``;
+    for (let [breakpoint, value] of Object.entries(color)) {
+      result += `
+      ${breakpoints.down(breakpoint as BreakpointsValuesProps)} {
+        .RuiRadioInput:checked + .RuiRadioTouchable {
+          ${colorsRadioTouchableChecked[value as NonNullable<RaidoPropsColor>](
+            theme
+          )}
+        }
+      }
+      `;
+    }
+    return result;
+  }
+  return `
+    .RuiRadioInput:checked + .RuiRadioTouchable {
+      ${colorsRadioTouchableChecked[color as NonNullable<RaidoPropsColor>](
+        theme
+      )}
+    }
+  `;
+}
 
 function getRadioSize({
   breakpoints,
@@ -119,6 +162,27 @@ function getRadioSize({
 `;
 }
 
+export const colorsRadioTouchableChecked = {
+  primary: (theme: ThemeProps) => `
+    border-color: ${theme.palette.primary.main};
+    &::before {
+      border-color: ${theme.palette.primary.main};
+    }
+  `,
+  secondary: (theme: ThemeProps) => `
+    border-color: ${theme.palette.secondary.main};
+    &::before {
+      border-color: ${theme.palette.secondary.main};
+    }
+  `,
+  ternary: (theme: ThemeProps) => `
+    border-color: ${theme.palette.ternary.main};
+    &::before {
+      border-color: ${theme.palette.ternary.main}; 
+    }
+  `,
+};
+
 export const sizesRadioTouchable = {
   sm: (theme: ThemeProps) => `
     width: 20px;
@@ -162,13 +226,13 @@ export const sizesRadioContent = {
 
 export const sizesRadioTouchableChecked = {
   sm: (theme: ThemeProps) => `
-    border: 8px solid ${theme.palette.primary.main};
+    border-width: 8px;
   `,
   md: (theme: ThemeProps) => `
-    border: 10px solid ${theme.palette.primary.main};
+    border: 10px;
   `,
   lg: (theme: ThemeProps) => `
-    border: 12px solid ${theme.palette.primary.main};
+    border: 12px;
   `,
 };
 
