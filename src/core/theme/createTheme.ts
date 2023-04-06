@@ -54,6 +54,7 @@ export const palette = {
     borderRadius: 4,
     borderWidth: 1,
     borderColor: {
+      transparent: "transparent",
       default: "rgba(0, 0, 0, 0.42)",
       hover: "rgba(0, 0, 0, 0.87)",
     },

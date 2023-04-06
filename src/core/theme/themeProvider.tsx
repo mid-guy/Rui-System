@@ -103,6 +103,7 @@ export type ThemeProps = {
       borderColor: {
         default: string;
         hover: string;
+        transparent: string;
       };
       borderStyle: {
         solid: "solid";

@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
-import Checkbox from "./packages/Checkbox";
+import Radio from "./packages/Radio/Radio";
+import RadioGroup from "./packages/RadioGroup";
 import Stack from "./packages/Stack/Stack";
 function App() {
   return (
@@ -11,12 +11,18 @@ function App() {
         <ThemeProvider theme={theme}>
           <Stack
             direction={{
+              xs: "column",
               sm: "column",
               md: "column",
             }}
             alignItems="flex-start"
           >
-            <Checkbox value={1} name="check-box-1" label={"this is one"} />
+            <RadioGroup name="radio" color="primary">
+              <Radio label="Number 1" />
+              <Radio label="Number 2" />
+              <Radio label="Number 3" />
+              <Radio label="Number 4" disabled />
+            </RadioGroup>
           </Stack>
         </ThemeProvider>
       </header>
