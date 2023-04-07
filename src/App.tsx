@@ -3,7 +3,9 @@ import { useState } from "react";
 import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
-import ButtonBase from "./packages/ButtonBase";
+import Autocomplete from "./packages/Autocomplete/Autocomplete";
+import ConditionalRender from "./packages/ConditionalRender/ConditionalRender";
+import Span from "./demo/Span";
 function App() {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [state, setState] = useState("");
@@ -25,6 +27,7 @@ function App() {
   function onClick(e: any, number: number) {
     console.log(e, number);
   }
+
   function getBook(value: any) {
     return fetch("https://jsonplaceholder.typicode.com/todos")
       .then((response) => response.json())
@@ -33,6 +36,7 @@ function App() {
         setOptions(result);
       });
   }
+
   function mapValue(target: string, source: any[]) {
     return source.filter((item: any) => item.title.includes(target));
   }
@@ -48,77 +52,23 @@ function App() {
         <ThemeProvider theme={theme}>
           <div style={{ display: "flex", gap: 20, flexDirection: "column" }}>
             <div style={{ display: "flex", gap: 10 }}>
-              <ButtonBase variant="text" size="lg" disableElevation>
-                Button Text Primary
-              </ButtonBase>
-              <ButtonBase
-                variant="text"
-                size="lg"
-                color="secondary"
-                disableElevation
+              <Autocomplete
+                onLoadOptions={withLoading(getBook)}
+                onChange={(e) => setState(e.target.value)}
+                isLoadingOptions={isLoading}
+                isUpdatingOptions={isUpdatingOptions}
+                onCompleteChangeOptions={onCompleteChangeOptions}
+                value={state}
               >
-                Button Text Secondary
-              </ButtonBase>
-              <ButtonBase
-                variant="text"
-                size="lg"
-                color="ternary"
-                disableElevation
-              >
-                Button Text Ternary
-              </ButtonBase>
-            </div>
-            <div style={{ display: "flex", gap: 10 }}>
-              <ButtonBase
-                variant="container"
-                size="lg"
-                background="primary"
-                disableElevation
-              >
-                Button Container Primary
-              </ButtonBase>
-              <ButtonBase
-                variant="container"
-                size="lg"
-                background="secondary"
-                disableElevation
-              >
-                Button Container Secondary
-              </ButtonBase>
-              <ButtonBase
-                variant="container"
-                size="lg"
-                background="ternary"
-                disableElevation
-              >
-                Button Container Ternary
-              </ButtonBase>
-            </div>
-            <div style={{ display: "flex", gap: 10 }}>
-              <ButtonBase
-                variant="outlined"
-                size="lg"
-                outlinedTheme="primary"
-                disableElevation
-              >
-                Button Outlined Primary
-              </ButtonBase>
-              <ButtonBase
-                variant="outlined"
-                size="lg"
-                outlinedTheme="secondary"
-                disableElevation
-              >
-                Button Outlined Secondary
-              </ButtonBase>
-              <ButtonBase
-                variant="outlined"
-                size="lg"
-                outlinedTheme="ternary"
-                disableElevation
-              >
-                Button Outlined Ternary
-              </ButtonBase>
+                <ConditionalRender
+                  conditional={options && options.length > 0}
+                  fallback={<Span>No Value</Span>}
+                >
+                  {options.map((option: any) => (
+                    <Span key={option.id}>{option.title}</Span>
+                  ))}
+                </ConditionalRender>
+              </Autocomplete>
             </div>
           </div>
         </ThemeProvider>
