@@ -6,7 +6,7 @@ import {
   sizes,
   variants as buttonBaseVariants,
 } from "../../packages/ButtonBase/constants";
-import { blue, green, orange, pink, red } from "../colors/colors";
+import { blue, green, lightBlue, orange, pink, red } from "../colors/colors";
 import { ThemeProps } from "./themeProvider";
 import {
   variants as inputBaseVariants,
@@ -40,6 +40,14 @@ export const palette = {
     main: red[700],
     contrastText: "#FFF",
   },
+  warning: {
+    main: orange["A400"],
+    contrastText: "#FFF",
+  },
+  info: {
+    main: lightBlue["700"],
+    contrastText: "#FFF",
+  },
   text: {
     primary: "rgba(0, 0, 0, 0.87)",
     secondary: "rgba(0, 0, 0, 0.6)",
@@ -49,6 +57,7 @@ export const palette = {
   divider: "rgba(0, 0, 0, 0.12)",
   action: {
     disabledBackground: "rgba(0,0,0,0.12)",
+    default: "rgba(0, 0, 0, 0.08)",
   },
   shape: {
     borderRadius: 4,
@@ -118,7 +127,7 @@ export const typography = {
     fontWeight: 500,
   },
   subtitle2: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: 500,
   },
   body1: {

@@ -1,8 +1,7 @@
 import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
-import Radio from "./packages/Radio/Radio";
-import RadioGroup from "./packages/RadioGroup";
+import Chip from "./packages/Chip/Chip";
 import Stack from "./packages/Stack/Stack";
 function App() {
   return (
@@ -17,12 +16,8 @@ function App() {
             }}
             alignItems="flex-start"
           >
-            <RadioGroup name="radio" color="primary">
-              <Radio label="Number 1" />
-              <Radio label="Number 2" />
-              <Radio label="Number 3" />
-              <Radio label="Number 4" disabled />
-            </RadioGroup>
+            <Chip label="This is Chip" />
+            <Chip label="This is Chip" />
           </Stack>
         </ThemeProvider>
       </header>
