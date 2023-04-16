@@ -1,7 +1,15 @@
-import { forwardRef, useRef, useState } from "react";
+import {
+  ReactNode,
+  forwardRef,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import InputBase from "../InputBase/InputBase";
 import { ThemeProps, useTheme } from "../../core/theme/themeProvider";
 import Portal from "../Portal";
+import PopoverVer2 from "../PopoverVer2/PopoverVer2";
+import Span from "../../demo/Span";
 
 const initialStateRectPopover = {
   x: 0,
@@ -17,6 +25,7 @@ const Select = forwardRef<HTMLInputElement, any>(function (props, ref) {
   const [isFocused, setFocused] = useState<boolean>(false);
   const [isVisible, setVisible] = useState<boolean>(false);
   const target = useRef<HTMLDivElement>(null);
+  const optionsContainerRef = useRef<HTMLDivElement>(null);
   function onFocusInput({ e, onFocus }: { e: any; onFocus?: Function }) {
     setFocused(true);
     setVisible(true);
@@ -36,6 +45,14 @@ const Select = forwardRef<HTMLInputElement, any>(function (props, ref) {
     }));
   }
 
+  function getBoundingRefRect(ref: { current: HTMLDivElement }) {
+    const client = ref.current.getBoundingClientRect();
+    setPopoverRect((prev: any) => ({
+      ...prev,
+      height: client.height,
+    }));
+  }
+
   return (
     <div className="RuiSelectRoot" ref={target}>
       <InputBase
@@ -47,11 +64,36 @@ const Select = forwardRef<HTMLInputElement, any>(function (props, ref) {
         ref={ref}
       />
       <Portal render={isVisible} background="blank">
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
-        <div>123</div>
+        <PopoverVer2 popoverRect={popoverRect} isVisible={isFocused}>
+          <OptionsStack
+            ref={optionsContainerRef}
+            getBoundingRefRect={getBoundingRefRect}
+          >
+            <Span>123</Span>
+            <Span>123</Span>
+            <Span>123</Span>
+            <Span>123</Span>
+          </OptionsStack>
+        </PopoverVer2>
       </Portal>
+    </div>
+  );
+});
+
+const OptionsStack = forwardRef<
+  HTMLDivElement,
+  {
+    children: ReactNode;
+    getBoundingRefRect: Function;
+  }
+>(function (props, ref) {
+  useLayoutEffect(() => {
+    props.getBoundingRefRect(ref);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <div ref={ref} className="RuiPopoverOverflowContent">
+      {props.children}
     </div>
   );
 });

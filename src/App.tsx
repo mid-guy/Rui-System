@@ -17,8 +17,6 @@ function App() {
             alignItems="flex-start"
           >
             <Select />
-            <Select />
-            <Select />
           </Stack>
         </ThemeProvider>
       </header>
