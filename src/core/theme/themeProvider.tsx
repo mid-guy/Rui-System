@@ -87,6 +87,14 @@ export type ThemeProps = {
       main: string;
       contrastText: string;
     };
+    warning: {
+      main: string;
+      contrastText: string;
+    };
+    info: {
+      main: string;
+      contrastText: string;
+    };
     text: {
       primary: string;
       secondary: string;
@@ -96,6 +104,7 @@ export type ThemeProps = {
     divider: string;
     action: {
       disabledBackground: string;
+      default: string;
     };
     shape: {
       borderRadius: number;
