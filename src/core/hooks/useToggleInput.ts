@@ -8,32 +8,22 @@ const initialStateRectPopover = {
 };
 
 export default function useToggleInput() {
-  const [popoverRect, setPopoverRect] = useState(initialStateRectPopover);
+  const [popoverRect, setPopoverRect] = useState<InitialStateRectPopoverTypes>(
+    initialStateRectPopover
+  );
   const [isFocused, setFocused] = useState<boolean>(false);
   const [isVisible, setVisible] = useState<boolean>(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const optionStackRef = useRef<HTMLDivElement>(null);
 
-  function getBoundingRefRect(ref: { current: HTMLDivElement }) {
-    const client = ref.current.getBoundingClientRect();
-    setPopoverRect((prev: any) => ({
-      ...prev,
-      height: client.height,
-    }));
-  }
-
-  function onUpdateRectPopover() {
-    const rect = getPositionTarget(rootRef);
-    setPopoverRect((prev: any) => ({
-      ...prev,
-      ...rect,
-    }));
-  }
-
   function onFocusInput({ e, onFocus }: { e: any; onFocus?: Function }) {
+    const _rootRef = rootRef as RefHTMLDivElementType;
     setFocused(true);
     setVisible(true);
-    onUpdateRectPopover();
+    onUpdateRectPopover({
+      rootRef: _rootRef,
+      setPopoverRect,
+    });
     onFocus && onFocus(e);
   }
 
@@ -49,15 +39,66 @@ export default function useToggleInput() {
     popoverRect,
     onRemovePopover,
     onFocusInput,
-    getBoundingRefRect,
+    getBoundingRefRect: (ref: RefHTMLDivElementType) =>
+      getBoundingRefRect({ ref, setPopoverRect }),
   };
 }
 
-const getPositionTarget = (target: any) => {
+function getBoundingRefRect({
+  ref,
+  setPopoverRect,
+}: {
+  ref: RefHTMLDivElementType;
+  setPopoverRect: React.Dispatch<
+    React.SetStateAction<{
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+    }>
+  >;
+}) {
+  const client = ref.current.getBoundingClientRect();
+  setPopoverRect((prev: InitialStateRectPopoverTypes) => ({
+    ...prev,
+    height: client.height,
+  }));
+}
+
+function onUpdateRectPopover({
+  setPopoverRect,
+  rootRef,
+}: {
+  setPopoverRect: React.Dispatch<
+    React.SetStateAction<{
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+    }>
+  >;
+  rootRef: RefHTMLDivElementType;
+}) {
+  const rect = getPositionTarget(rootRef);
+  setPopoverRect((prev: InitialStateRectPopoverTypes) => ({
+    ...prev,
+    ...rect,
+  }));
+}
+
+const getPositionTarget = (target: RefHTMLDivElementType) => {
   const rect = target.current.getBoundingClientRect();
   return {
     x: rect.x,
     y: rect.y + rect.height,
     width: rect.width,
   };
+};
+
+type RefHTMLDivElementType = { current: HTMLDivElement };
+type InitialStateRectPopoverTypes = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 };
