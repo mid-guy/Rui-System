@@ -1,8 +1,8 @@
 import "./App.css";
 import theme from "./core-theme/theme";
 import ThemeProvider from "./core/theme/themeProvider";
-import Chip from "./packages/Chip/Chip";
-import Stack from "./packages/Stack/Stack";
+import Select from "./packages/Select";
+import Stack from "./packages/Stack";
 function App() {
   return (
     <div className="App">
@@ -16,8 +16,9 @@ function App() {
             }}
             alignItems="flex-start"
           >
-            <Chip label="This is Chip" />
-            <Chip label="This is Chip" />
+            <Select />
+            <Select />
+            <Select />
           </Stack>
         </ThemeProvider>
       </header>

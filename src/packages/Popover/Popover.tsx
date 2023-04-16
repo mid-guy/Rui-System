@@ -26,7 +26,6 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(function (props, ref) {
     onAnimationEnd,
     isLoadingOptions = false,
     isUpdatingOptions = false,
-    // cacheOptions = false,
     onCompleteChangeOptions,
   } = props;
   const isMounted = useRef<boolean>(false);
