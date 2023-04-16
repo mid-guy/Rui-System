@@ -26,6 +26,7 @@ export const getBackDropCss = (
           position: relative;
           width: 100%;
           height: 100%;
+          pointer-events: none;
         `
       }
       ${

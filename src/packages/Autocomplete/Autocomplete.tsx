@@ -41,7 +41,6 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
     ...rest
   } = props;
   const optionsContainerRef = useRef<HTMLDivElement>(null);
-  const wrapperRefs = useRef<HTMLDivElement>(null);
   const [popoverRect, setPopoverRect] = useState(initialStateRectPopover);
   const [isFocused, setFocused] = useState<boolean>(false);
   const [isVisible, setVisible] = useState<boolean>(false);
@@ -109,30 +108,26 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
   }, [isCompletedTyping]);
 
   return (
-    <div className={classesAutocomplete.root} ref={target}>
-      <InputBase
-        innerTheme={innerTheme}
-        isFocused={isFocused}
-        size="md"
-        onFocus={(e) => onFocusInput({ e, onFocus })}
-        onChange={(e) => onChangeInput({ e, onChange })}
-        value={value}
-        ref={ref}
-        {...rest}
-      />
-      <Portal render={isVisible} background="blank">
-        <Popover
-          ref={wrapperRefs}
-          popoverRect={popoverRect}
-          isVisible={isFocused}
-          isLoadingOptions={isLoadingOptions}
-          isUpdatingOptions={isUpdatingOptions}
-          onAnimationEnd={onRemovePopover}
-          onCompleteChangeOptions={onCompleteChangeOptions}
-        >
-          <ClickOutsideEvent
-            refs={[target, wrapperRefs]}
-            callback={onBlurInput}
+    <ClickOutsideEvent refs={target} callback={onBlurInput}>
+      <div className={classesAutocomplete.root} ref={target}>
+        <InputBase
+          innerTheme={innerTheme}
+          isFocused={isFocused}
+          size="md"
+          onFocus={(e) => onFocusInput({ e, onFocus })}
+          onChange={(e) => onChangeInput({ e, onChange })}
+          value={value}
+          ref={ref}
+          {...rest}
+        />
+        <Portal render={isVisible} background="blank">
+          <Popover
+            popoverRect={popoverRect}
+            isVisible={isFocused}
+            isLoadingOptions={isLoadingOptions}
+            isUpdatingOptions={isUpdatingOptions}
+            onAnimationEnd={onRemovePopover}
+            onCompleteChangeOptions={onCompleteChangeOptions}
           >
             <OptionsStack
               ref={optionsContainerRef}
@@ -141,10 +136,10 @@ const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(function (
             >
               {children}
             </OptionsStack>
-          </ClickOutsideEvent>
-        </Popover>
-      </Portal>
-    </div>
+          </Popover>
+        </Portal>
+      </div>
+    </ClickOutsideEvent>
   );
 });
 

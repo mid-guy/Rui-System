@@ -65,7 +65,9 @@ function App() {
                   fallback={<Span>No Value</Span>}
                 >
                   {options.map((option: any) => (
-                    <Span key={option.id}>{option.title}</Span>
+                    <Span key={option.id} onClick={() => console.log("123")}>
+                      {option.title}
+                    </Span>
                   ))}
                 </ConditionalRender>
               </Autocomplete>

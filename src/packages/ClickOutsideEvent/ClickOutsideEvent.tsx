@@ -1,7 +1,7 @@
 import { Fragment, ReactNode, RefObject, useLayoutEffect, useRef } from "react";
 
 type ClickOutsideEventProps = {
-  refs: RefObject<HTMLDivElement>[];
+  refs: RefObject<HTMLDivElement>;
   callback: Function;
   children: ReactNode;
 };
@@ -11,12 +11,9 @@ export default function ClickOutsideEvent({
   children,
 }: ClickOutsideEventProps) {
   const isMounted = useRef(false);
-
   const handleClick = (e: any) => {
     if (!isMounted.current) return (isMounted.current = true);
-    if (refs[0].current && refs[0].current.contains(e.target)) return;
-    if (refs[1].current && !refs[1].current.contains(e.target))
-      return callback();
+    if (refs.current && !refs.current.contains(e.target)) return callback();
     return;
   };
 
