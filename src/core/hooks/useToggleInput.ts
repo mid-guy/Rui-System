@@ -31,6 +31,10 @@ export default function useToggleInput() {
     setVisible(false);
   }
 
+  function onBlurInput() {
+    setFocused(false);
+  }
+
   return {
     isFocused,
     isVisible,
@@ -39,6 +43,7 @@ export default function useToggleInput() {
     popoverRect,
     onRemovePopover,
     onFocusInput,
+    onBlurInput,
     getBoundingRefRect: (ref: RefHTMLDivElementType) =>
       getBoundingRefRect({ ref, setPopoverRect }),
   };

@@ -12,7 +12,6 @@ const getPopoverCss = (
   theme: ThemeProps,
   props: Omit<
     PopoverProps & {
-      disable: boolean;
       mounted: boolean;
       mounting: boolean;
     },
@@ -74,7 +73,7 @@ export const generatePopoverClassNames = (props: {
   transitionContent: PopoverPropsTransitionContent;
   mounted: boolean;
   mounting: boolean;
-  disable: boolean;
+  disabled: boolean;
 }) => {
   const _props: { [key: string]: boolean | string } = props;
   return Object.keys(props).reduce((prevClasses: any, key: any) => {
@@ -96,7 +95,7 @@ export const classNames: { [key: string]: string | any } = {
   paper: "RuiPaper",
   overflowContainer: "RuiPopoverOverflowContainer",
   overflowContent: "RuiPopoverOverflowContent",
-  disable: "RuiPopoverDisabled",
+  disabled: "RuiPopoverDisabled",
   animationFrame: (value: PopoverPropsAnimationFrame): string => {
     return value && `RuiPopoverAnimation${capitalizeFirstLetter(value)}`;
   },
