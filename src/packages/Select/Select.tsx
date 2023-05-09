@@ -5,6 +5,7 @@ import Portal from "../Portal";
 import PopoverVer2 from "../PopoverVer2/PopoverVer2";
 import useToggleInput from "../../core/hooks/useToggleInput";
 import Span from "../../demo/Span";
+import useCatchClickOutSide from "../../core/hooks/useCatchClickOutSide";
 
 const Select = forwardRef<HTMLInputElement, any>(function (props, ref) {
   const {
@@ -14,7 +15,6 @@ const Select = forwardRef<HTMLInputElement, any>(function (props, ref) {
     isLoading,
     disabled,
     LoadingComponent = <Span>Loading</Span>,
-    EmptyComponent = <Span>Khong co gì</Span>,
   } = props;
   const innerTheme = useTheme() as ThemeProps;
   const {
@@ -24,22 +24,33 @@ const Select = forwardRef<HTMLInputElement, any>(function (props, ref) {
     optionStackRef,
     popoverRect,
     onFocusInput,
+    onBlurInput,
     onRemovePopover,
     getBoundingRefRect,
   } = useToggleInput();
+
+  useCatchClickOutSide({
+    targetRef: rootRef,
+    callback: onBlurInput,
+  });
+
   return (
     <div className="RuiSelectRoot" ref={rootRef}>
       <InputBase
         readOnly
         innerTheme={innerTheme}
-        isFocused={false}
+        isFocused={isFocused}
         onFocus={(e) => onFocusInput({ e, onFocus })}
-        onBlur={onRemovePopover}
         size={size}
         ref={ref}
       />
       <Portal render={isVisible} background="blank">
-        <PopoverVer2 popoverRect={popoverRect} isVisible={isFocused}>
+        <PopoverVer2
+          popoverRect={popoverRect}
+          isVisible={isFocused}
+          disabled={disabled}
+          onAnimationEnd={onRemovePopover}
+        >
           <OptionStack
             ref={optionStackRef}
             getBoundingRefRect={getBoundingRefRect}
@@ -61,13 +72,20 @@ const OptionStack = forwardRef<
     isPending: boolean;
   }
 >(function (props, ref) {
+  const { isPending, children, ...rest } = props;
+  const onEventStopPropagation = (e: any) => e.stopPropagation();
   useLayoutEffect(() => {
     props.getBoundingRefRect(ref);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.isPending]);
   return (
-    <div ref={ref} className="RuiOptionStackRoot">
-      {props.children}
+    <div
+      ref={ref}
+      className="RuiOptionStackRoot"
+      onClick={onEventStopPropagation}
+      {...rest}
+    >
+      {children}
     </div>
   );
 });

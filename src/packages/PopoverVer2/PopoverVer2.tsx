@@ -16,9 +16,10 @@ const PopoverVer2 = forwardRef<HTMLDivElement, PopoverProps>(function (
     maxHeight = 100,
     animationframe = "slide",
     transitionStack = "elasticity",
+    onAnimationEnd,
     isVisible = false,
     children,
-    isLoadingOptions = false,
+    disabled = false,
   } = props;
   const isMounted = useRef<boolean>(false);
   const isMounting = useRef<boolean>(false);
@@ -31,7 +32,7 @@ const PopoverVer2 = forwardRef<HTMLDivElement, PopoverProps>(function (
     transitionContent: "flash",
     mounted: isMounted.current,
     mounting: isMounting.current,
-    disable: isLoadingOptions,
+    disabled: disabled,
   });
   const scopePopoverClasses = generatePopoverClassNames({
     root: true,
@@ -41,7 +42,7 @@ const PopoverVer2 = forwardRef<HTMLDivElement, PopoverProps>(function (
     transitionContent: "flash",
     mounted: isVisible,
     mounting: isVisible,
-    disable: isLoadingOptions,
+    disabled: disabled,
   });
 
   useLayoutEffect(() => {
@@ -59,7 +60,7 @@ const PopoverVer2 = forwardRef<HTMLDivElement, PopoverProps>(function (
       css={[scopePopoverCSS]}
       onTransitionEnd={() => {
         isMounted.current = true;
-        // !isVisible && onAnimationEnd();
+        !isVisible && onAnimationEnd();
       }}
       ref={ref}
     >
@@ -88,8 +89,8 @@ export type PopoverProps = {
   transitionStack?: PopoverPropsTransitionStack;
   transitionContent?: PopoverPropsTransitionContent;
   children: ReactNode;
-  isLoadingOptions?: boolean;
-  isUpdatingOptions?: boolean;
+  disabled?: boolean;
+  onAnimationEnd: Function;
 };
 
 export type PopoverPropsAnimationFrame = OverridableStringUnion<

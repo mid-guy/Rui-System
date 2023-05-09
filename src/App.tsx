@@ -33,11 +33,12 @@ function App() {
               disabled={isLoading}
               onFocus={onFocus}
             >
-              <Span>123</Span>
-              <Span>123</Span>
-              <Span>123</Span>
-              <Span>123</Span>
-              <Span>123</Span>
+              <Span onClick={(e: any) => console.log(e.target.value)}>1</Span>
+              <Span onClick={(e: any) => console.log(e.target.value)}>2</Span>
+              <Span onClick={(e: any) => console.log(e.target.value)}>3</Span>
+              <Span onClick={(e: any) => console.log(e.target.value)}>4</Span>
+              <Span onClick={(e: any) => console.log(e.target.value)}>5</Span>
+              <Span onClick={(e: any) => console.log(e.target.value)}>6</Span>
             </Select>
           </Stack>
         </ThemeProvider>
